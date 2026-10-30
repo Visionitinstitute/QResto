@@ -1,22 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
 import { HeroMockup } from "@/components/landing/HeroMockup";
-import { QuickMenuFinder } from "@/components/public/QuickMenuFinder";
 
-interface HotelOption {
-  id: string;
-  name: string;
-  slug: string;
-  address?: string | null;
-  phone?: string | null;
-  logo_url?: string | null;
-}
-
-interface HeroSectionProps {
-  hotels: HotelOption[];
-}
-
-export function HeroSection({ hotels }: HeroSectionProps) {
+export function HeroSection() {
   return (
     <section className="relative pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden bg-white">
       {/* Subtle Warm Gradient Wash at Top */}
@@ -69,11 +55,6 @@ export function HeroSection({ hotels }: HeroSectionProps) {
             <span className="flex items-center gap-1.5">
               <Check className="w-3.5 h-3.5 text-emerald-600" /> Set up in 5 minutes
             </span>
-          </div>
-
-          {/* Table Finder Widget Box */}
-          <div className="mt-10 max-w-xl mx-auto">
-            <QuickMenuFinder hotels={hotels} />
           </div>
         </div>
 
