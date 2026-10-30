@@ -66,3 +66,4 @@ export async function checkTenantRole(
 
   return { allowed: true, role: member.role };
 }
+
