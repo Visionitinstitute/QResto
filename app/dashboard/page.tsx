@@ -337,117 +337,117 @@ export default function DashboardOverviewPage() {
       </div>
 
       {/* Key Metric Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <Card className="p-5 flex items-center justify-between">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Pending Orders
+              Pending
             </p>
             <p className="text-2xl sm:text-3xl font-black text-orange-600 mt-1">
               {stats.pendingOrders}
             </p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center">
-            <Clock className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center">
+            <Clock className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-5 flex items-center justify-between">
+        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Total Orders
+              Orders Today
             </p>
             <p className="text-2xl sm:text-3xl font-black text-zinc-900 mt-1">
               {stats.todayOrders}
             </p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center">
-            <UtensilsCrossed className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
+            <UtensilsCrossed className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-5 flex items-center justify-between">
+        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Total Sales
+              Total Revenue
             </p>
             <p className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">
               ₹{stats.todaySales}
             </p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-            <TrendingUp className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
+            <TrendingUp className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-5 flex items-center justify-between">
+        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Avg Rating
+              Guest Rating
             </p>
             <p className="text-2xl sm:text-3xl font-black text-amber-500 mt-1">
-              {stats.avgRating} <span className="text-sm font-normal text-zinc-400">/ 5</span>
+              {stats.avgRating} <span className="text-xs font-normal text-zinc-400">/ 5</span>
             </p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center">
-            <Star className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center">
+            <Star className="w-4 h-4" />
           </div>
         </Card>
       </div>
 
       {/* Quick Action Navigation Grid */}
       <div>
-        <h2 className="text-base font-bold text-zinc-900 mb-4">
-          Quick Actions (Turant Kaam)
+        <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-3">
+          Quick Actions
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             href="/dashboard/orders"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-4 group"
+            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
           >
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition">
-              <UtensilsCrossed className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition">
+              <UtensilsCrossed className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
-                Live Orders Dashboard
+                Live Kitchen Orders
               </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                Kichen me aane wale naye orders dekhein aur status update karein.
+              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+                Monitor incoming orders in realtime and update cooking status.
               </p>
             </div>
           </Link>
 
           <Link
             href="/dashboard/menu"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-4 group"
+            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
-              <ChefHat className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
+              <ChefHat className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
                 Menu & Categories
               </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                Nayi dish jodein, daam badlein aur availability on/off karein.
+              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+                Manage dishes, adjust prices, and toggle in-stock availability.
               </p>
             </div>
           </Link>
 
           <Link
             href="/dashboard/qr"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-4 group"
+            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
-              <QrCode className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-purple-50 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
+              <QrCode className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
                 Table QR Codes
               </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                Har table ke liye unique QR code print karein aur download karein.
+              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+                Generate, export and print custom QR standees for every table.
               </p>
             </div>
           </Link>

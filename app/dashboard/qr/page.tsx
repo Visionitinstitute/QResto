@@ -275,9 +275,9 @@ export default function QRManagementPage() {
       {/* ------------------------------------------------------------- */}
       {/* GENERAL HOTEL LEVEL QR CODE (Prompt 8.2)                      */}
       {/* ------------------------------------------------------------- */}
-      <Card className="p-5 sm:p-6 bg-gradient-to-tr from-orange-50/70 via-white to-amber-50/50 print:hidden">
+      <Card className="p-5 sm:p-6 bg-white border border-zinc-200/80 shadow-2xs print:hidden">
         <div className="flex flex-col sm:flex-row items-center gap-6">
-          <div className="p-3 bg-white rounded-2xl shadow-sm border border-orange-200">
+          <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-200/80">
             <QRCodeCanvas
               id="qr-code-hotel"
               value={hotelMenuUrl}
@@ -288,14 +288,15 @@ export default function QRManagementPage() {
           </div>
 
           <div className="flex-1 text-center sm:text-left space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" /> Reception / Counter QR (Bina Table)
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 text-zinc-700 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Reception / Counter QR</span>
             </div>
-            <h3 className="text-base font-extrabold text-zinc-900">
+            <h3 className="text-base font-bold text-zinc-900">
               General Hotel Menu QR
             </h3>
-            <p className="text-xs text-zinc-600 max-w-md">
-              Ise counter, reception ya entry gate par lagayein. Customer ise scan karke checkout par apna table number khud select kar sakte hain.
+            <p className="text-xs text-zinc-500 max-w-md">
+              Counter, reception ya entry gate par lagayein. Customer ise scan karke checkout par apna table number select kar sakte hain.
             </p>
             <div className="pt-1 flex items-center justify-center sm:justify-start gap-3">
               <Button
@@ -308,7 +309,7 @@ export default function QRManagementPage() {
               <Link
                 href={hotelMenuUrl}
                 target="_blank"
-                className="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1"
+                className="text-xs font-semibold text-orange-600 hover:text-orange-700 flex items-center gap-1"
               >
                 Open Menu Link <ExternalLink className="w-3 h-3" />
               </Link>
@@ -321,7 +322,7 @@ export default function QRManagementPage() {
       {/* TABLE-WISE QR CODE GRID (Prompt 8.2 & 8.3)                     */}
       {/* ------------------------------------------------------------- */}
       <div ref={printRef} className="space-y-4">
-        <h2 className="text-base font-bold text-zinc-900 print:text-center print:text-xl print:mb-6">
+        <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider print:text-center print:text-xl print:mb-6">
           All Table QR Codes ({tables.length} Tables)
         </h2>
 
@@ -350,20 +351,20 @@ export default function QRManagementPage() {
               return (
                 <div
                   key={table.id}
-                  className="bg-white rounded-3xl border border-zinc-200/90 p-5 shadow-xs flex flex-col items-center text-center print:border-2 print:border-black print:rounded-2xl print:p-6 print:break-inside-avoid"
+                  className="bg-white rounded-2xl border border-zinc-200/80 p-5 shadow-2xs hover:shadow-xs transition flex flex-col items-center text-center print:border-2 print:border-black print:rounded-2xl print:p-6 print:break-inside-avoid"
                 >
                   {/* Hotel Name & Branding */}
-                  <div className="mb-3">
-                    <span className="text-xs font-bold text-zinc-400 tracking-wider uppercase">
+                  <div className="mb-2.5">
+                    <span className="text-[11px] font-semibold text-zinc-400 tracking-wider uppercase">
                       Scan To Order
                     </span>
-                    <h3 className="text-base font-black text-zinc-900 truncate max-w-[200px]">
+                    <h3 className="text-sm font-bold text-zinc-900 truncate max-w-[200px]">
                       {hotel.name}
                     </h3>
                   </div>
 
                   {/* QR Canvas */}
-                  <div className="p-3 bg-zinc-50 rounded-2xl border border-zinc-100 my-1 shadow-inner">
+                  <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100 my-1">
                     <QRCodeCanvas
                       id={`qr-code-${table.table_number}`}
                       value={tableMenuUrl}
@@ -374,7 +375,7 @@ export default function QRManagementPage() {
                   </div>
 
                   {/* Table Badge */}
-                  <div className="mt-3 px-4 py-1.5 rounded-full bg-orange-600 text-white font-black text-sm tracking-wide shadow-sm shadow-orange-600/30">
+                  <div className="mt-3 px-3 py-1 rounded-lg bg-zinc-900 text-white font-bold text-xs tracking-wide shadow-2xs">
                     TABLE {table.table_number}
                   </div>
 

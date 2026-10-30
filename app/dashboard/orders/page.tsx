@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
 import { createClient } from "@/lib/supabase/client";
 import { Order, OrderItem, Hotel, OrderStatus } from "@/types";
@@ -192,18 +191,48 @@ export default function ManagerOrdersPage() {
   const getStatusBadge = (status: OrderStatus) => {
     switch (status) {
       case "pending":
-        return <Badge variant="warning">⏳ Pending</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+            Pending
+          </span>
+        );
       case "accepted":
-        return <Badge variant="info">✓ Accepted</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+            Accepted
+          </span>
+        );
       case "preparing":
-        return <Badge variant="warning">🍳 Cooking</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-50 text-orange-800 border border-orange-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+            Cooking
+          </span>
+        );
       case "ready":
-        return <Badge variant="success">🔔 Ready</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            Ready
+          </span>
+        );
       case "served":
       case "completed":
-        return <Badge variant="success">🎉 Served</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+            Served
+          </span>
+        );
       case "rejected":
-        return <Badge variant="danger">✕ Rejected</Badge>;
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+            Rejected
+          </span>
+        );
     }
   };
 
@@ -233,8 +262,9 @@ export default function ManagerOrdersPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight flex items-center gap-2.5">
-            <UtensilsCrossed className="w-6 h-6 text-orange-600" /> Live Kitchen Orders
+          <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
+            <UtensilsCrossed className="w-5 h-5 text-orange-600" />
+            <span>Live Kitchen Orders</span>
           </h1>
           <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
             Realtime orders monitor karein aur status turant update karein.
@@ -244,41 +274,45 @@ export default function ManagerOrdersPage() {
         {/* Sound toggle */}
         <button
           onClick={() => setSoundEnabled(!soundEnabled)}
-          className={`px-3 py-2 rounded-xl text-xs font-bold border flex items-center gap-2 transition ${
+          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
             soundEnabled
-              ? "bg-orange-50 text-orange-800 border-orange-200"
-              : "bg-zinc-100 text-zinc-500 border-zinc-200"
+              ? "bg-white text-zinc-800 border-zinc-200 shadow-2xs hover:border-zinc-300"
+              : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:text-zinc-600"
           }`}
           title="Toggle notification sound"
         >
           {soundEnabled ? (
             <>
-              <Volume2 className="w-4 h-4 text-orange-600" /> Sound Alert ON
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <Volume2 className="w-3.5 h-3.5 text-zinc-700" />
+              <span>Audio Alerts ON</span>
             </>
           ) : (
             <>
-              <VolumeX className="w-4 h-4 text-zinc-400" /> Sound OFF
+              <span className="w-2 h-2 rounded-full bg-zinc-300" />
+              <VolumeX className="w-3.5 h-3.5 text-zinc-400" />
+              <span>Audio Muted</span>
             </>
           )}
         </button>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-zinc-200/80 shadow-xs select-none overflow-x-auto">
+      <div className="flex items-center gap-1.5 bg-zinc-100/80 p-1 rounded-xl border border-zinc-200/60 select-none overflow-x-auto">
         <button
           onClick={() => setActiveTab("pending")}
-          className={`flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
             activeTab === "pending"
-              ? "bg-orange-600 text-white shadow-xs"
-              : "text-zinc-600 hover:bg-zinc-100"
+              ? "bg-white text-zinc-900 shadow-2xs"
+              : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          Pending
+          <span>Pending</span>
           <span
-            className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+            className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "pending"
-                ? "bg-white/30 text-white"
-                : "bg-orange-100 text-orange-700 font-extrabold"
+                ? "bg-orange-100 text-orange-700"
+                : "bg-zinc-200/80 text-zinc-600"
             }`}
           >
             {counts.pending}
@@ -287,18 +321,18 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("active")}
-          className={`flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
             activeTab === "active"
-              ? "bg-orange-600 text-white shadow-xs"
-              : "text-zinc-600 hover:bg-zinc-100"
+              ? "bg-white text-zinc-900 shadow-2xs"
+              : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          In Progress
+          <span>In Progress</span>
           <span
-            className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+            className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "active"
-                ? "bg-white/30 text-white"
-                : "bg-blue-100 text-blue-700 font-extrabold"
+                ? "bg-blue-100 text-blue-700"
+                : "bg-zinc-200/80 text-zinc-600"
             }`}
           >
             {counts.active}
@@ -307,18 +341,18 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("completed")}
-          className={`flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
             activeTab === "completed"
-              ? "bg-orange-600 text-white shadow-xs"
-              : "text-zinc-600 hover:bg-zinc-100"
+              ? "bg-white text-zinc-900 shadow-2xs"
+              : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          Completed
+          <span>Completed</span>
           <span
-            className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+            className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "completed"
-                ? "bg-white/30 text-white"
-                : "bg-zinc-100 text-zinc-600 font-extrabold"
+                ? "bg-emerald-100 text-emerald-700"
+                : "bg-zinc-200/80 text-zinc-600"
             }`}
           >
             {counts.completed}
@@ -327,10 +361,10 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("all")}
-          className={`py-2 px-3.5 rounded-xl text-xs font-bold transition ${
+          className={`py-1.5 px-3 rounded-lg text-xs font-semibold transition ${
             activeTab === "all"
-              ? "bg-orange-600 text-white shadow-xs"
-              : "text-zinc-600 hover:bg-zinc-100"
+              ? "bg-white text-zinc-900 shadow-2xs"
+              : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
           All ({orders.length})
@@ -360,17 +394,17 @@ export default function ManagerOrdersPage() {
             return (
               <Card
                 key={order.id}
-                className={`p-5 space-y-4 transition border ${
+                className={`p-4 sm:p-5 space-y-3.5 transition border ${
                   isPending
-                    ? "border-amber-300 ring-2 ring-amber-200/50 bg-amber-50/20"
-                    : "border-zinc-200/80"
+                    ? "border-amber-300 ring-2 ring-amber-100 bg-amber-50/15"
+                    : "border-zinc-200/80 shadow-2xs hover:shadow-xs"
                 }`}
               >
                 {/* Header: Table, Status & Time */}
                 <div className="flex items-start justify-between gap-3 border-b border-zinc-100 pb-3">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-base font-black text-zinc-900 bg-orange-100 text-orange-900 px-2.5 py-0.5 rounded-lg">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs sm:text-sm font-bold text-zinc-900 bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-md">
                         Table {order.table_number}
                       </span>
                       {getStatusBadge(order.status)}
@@ -385,7 +419,7 @@ export default function ManagerOrdersPage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="text-base font-black text-orange-600">
+                    <span className="text-sm sm:text-base font-bold text-zinc-900">
                       ₹{order.total_amount}
                     </span>
                   </div>
@@ -409,30 +443,30 @@ export default function ManagerOrdersPage() {
 
                 {/* Note */}
                 {order.note && (
-                  <div className="p-2.5 rounded-xl bg-orange-50/70 border border-orange-200/70 text-xs text-orange-950 flex items-start gap-1.5">
-                    <FileText className="w-3.5 h-3.5 text-orange-600 shrink-0 mt-0.5" />
+                  <div className="p-2.5 rounded-lg bg-amber-50/60 border border-amber-200/60 text-xs text-amber-950 flex items-start gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                     <span>
-                      <strong className="font-bold">Note:</strong> {order.note}
+                      <strong className="font-semibold text-amber-900">Note:</strong> {order.note}
                     </span>
                   </div>
                 )}
 
                 {/* Order Items */}
-                <div className="divide-y divide-zinc-100 text-xs">
+                <div className="divide-y divide-zinc-100 text-xs py-1">
                   {order.order_items?.map((it) => (
                     <div
                       key={it.id}
                       className="py-1.5 flex justify-between items-center"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="font-black text-orange-600">
+                        <span className="font-bold text-zinc-900 bg-zinc-100 px-1.5 py-0.5 rounded text-[11px]">
                           {it.quantity}x
                         </span>
-                        <span className="font-medium text-zinc-800">
+                        <span className="font-medium text-zinc-700">
                           {it.item_name}
                         </span>
                       </div>
-                      <span className="font-semibold text-zinc-600">
+                      <span className="font-semibold text-zinc-900">
                         ₹{Number(it.price) * it.quantity}
                       </span>
                     </div>
