@@ -415,24 +415,24 @@ export default function MenuManagementPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight flex items-center gap-2.5">
-            <ChefHat className="w-6 h-6 text-orange-600" /> Menu & Categories
+          <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
+            <ChefHat className="w-4 h-4 text-orange-600" /> Menu & Categories
           </h1>
-          <p className="text-sm text-zinc-500 mt-0.5">
+          <p className="text-xs text-zinc-500 mt-0.5">
             Apne restaurant ka live menu, rate aur categories yahan se manage karein.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <Button variant="outline" size="sm" onClick={openAddCategory}>
-            <Layers className="w-4 h-4 mr-1.5" /> + Category
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={openAddCategory} className="h-8 text-xs">
+            <Layers className="w-3.5 h-3.5 mr-1" /> + Category
           </Button>
-          <Button variant="primary" size="sm" onClick={openAddItem}>
-            <Plus className="w-4 h-4 mr-1.5" /> + Nayi Dish Jodein
+          <Button variant="primary" size="sm" onClick={openAddItem} className="h-8 text-xs">
+            <Plus className="w-3.5 h-3.5 mr-1" /> + Nayi Dish
           </Button>
         </div>
       </div>
@@ -440,32 +440,32 @@ export default function MenuManagementPage() {
       {/* Alert Feedback Banner */}
       {feedback && (
         <div
-          className={`p-4 rounded-xl border flex items-start gap-3 animate-in fade-in ${
+          className={`p-3 rounded-lg border flex items-start gap-2.5 animate-in fade-in ${
             feedback.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
               : "bg-red-50 border-red-200 text-red-800"
           }`}
         >
           {feedback.type === "success" ? (
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
           ) : (
-            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+            <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
           )}
-          <p className="text-sm font-medium">{feedback.text}</p>
+          <p className="text-xs font-medium">{feedback.text}</p>
         </div>
       )}
 
       {/* Category Pills & Manage Row */}
-      <div className="bg-white p-3.5 rounded-2xl border border-zinc-200/80 shadow-xs flex items-center gap-2 overflow-x-auto select-none">
+      <div className="bg-white p-2 rounded-xl border border-zinc-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto select-none">
         <button
           onClick={() => setSelectedCategory("all")}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition shrink-0 ${
+          className={`px-3 py-1 rounded-lg text-xs font-semibold transition shrink-0 ${
             selectedCategory === "all"
-              ? "bg-orange-600 text-white shadow-xs"
-              : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+              ? "bg-zinc-900 text-white shadow-2xs"
+              : "bg-zinc-100 text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          All Items ({menuItems.length})
+          All ({menuItems.length})
         </button>
 
         {categories.map((cat) => {
@@ -475,15 +475,14 @@ export default function MenuManagementPage() {
           return (
             <div
               key={cat.id}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium shrink-0 transition ${
                 isSelected
-                  ? "bg-orange-600 text-white shadow-xs"
-                  : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+                  ? "bg-zinc-900 text-white shadow-2xs font-semibold"
+                  : "bg-zinc-100 text-zinc-600 hover:text-zinc-900"
               }`}
             >
               <button
                 onClick={() => setSelectedCategory(cat.id)}
-                className="font-semibold"
               >
                 {cat.name} ({count})
               </button>
@@ -554,13 +553,13 @@ export default function MenuManagementPage() {
               return (
                 <div
                   key={item.id}
-                  className={`p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition ${
+                  className={`p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition ${
                     !item.is_available ? "bg-zinc-50/70 opacity-75" : "bg-white"
                   }`}
                 >
                   {/* Left: Image & Info */}
-                  <div className="flex items-start gap-4 min-w-0">
-                    <div className="w-16 h-16 rounded-xl bg-orange-50 border border-orange-100 shrink-0 overflow-hidden flex items-center justify-center">
+                  <div className="flex items-start gap-3 min-w-0">
+                    <div className="w-12 h-12 rounded-lg bg-orange-50 border border-orange-100 shrink-0 overflow-hidden flex items-center justify-center">
                       {item.image_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -569,32 +568,32 @@ export default function MenuManagementPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <ImageIcon className="w-6 h-6 text-orange-300" />
+                        <ImageIcon className="w-5 h-5 text-orange-300" />
                       )}
                     </div>
 
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-bold text-zinc-900 text-sm sm:text-base">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-semibold text-zinc-900 text-xs sm:text-sm">
                           {item.name}
                         </span>
-                        <Badge variant={item.is_veg ? "veg" : "non-veg"}>
+                        <Badge variant={item.is_veg ? "veg" : "non-veg"} className="text-[10px] px-1.5 py-0">
                           {item.is_veg ? "Veg" : "Non-Veg"}
                         </Badge>
-                        <span className="text-[11px] font-semibold text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-medium text-zinc-500 bg-zinc-100 px-1.5 py-0.2 rounded">
                           {categoryName}
                         </span>
                       </div>
 
                       {item.description && (
-                        <p className="text-xs text-zinc-500 mt-1 line-clamp-1">
+                        <p className="text-[11px] text-zinc-500 mt-0.5 line-clamp-1">
                           {item.description}
                         </p>
                       )}
 
                       {/* Inline Price on Mobile */}
-                      <div className="sm:hidden mt-2 flex items-center gap-2">
-                        <span className="font-extrabold text-orange-600 text-sm">
+                      <div className="sm:hidden mt-1 flex items-center gap-2">
+                        <span className="font-bold text-zinc-900 text-xs">
                           ₹{item.price}
                         </span>
                       </div>
@@ -602,7 +601,7 @@ export default function MenuManagementPage() {
                   </div>
 
                   {/* Right: Inline Price, Availability Switch & Actions */}
-                  <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-zinc-100">
+                  <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-zinc-100">
                     {/* Inline Price Desktop */}
                     <div className="hidden sm:flex items-center">
                       {editingPriceId === item.id ? (
@@ -612,20 +611,20 @@ export default function MenuManagementPage() {
                             type="number"
                             value={tempPrice}
                             onChange={(e) => setTempPrice(e.target.value)}
-                            className="w-20 px-2 py-1 text-sm font-bold border border-orange-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500"
+                            className="w-16 px-1.5 py-0.5 text-xs font-bold border border-orange-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500"
                             autoFocus
                           />
                           <button
                             onClick={() => handleSaveInlinePrice(item.id)}
                             className="p-1 text-emerald-600 hover:bg-emerald-50 rounded"
                           >
-                            <Check className="w-4 h-4" />
+                            <Check className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => setEditingPriceId(null)}
                             className="p-1 text-zinc-400 hover:bg-zinc-100 rounded"
                           >
-                            <X className="w-4 h-4" />
+                            <X className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       ) : (
@@ -634,13 +633,13 @@ export default function MenuManagementPage() {
                             setEditingPriceId(item.id);
                             setTempPrice(item.price.toString());
                           }}
-                          className="group flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-orange-50 transition"
+                          className="group flex items-center gap-1 px-2 py-0.5 rounded hover:bg-orange-50 transition"
                           title="Click to edit price"
                         >
-                          <span className="text-sm font-extrabold text-zinc-900 group-hover:text-orange-600">
+                          <span className="text-xs font-bold text-zinc-900 group-hover:text-orange-600">
                             ₹{item.price}
                           </span>
-                          <Edit2 className="w-3 h-3 text-zinc-300 group-hover:text-orange-500 opacity-0 group-hover:opacity-100 transition" />
+                          <Edit2 className="w-2.5 h-2.5 text-zinc-300 group-hover:text-orange-500 opacity-0 group-hover:opacity-100 transition" />
                         </button>
                       )}
                     </div>
@@ -648,28 +647,28 @@ export default function MenuManagementPage() {
                     {/* Quick Availability Toggle Switch */}
                     <button
                       onClick={() => handleToggleAvailability(item)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition flex items-center gap-1.5 ${
                         item.is_available
-                          ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
-                          : "bg-zinc-200 text-zinc-600 hover:bg-zinc-300"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200/80 hover:bg-emerald-100"
+                          : "bg-zinc-100 text-zinc-600 border border-zinc-200/80 hover:bg-zinc-200"
                       }`}
                     >
                       <span
-                        className={`w-2 h-2 rounded-full ${
-                          item.is_available ? "bg-emerald-600" : "bg-zinc-400"
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          item.is_available ? "bg-emerald-500" : "bg-zinc-400"
                         }`}
                       />
-                      {item.is_available ? "Available" : "Out of Stock"}
+                      {item.is_available ? "In Stock" : "Sold Out"}
                     </button>
 
                     {/* Edit & Delete Buttons */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-0.5">
                       <button
                         onClick={() => openEditItem(item)}
-                        className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition"
+                        className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition"
                         title="Edit Dish"
                       >
-                        <Edit2 className="w-4 h-4" />
+                        <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() =>
@@ -679,10 +678,10 @@ export default function MenuManagementPage() {
                             name: item.name,
                           })
                         }
-                        className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                        className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                         title="Delete Dish"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>

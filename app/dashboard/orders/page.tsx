@@ -192,28 +192,28 @@ export default function ManagerOrdersPage() {
     switch (status) {
       case "pending":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
             Pending
           </span>
         );
       case "accepted":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-800 border border-blue-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
             Accepted
           </span>
         );
       case "preparing":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-50 text-orange-800 border border-orange-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-orange-50 text-orange-800 border border-orange-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
             Cooking
           </span>
         );
       case "ready":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             Ready
           </span>
@@ -221,14 +221,14 @@ export default function ManagerOrdersPage() {
       case "served":
       case "completed":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
             Served
           </span>
         );
       case "rejected":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200/80">
             <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
             Rejected
           </span>
@@ -238,35 +238,35 @@ export default function ManagerOrdersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
-        <Spinner size="lg" />
-        <p className="text-sm font-medium text-zinc-500">Live Orders load ho rahe hain...</p>
+      <div className="min-h-[40vh] flex flex-col items-center justify-center gap-2">
+        <Spinner size="md" />
+        <p className="text-xs font-medium text-zinc-500">Live Orders load ho rahe hain...</p>
       </div>
     );
   }
 
   if (!hotel) {
     return (
-      <div className="p-8 text-center bg-white rounded-2xl border border-zinc-200">
-        <Store className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
-        <Link href="/dashboard" className="mt-4 inline-block">
-          <Button>Dashboard Overview par jayein</Button>
+      <div className="p-6 text-center bg-white rounded-xl border border-zinc-200">
+        <Store className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+        <h2 className="text-base font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Link href="/dashboard" className="mt-3 inline-block">
+          <Button size="sm">Dashboard Overview par jayein</Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3.5">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <UtensilsCrossed className="w-5 h-5 text-orange-600" />
+          <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
+            <UtensilsCrossed className="w-4 h-4 text-orange-600" />
             <span>Live Kitchen Orders</span>
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
+          <p className="text-xs text-zinc-500 mt-0.5">
             Realtime orders monitor karein aur status turant update karein.
           </p>
         </div>
@@ -274,7 +274,7 @@ export default function ManagerOrdersPage() {
         {/* Sound toggle */}
         <button
           onClick={() => setSoundEnabled(!soundEnabled)}
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border transition ${
             soundEnabled
               ? "bg-white text-zinc-800 border-zinc-200 shadow-2xs hover:border-zinc-300"
               : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:text-zinc-600"
@@ -283,27 +283,27 @@ export default function ManagerOrdersPage() {
         >
           {soundEnabled ? (
             <>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <Volume2 className="w-3.5 h-3.5 text-zinc-700" />
-              <span>Audio Alerts ON</span>
+              <span>Alerts ON</span>
             </>
           ) : (
             <>
-              <span className="w-2 h-2 rounded-full bg-zinc-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
               <VolumeX className="w-3.5 h-3.5 text-zinc-400" />
-              <span>Audio Muted</span>
+              <span>Muted</span>
             </>
           )}
         </button>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-1.5 bg-zinc-100/80 p-1 rounded-xl border border-zinc-200/60 select-none overflow-x-auto">
+      <div className="flex items-center gap-1 bg-zinc-100/90 p-1 rounded-xl border border-zinc-200/70 select-none overflow-x-auto">
         <button
           onClick={() => setActiveTab("pending")}
-          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
             activeTab === "pending"
-              ? "bg-white text-zinc-900 shadow-2xs"
+              ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
@@ -312,7 +312,7 @@ export default function ManagerOrdersPage() {
             className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "pending"
                 ? "bg-orange-100 text-orange-700"
-                : "bg-zinc-200/80 text-zinc-600"
+                : "bg-zinc-200 text-zinc-600"
             }`}
           >
             {counts.pending}
@@ -321,18 +321,18 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("active")}
-          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
             activeTab === "active"
-              ? "bg-white text-zinc-900 shadow-2xs"
+              ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          <span>In Progress</span>
+          <span>Cooking</span>
           <span
             className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "active"
                 ? "bg-blue-100 text-blue-700"
-                : "bg-zinc-200/80 text-zinc-600"
+                : "bg-zinc-200 text-zinc-600"
             }`}
           >
             {counts.active}
@@ -341,9 +341,9 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("completed")}
-          className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
             activeTab === "completed"
-              ? "bg-white text-zinc-900 shadow-2xs"
+              ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
@@ -352,7 +352,7 @@ export default function ManagerOrdersPage() {
             className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
               activeTab === "completed"
                 ? "bg-emerald-100 text-emerald-700"
-                : "bg-zinc-200/80 text-zinc-600"
+                : "bg-zinc-200 text-zinc-600"
             }`}
           >
             {counts.completed}
@@ -361,9 +361,9 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("all")}
-          className={`py-1.5 px-3 rounded-lg text-xs font-semibold transition ${
+          className={`py-1 px-2.5 rounded-lg text-xs font-medium transition ${
             activeTab === "all"
-              ? "bg-white text-zinc-900 shadow-2xs"
+              ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
@@ -373,17 +373,17 @@ export default function ManagerOrdersPage() {
 
       {/* Orders List */}
       {filteredOrders.length === 0 ? (
-        <Card className="text-center py-16 px-4">
-          <Clock className="w-12 h-12 text-zinc-300 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-zinc-800">
+        <Card className="text-center py-12 px-4">
+          <Clock className="w-10 h-10 text-zinc-300 mx-auto mb-2" />
+          <h3 className="text-sm font-bold text-zinc-800">
             Abhi koi order nahi hai
           </h3>
-          <p className="text-xs text-zinc-500 mt-1">
+          <p className="text-xs text-zinc-500 mt-0.5">
             Jaise hi table se naya order aayega, yahan realtime me update dikhega.
           </p>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
           {filteredOrders.map((order) => {
             const isPending = order.status === "pending";
             const isAccepted = order.status === "accepted";
@@ -394,22 +394,22 @@ export default function ManagerOrdersPage() {
             return (
               <Card
                 key={order.id}
-                className={`p-4 sm:p-5 space-y-3.5 transition border ${
+                className={`p-3.5 space-y-2.5 transition border ${
                   isPending
                     ? "border-amber-300 ring-2 ring-amber-100 bg-amber-50/15"
                     : "border-zinc-200/80 shadow-2xs hover:shadow-xs"
                 }`}
               >
                 {/* Header: Table, Status & Time */}
-                <div className="flex items-start justify-between gap-3 border-b border-zinc-100 pb-3">
+                <div className="flex items-start justify-between gap-2 border-b border-zinc-100 pb-2">
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs sm:text-sm font-bold text-zinc-900 bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-md">
-                        Table {order.table_number}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-bold text-zinc-900 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">
+                        T-{order.table_number}
                       </span>
                       {getStatusBadge(order.status)}
                     </div>
-                    <p className="text-[11px] text-zinc-400 mt-1 font-mono">
+                    <p className="text-[10px] text-zinc-400 mt-0.5 font-mono">
                       #{order.id.slice(0, 8)} •{" "}
                       {new Date(order.created_at).toLocaleTimeString([], {
                         hour: "2-digit",
@@ -419,7 +419,7 @@ export default function ManagerOrdersPage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="text-sm sm:text-base font-bold text-zinc-900">
+                    <span className="text-sm font-bold text-zinc-900">
                       ₹{order.total_amount}
                     </span>
                   </div>
@@ -427,15 +427,15 @@ export default function ManagerOrdersPage() {
 
                 {/* Customer Details */}
                 {(order.customer_name || order.customer_phone) && (
-                  <div className="text-xs text-zinc-600 flex items-center gap-3">
+                  <div className="text-[11px] text-zinc-500 flex items-center gap-2">
                     {order.customer_name && (
-                      <span className="font-semibold text-zinc-800">
+                      <span className="font-semibold text-zinc-800 truncate">
                         {order.customer_name}
                       </span>
                     )}
                     {order.customer_phone && (
-                      <span className="flex items-center gap-1 text-zinc-500">
-                        <Phone className="w-3 h-3" /> {order.customer_phone}
+                      <span className="flex items-center gap-1 text-zinc-500 shrink-0">
+                        <Phone className="w-2.5 h-2.5" /> {order.customer_phone}
                       </span>
                     )}
                   </div>
@@ -443,38 +443,38 @@ export default function ManagerOrdersPage() {
 
                 {/* Note */}
                 {order.note && (
-                  <div className="p-2.5 rounded-lg bg-amber-50/60 border border-amber-200/60 text-xs text-amber-950 flex items-start gap-1.5">
-                    <FileText className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                    <span>
+                  <div className="px-2 py-1.5 rounded-md bg-amber-50/70 border border-amber-200/60 text-[11px] text-amber-950 flex items-start gap-1.5">
+                    <FileText className="w-3 h-3 text-amber-600 shrink-0 mt-0.5" />
+                    <span className="line-clamp-2">
                       <strong className="font-semibold text-amber-900">Note:</strong> {order.note}
                     </span>
                   </div>
                 )}
 
                 {/* Order Items */}
-                <div className="divide-y divide-zinc-100 text-xs py-1">
+                <div className="divide-y divide-zinc-100/80 text-xs py-0.5">
                   {order.order_items?.map((it) => (
                     <div
                       key={it.id}
-                      className="py-1.5 flex justify-between items-center"
+                      className="py-1 flex justify-between items-center text-[12px]"
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-zinc-900 bg-zinc-100 px-1.5 py-0.5 rounded text-[11px]">
-                          {it.quantity}x
+                      <div className="flex items-center gap-1.5 min-w-0 pr-2">
+                        <span className="font-mono text-[11px] font-bold text-zinc-900 bg-zinc-100 px-1 py-0.2 rounded shrink-0">
+                          {it.quantity}×
                         </span>
-                        <span className="font-medium text-zinc-700">
+                        <span className="font-medium text-zinc-800 truncate">
                           {it.item_name}
                         </span>
                       </div>
-                      <span className="font-semibold text-zinc-900">
+                      <span className="font-medium text-zinc-600 shrink-0">
                         ₹{Number(it.price) * it.quantity}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                {/* Action Buttons (Prompt 7.2 & 7.3) */}
-                <div className="pt-2 border-t border-zinc-100 flex flex-wrap items-center justify-end gap-2">
+                {/* Action Buttons */}
+                <div className="pt-2 border-t border-zinc-100 flex items-center justify-end gap-1.5">
                   {isPending && (
                     <>
                       <Button
@@ -482,18 +482,18 @@ export default function ManagerOrdersPage() {
                         size="sm"
                         isLoading={isActionLoading}
                         onClick={() => handleUpdateStatus(order.id, "rejected")}
-                        className="flex-1 sm:flex-initial"
+                        className="h-8 px-2.5 text-xs flex-1 sm:flex-initial"
                       >
-                        <XCircle className="w-3.5 h-3.5 mr-1" /> Reject
+                        <XCircle className="w-3 h-3 mr-1" /> Reject
                       </Button>
                       <Button
                         variant="primary"
                         size="sm"
                         isLoading={isActionLoading}
                         onClick={() => handleUpdateStatus(order.id, "accepted")}
-                        className="flex-1 sm:flex-initial"
+                        className="h-8 px-3 text-xs flex-1 sm:flex-initial"
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Accept Order
+                        <CheckCircle2 className="w-3 h-3 mr-1" /> Accept
                       </Button>
                     </>
                   )}
@@ -504,9 +504,9 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "preparing")}
-                      className="w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto"
                     >
-                      <ChefHat className="w-3.5 h-3.5 mr-1" /> Start Cooking
+                      <ChefHat className="w-3 h-3 mr-1" /> Start Cooking
                     </Button>
                   )}
 
@@ -516,9 +516,9 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "ready")}
-                      className="w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto"
                     >
-                      <BellRing className="w-3.5 h-3.5 mr-1" /> Mark Ready
+                      <BellRing className="w-3 h-3 mr-1" /> Mark Ready
                     </Button>
                   )}
 
@@ -528,9 +528,9 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "served")}
-                      className="w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Mark Served
+                      <CheckCircle2 className="w-3 h-3 mr-1" /> Mark Served
                     </Button>
                   )}
                 </div>

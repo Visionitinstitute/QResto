@@ -17,60 +17,60 @@ export function InteractiveTabsDemo() {
   );
 
   return (
-    <section id="live-demo" className="py-14 sm:py-20 bg-zinc-50 border-b border-zinc-200">
+    <section id="live-demo" className="py-10 sm:py-16 bg-zinc-50 border-b border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
+        <div className="max-w-3xl mx-auto text-center mb-7 sm:mb-9">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-2.5 py-0.5 rounded-full">
             Complete Ecosystem
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
+          <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight mt-2.5 sm:mt-3">
             One platform. Flawless synchronization.
           </h2>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
+          <p className="mt-2 text-xs sm:text-base text-zinc-600">
             Switch views below to see how guest orders flow instantaneously from table to kitchen to manager reports.
           </p>
 
           {/* Tab Switcher Buttons */}
-          <div className="mt-6 sm:mt-8 inline-flex p-1 sm:p-1.5 rounded-2xl bg-zinc-200/80 border border-zinc-300/80 max-w-lg w-full justify-between gap-1 shadow-inner">
+          <div className="mt-5 sm:mt-6 inline-flex p-1 rounded-xl bg-zinc-200/80 border border-zinc-300/80 max-w-md w-full justify-between gap-1 shadow-inner">
             <button
               onClick={() => setActiveTab("guest")}
-              className={`flex-1 py-2 px-1.5 sm:px-3 rounded-xl text-[11px] sm:text-xs md:text-sm font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 activeTab === "guest"
-                  ? "bg-white text-zinc-950 shadow-sm"
+                  ? "bg-white text-zinc-950 shadow-2xs font-bold"
                   : "text-zinc-600 hover:text-zinc-950"
               }`}
             >
-              <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-600 shrink-0" />
-              <span>Guest<span className="hidden sm:inline"> View</span></span>
+              <Smartphone className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+              <span>Guest View</span>
             </button>
             <button
               onClick={() => setActiveTab("kitchen")}
-              className={`flex-1 py-2 px-1.5 sm:px-3 rounded-xl text-[11px] sm:text-xs md:text-sm font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 activeTab === "kitchen"
-                  ? "bg-white text-zinc-950 shadow-sm"
+                  ? "bg-white text-zinc-950 shadow-2xs font-bold"
                   : "text-zinc-600 hover:text-zinc-950"
               }`}
             >
-              <ChefHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-600 shrink-0" />
-              <span>Kitchen<span className="hidden sm:inline"> View</span></span>
+              <ChefHat className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+              <span>Kitchen View</span>
             </button>
             <button
               onClick={() => setActiveTab("analytics")}
-              className={`flex-1 py-2 px-1.5 sm:px-3 rounded-xl text-[11px] sm:text-xs md:text-sm font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 activeTab === "analytics"
-                  ? "bg-white text-zinc-950 shadow-sm"
+                  ? "bg-white text-zinc-950 shadow-2xs font-bold"
                   : "text-zinc-600 hover:text-zinc-950"
               }`}
             >
-              <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-600 shrink-0" />
+              <BarChart3 className="w-3.5 h-3.5 text-orange-600 shrink-0" />
               <span>Analytics</span>
             </button>
           </div>
         </div>
 
         {/* Tab Content Display Container */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-zinc-200/90 shadow-xl overflow-hidden p-5 sm:p-10 max-w-5xl mx-auto">
+        <div className="bg-white rounded-2xl border border-zinc-200/90 shadow-lg overflow-hidden p-4 sm:p-7 max-w-5xl mx-auto">
           {/* TAB 1: Guest Menu View */}
           {activeTab === "guest" && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-in fade-in duration-300">

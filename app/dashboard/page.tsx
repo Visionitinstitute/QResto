@@ -309,19 +309,19 @@ export default function DashboardOverviewPage() {
   // 2. DASHBOARD OVERVIEW (Prompt 3.4 & 10.3)
   // -------------------------------------------------------------
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
       {/* Clean Dashboard Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-zinc-200/80">
         <div>
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-xl sm:text-2xl font-bold text-zinc-950 tracking-tight">
               {hotel.name}
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-semibold border border-emerald-200">
               <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Live & Active
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-1">
+          <p className="text-xs text-zinc-500 mt-0.5">
             Dashboard Overview • Live orders, menu & table QR codes
           </p>
         </div>
@@ -329,67 +329,67 @@ export default function DashboardOverviewPage() {
         <Link
           href={`/menu/${hotel.slug}`}
           target="_blank"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-orange-50 text-orange-600 border border-orange-200 font-bold text-xs sm:text-sm shadow-xs transition self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-orange-50 text-orange-600 border border-orange-200 font-semibold text-xs shadow-2xs transition self-start sm:self-auto"
         >
           <span>Open Live Menu</span>
-          <ExternalLink className="w-3.5 h-3.5" />
+          <ExternalLink className="w-3 h-3" />
         </Link>
       </div>
 
       {/* Key Metric Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
-        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+        <Card className="p-3.5 sm:p-4 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
               Pending
             </p>
-            <p className="text-2xl sm:text-3xl font-black text-orange-600 mt-1">
+            <p className="text-xl sm:text-2xl font-bold text-orange-600 mt-0.5">
               {stats.pendingOrders}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center">
             <Clock className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
+        <Card className="p-3.5 sm:p-4 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
               Orders Today
             </p>
-            <p className="text-2xl sm:text-3xl font-black text-zinc-900 mt-1">
+            <p className="text-xl sm:text-2xl font-bold text-zinc-900 mt-0.5">
               {stats.todayOrders}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
             <UtensilsCrossed className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
+        <Card className="p-3.5 sm:p-4 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Total Revenue
+            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
+              Revenue
             </p>
-            <p className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">
+            <p className="text-xl sm:text-2xl font-bold text-emerald-600 mt-0.5">
               ₹{stats.todaySales}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
             <TrendingUp className="w-4 h-4" />
           </div>
         </Card>
 
-        <Card className="p-4 sm:p-5 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
+        <Card className="p-3.5 sm:p-4 flex items-center justify-between border-zinc-200/80 shadow-2xs hover:shadow-xs transition">
           <div>
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-              Guest Rating
+            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
+              Rating
             </p>
-            <p className="text-2xl sm:text-3xl font-black text-amber-500 mt-1">
-              {stats.avgRating} <span className="text-xs font-normal text-zinc-400">/ 5</span>
+            <p className="text-xl sm:text-2xl font-bold text-amber-500 mt-0.5">
+              {stats.avgRating} <span className="text-[11px] font-normal text-zinc-400">/ 5</span>
             </p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center">
             <Star className="w-4 h-4" />
           </div>
         </Card>
@@ -397,22 +397,22 @@ export default function DashboardOverviewPage() {
 
       {/* Quick Action Navigation Grid */}
       <div>
-        <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-3">
+        <h2 className="text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2.5">
           Quick Actions
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
             href="/dashboard/orders"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
+            className="p-3.5 sm:p-4 rounded-xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-xs transition flex items-start gap-3 group"
           >
-            <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition">
+            <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition">
               <UtensilsCrossed className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
+              <h3 className="font-bold text-zinc-900 text-xs sm:text-sm group-hover:text-orange-600 transition">
                 Live Kitchen Orders
               </h3>
-              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+              <p className="text-xs text-zinc-500 mt-0.5 leading-snug">
                 Monitor incoming orders in realtime and update cooking status.
               </p>
             </div>
@@ -420,16 +420,16 @@ export default function DashboardOverviewPage() {
 
           <Link
             href="/dashboard/menu"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
+            className="p-3.5 sm:p-4 rounded-xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-xs transition flex items-start gap-3 group"
           >
-            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
+            <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
               <ChefHat className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
+              <h3 className="font-bold text-zinc-900 text-xs sm:text-sm group-hover:text-orange-600 transition">
                 Menu & Categories
               </h3>
-              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+              <p className="text-xs text-zinc-500 mt-0.5 leading-snug">
                 Manage dishes, adjust prices, and toggle in-stock availability.
               </p>
             </div>
@@ -437,16 +437,16 @@ export default function DashboardOverviewPage() {
 
           <Link
             href="/dashboard/qr"
-            className="p-5 rounded-2xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-md transition flex items-start gap-3.5 group"
+            className="p-3.5 sm:p-4 rounded-xl bg-white border border-zinc-200/80 hover:border-orange-300 hover:shadow-xs transition flex items-start gap-3 group"
           >
-            <div className="w-9 h-9 rounded-xl bg-purple-50 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
+            <div className="w-8 h-8 rounded-lg bg-purple-50 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
               <QrCode className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-zinc-900 text-sm group-hover:text-orange-600 transition">
+              <h3 className="font-bold text-zinc-900 text-xs sm:text-sm group-hover:text-orange-600 transition">
                 Table QR Codes
               </h3>
-              <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">
+              <p className="text-xs text-zinc-500 mt-0.5 leading-snug">
                 Generate, export and print custom QR standees for every table.
               </p>
             </div>
