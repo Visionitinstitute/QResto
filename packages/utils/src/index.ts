@@ -88,3 +88,4 @@ export function isValidOrderStatusTransition(
 
   return allowedTransitions[current]?.includes(next) ?? false;
 }
+

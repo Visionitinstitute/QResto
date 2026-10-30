@@ -69,3 +69,4 @@ export const Modal = ({
     </div>
   );
 };
+

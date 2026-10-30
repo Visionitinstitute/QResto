@@ -1,3 +1,4 @@
 export * from "./client";
 export * from "./server";
-export type { SupabaseClient } from "@supabase/supabase-js";
+export * from "./admin";
+export * from "./queries";

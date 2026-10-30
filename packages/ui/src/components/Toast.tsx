@@ -48,3 +48,4 @@ export const Toast = ({ id, type, title, message, onDismiss }: ToastProps) => {
     </div>
   );
 };
+

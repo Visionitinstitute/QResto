@@ -10,6 +10,7 @@ export type Json =
 // USER & RBAC
 // -------------------------------------------------------------
 export type MemberRole = "owner" | "manager" | "chef" | "waiter" | "cashier";
+export type UserRole = MemberRole;
 
 export interface Profile {
   id: string;
@@ -17,6 +18,7 @@ export interface Profile {
   avatar_url: string | null;
   phone: string | null;
   is_platform_admin: boolean;
+  is_super_admin?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -293,3 +295,4 @@ export interface CartItem {
   selected_addons?: AddOn[];
   special_instructions?: string;
 }
+

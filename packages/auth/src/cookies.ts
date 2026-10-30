@@ -27,3 +27,4 @@ export function getSharedCookieOptions() {
     secure: process.env.NODE_ENV === "production",
   };
 }
+
