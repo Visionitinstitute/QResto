@@ -70,8 +70,11 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
   }, []);
 
   useEffect(() => {
-    initSession();
+    const timer = setTimeout(() => {
+      initSession();
+    }, 0);
     return () => {
+      clearTimeout(timer);
       if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
     };
@@ -95,6 +98,48 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
     };
   }, [status]);
+
+  // Handle successful approval
+  const handleLoginSuccess = useCallback(
+    async (data: {
+      accessToken?: string;
+      refreshToken?: string;
+      userEmail?: string;
+    }) => {
+      try {
+        const supabase = createClient();
+
+        if (data.accessToken && data.refreshToken) {
+          // Set real Supabase session received from mobile device
+          await supabase.auth.setSession({
+            access_token: data.accessToken,
+            refresh_token: data.refreshToken,
+          });
+        } else {
+          // Fallback demo/staff authentication
+          // Try sign in with demo credentials if available
+          try {
+            await supabase.auth.signInWithPassword({
+              email: data.userEmail || "demo@qresto.com",
+              password: "demo1234",
+            });
+          } catch {
+            // If demo user is not yet created in supabase, continue to dashboard
+          }
+        }
+
+        // Small delay for smooth feedback
+        setTimeout(() => {
+          router.push(redirectPath || "/dashboard");
+          router.refresh();
+        }, 1000);
+      } catch (err) {
+        console.error("Failed to complete login:", err);
+        router.push(redirectPath || "/dashboard");
+      }
+    },
+    [redirectPath, router]
+  );
 
   // Polling for status updates
   useEffect(() => {
@@ -125,46 +170,7 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
     return () => {
       if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
     };
-  }, [sessionId, status]);
-
-  // Handle successful approval
-  const handleLoginSuccess = async (data: {
-    accessToken?: string;
-    refreshToken?: string;
-    userEmail?: string;
-  }) => {
-    try {
-      const supabase = createClient();
-
-      if (data.accessToken && data.refreshToken) {
-        // Set real Supabase session received from mobile device
-        await supabase.auth.setSession({
-          access_token: data.accessToken,
-          refresh_token: data.refreshToken,
-        });
-      } else {
-        // Fallback demo/staff authentication
-        // Try sign in with demo credentials if available
-        try {
-          await supabase.auth.signInWithPassword({
-            email: data.userEmail || "demo@qresto.com",
-            password: "demo1234",
-          });
-        } catch {
-          // If demo user is not yet created in supabase, continue to dashboard
-        }
-      }
-
-      // Small delay for smooth feedback
-      setTimeout(() => {
-        router.push(redirectPath || "/dashboard");
-        router.refresh();
-      }, 1000);
-    } catch (err) {
-      console.error("Failed to complete login:", err);
-      router.push(redirectPath || "/dashboard");
-    }
-  };
+  }, [sessionId, status, handleLoginSuccess]);
 
   // Simulate mobile scan & approve (for testing on desktop)
   const handleSimulateScan = async () => {

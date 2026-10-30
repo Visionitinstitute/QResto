@@ -11,8 +11,8 @@ export function PricingSection() {
     {
       name: "Starter",
       badge: "For Cafes & Food Trucks",
-      priceMonthly: 1299,
-      priceAnnual: 999,
+      priceMonthly: 399,
+      priceAnnual: 299,
       description:
         "Everything needed to digitize your tables, ditch paper menus, and accept table orders.",
       features: [
@@ -29,8 +29,8 @@ export function PricingSection() {
     {
       name: "Pro Hospitality",
       badge: "Most Popular for Restaurants",
-      priceMonthly: 2499,
-      priceAnnual: 1899,
+      priceMonthly: 699,
+      priceAnnual: 499,
       description:
         "The complete powerhouse: KDS, upselling recommendations, analytics, and instant audio tickets.",
       features: [
@@ -48,8 +48,8 @@ export function PricingSection() {
     {
       name: "Multi-Outlet Enterprise",
       badge: "Chains & Hotel Dining",
-      priceMonthly: 5999,
-      priceAnnual: 4499,
+      priceMonthly: 1299,
+      priceAnnual: 999,
       description:
         "Centralized menu management and deep integrations for restaurant groups with multiple branches.",
       features: [

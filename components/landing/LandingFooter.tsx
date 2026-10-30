@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { UtensilsCrossed, ArrowRight, ShieldCheck, Heart } from "lucide-react";
+import { UtensilsCrossed } from "lucide-react";
 
 export function LandingFooter() {
   return (
@@ -119,11 +119,6 @@ export function LandingFooter() {
                 <Link href="/signup" className="hover:text-orange-600 transition-colors">
                   Register Restaurant
                 </Link>
-              </li>
-              <li>
-                <a href="#restaurants" className="hover:text-orange-600 transition-colors">
-                  Venue Directory
-                </a>
               </li>
             </ul>
           </div>

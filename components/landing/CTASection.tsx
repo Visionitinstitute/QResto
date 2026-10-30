@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, PhoneCall } from "lucide-react";
+import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 
 export function CTASection() {
   return (

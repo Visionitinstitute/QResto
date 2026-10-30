@@ -5,7 +5,6 @@ import { StatsBanner } from "@/components/landing/StatsBanner";
 import { KeyFeatures } from "@/components/landing/KeyFeatures";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { RestaurantBenefits } from "@/components/landing/RestaurantBenefits";
-import { PartnerVenues } from "@/components/landing/PartnerVenues";
 import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { CTASection } from "@/components/landing/CTASection";
@@ -74,10 +73,7 @@ export default async function Home() {
         {/* 6. Measurable Restaurant Benefits & Paper vs Digital Comparison */}
         <RestaurantBenefits />
 
-        {/* 7. Active Partner Venues Directory */}
-        <PartnerVenues hotels={hotels} />
-
-        {/* 9. Verified Restaurant Owner Testimonials */}
+        {/* 7. Verified Restaurant Owner Testimonials */}
         <TestimonialsSection />
 
         {/* 10. Transparent Pricing Plans with Monthly/Annual Toggle & FAQ */}

@@ -1,9 +1,9 @@
-import { Star, Quote, CheckCircle2 } from "lucide-react";
+import { Star, CheckCircle2 } from "lucide-react";
 
 export function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Vikram Singhania",
+      name: "Balkumari",
       role: "Founder & Head Chef",
       restaurant: "Spice & Wood Bistro",
       city: "Connaught Place, New Delhi",
@@ -13,7 +13,7 @@ export function TestimonialsSection() {
       rating: 5,
     },
     {
-      name: "Pooja Hegde",
+      name: "Sangeeta",
       role: "Operations Director",
       restaurant: "The Amber Cafe & Roastery",
       city: "Indiranagar, Bengaluru",
@@ -23,7 +23,7 @@ export function TestimonialsSection() {
       rating: 5,
     },
     {
-      name: "Rajesh Kulkarni",
+      name: "Basanti",
       role: "General Manager",
       restaurant: "Urban Tadka Lounge",
       city: "Bandra West, Mumbai",
@@ -43,7 +43,7 @@ export function TestimonialsSection() {
             Real Partner Stories
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight mt-4">
-            Loved by 500+ restaurants, cafes & rooftop bars
+            Loved by leading restaurants, cafes & rooftop bars
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-600">
             Hear how hospitality operators use QResto to speed up service, boost diner spend, and simplify kitchen logistics.
@@ -52,7 +52,7 @@ export function TestimonialsSection() {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item, idx) => (
+          in          {testimonials.map((item, idx) => (
             <div
               key={idx}
               className="bg-white rounded-3xl p-8 border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between relative group"

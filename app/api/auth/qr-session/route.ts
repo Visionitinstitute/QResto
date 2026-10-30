@@ -68,21 +68,27 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   purgeStaleSessions();
 
-  let body: Record<string, any> = {};
+  let body: Record<string, unknown> = {};
   try {
-    body = await request.json();
+    body = (await request.json()) as Record<string, unknown>;
   } catch {
     // If body is empty or plain text
     try {
       const text = await request.text();
-      body = JSON.parse(text);
+      body = JSON.parse(text) as Record<string, unknown>;
     } catch {
       body = {};
     }
   }
 
   try {
-    const { action, sessionId, userEmail, hotelName, deviceInfo, accessToken, refreshToken } = body;
+    const action = body.action as string | undefined;
+    const sessionId = body.sessionId as string | undefined;
+    const userEmail = body.userEmail as string | undefined;
+    const hotelName = body.hotelName as string | undefined;
+    const deviceInfo = body.deviceInfo as string | undefined;
+    const accessToken = body.accessToken as string | undefined;
+    const refreshToken = body.refreshToken as string | undefined;
 
     // Action 1: Create a new QR session
     if (action === "create") {

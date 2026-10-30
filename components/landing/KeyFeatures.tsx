@@ -5,7 +5,6 @@ import {
   Smartphone,
   SlidersHorizontal,
   BellRing,
-  Layers,
   Sparkles,
 } from "lucide-react";
 

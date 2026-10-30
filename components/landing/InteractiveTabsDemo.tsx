@@ -8,11 +8,6 @@ import {
   BarChart3,
   CheckCircle2,
   Clock,
-  ArrowRight,
-  TrendingUp,
-  DollarSign,
-  Users,
-  Utensils,
   ExternalLink,
 } from "lucide-react";
 
