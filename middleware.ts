@@ -41,19 +41,27 @@ export async function middleware(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     const pathname = request.nextUrl.pathname;
-    const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/signup");
+    const isAuthRoute = pathname === "/login" || pathname === "/signup";
     const isDashboardRoute = pathname.startsWith("/dashboard");
 
     // Protect dashboard routes
     if (!user && isDashboardRoute) {
       const redirectUrl = new URL("/login", request.url);
       redirectUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(redirectUrl);
+      const redirectResponse = NextResponse.redirect(redirectUrl);
+      response.cookies.getAll().forEach((cookie) => {
+        redirectResponse.cookies.set(cookie.name, cookie.value);
+      });
+      return redirectResponse;
     }
 
     // Redirect logged-in users away from auth routes to dashboard
     if (user && isAuthRoute) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      const redirectResponse = NextResponse.redirect(new URL("/dashboard", request.url));
+      response.cookies.getAll().forEach((cookie) => {
+        redirectResponse.cookies.set(cookie.name, cookie.value);
+      });
+      return redirectResponse;
     }
   } catch (error) {
     console.error("Middleware auth check error:", error);
