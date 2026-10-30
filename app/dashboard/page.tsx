@@ -310,26 +310,29 @@ export default function DashboardOverviewPage() {
   // -------------------------------------------------------------
   return (
     <div className="space-y-8">
-      {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 rounded-3xl p-6 sm:p-8 text-white shadow-lg shadow-orange-500/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Clean Dashboard Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold backdrop-blur-xs mb-3">
-            <CheckCircle2 className="w-3.5 h-3.5" /> Hotel Live & Active
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight">
+              {hotel.name}
+            </h1>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Live & Active
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Swagat hai, {hotel.name}!
-          </h1>
-          <p className="text-sm text-orange-100 mt-1 max-w-xl">
-            Yahan se aap apne restaurant ke live orders, digital menu aur table QR codes ko aasaani se monitor kar sakte hain.
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">
+            Dashboard Overview • Live orders, menu & table QR codes
           </p>
         </div>
 
         <Link
           href={`/menu/${hotel.slug}`}
           target="_blank"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-orange-600 font-bold text-sm shadow-sm hover:bg-orange-50 transition shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-orange-50 text-orange-600 border border-orange-200 font-bold text-xs sm:text-sm shadow-xs transition self-start sm:self-auto"
         >
-          Open Live Menu <ExternalLink className="w-4 h-4" />
+          <span>Open Live Menu</span>
+          <ExternalLink className="w-3.5 h-3.5" />
         </Link>
       </div>
 
