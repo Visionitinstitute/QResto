@@ -61,30 +61,30 @@ export function KeyFeatures() {
   ];
 
   return (
-    <section id="features" className="py-20 bg-white">
+    <section id="features" className="py-14 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold uppercase tracking-wider mb-4">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4">
             <Sparkles className="w-3.5 h-3.5 text-orange-600" />
             <span>Engineered for Peak Service Hours</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight leading-tight">
             Everything your dining room needs to run smoother and earn more.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600 leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600 leading-relaxed">
             Eliminate server bottlenecks, reduce order mix-ups, and elevate the dining experience with an operating system built exclusively for hospitality.
           </p>
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
               <div
                 key={idx}
-                className="group relative p-8 rounded-3xl bg-white border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between"
+                className="group relative p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">

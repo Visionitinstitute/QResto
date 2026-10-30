@@ -440,7 +440,7 @@ export default function ManagerOrdersPage() {
                 </div>
 
                 {/* Action Buttons (Prompt 7.2 & 7.3) */}
-                <div className="pt-2 border-t border-zinc-100 flex items-center justify-end gap-2">
+                <div className="pt-2 border-t border-zinc-100 flex flex-wrap items-center justify-end gap-2">
                   {isPending && (
                     <>
                       <Button
@@ -448,6 +448,7 @@ export default function ManagerOrdersPage() {
                         size="sm"
                         isLoading={isActionLoading}
                         onClick={() => handleUpdateStatus(order.id, "rejected")}
+                        className="flex-1 sm:flex-initial"
                       >
                         <XCircle className="w-3.5 h-3.5 mr-1" /> Reject
                       </Button>
@@ -456,6 +457,7 @@ export default function ManagerOrdersPage() {
                         size="sm"
                         isLoading={isActionLoading}
                         onClick={() => handleUpdateStatus(order.id, "accepted")}
+                        className="flex-1 sm:flex-initial"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Accept Order
                       </Button>
@@ -468,6 +470,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "preparing")}
+                      className="w-full sm:w-auto"
                     >
                       <ChefHat className="w-3.5 h-3.5 mr-1" /> Start Cooking
                     </Button>
@@ -479,6 +482,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "ready")}
+                      className="w-full sm:w-auto"
                     >
                       <BellRing className="w-3.5 h-3.5 mr-1" /> Mark Ready
                     </Button>
@@ -490,6 +494,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "served")}
+                      className="w-full sm:w-auto"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Mark Served
                     </Button>

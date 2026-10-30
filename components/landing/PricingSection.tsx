@@ -85,24 +85,24 @@ export function PricingSection() {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-zinc-50 border-y border-zinc-200">
+    <section id="pricing" className="py-14 sm:py-20 bg-zinc-50 border-y border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
             Transparent Pricing
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight mt-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
             Simple, honest plans that scale with your tables
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
             Start with a 14-day free trial. No credit card required. Cancel anytime.
           </p>
 
           {/* Billing Toggle */}
-          <div className="mt-8 flex items-center justify-center gap-3">
+          <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold ${
                 !isAnnual ? "text-zinc-950" : "text-zinc-500"
               }`}
             >
@@ -111,23 +111,23 @@ export function PricingSection() {
             <button
               onClick={() => setIsAnnual(!isAnnual)}
               aria-label="Toggle annual or monthly billing"
-              className="w-14 h-8 bg-zinc-300 rounded-full p-1 transition-colors relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-13 sm:w-14 h-7 sm:h-8 bg-zinc-300 rounded-full p-1 transition-colors relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               <div
-                className={`w-6 h-6 rounded-full bg-orange-600 shadow-md transition-transform ${
+                className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-orange-600 shadow-md transition-transform ${
                   isAnnual ? "translate-x-6" : "translate-x-0"
                 }`}
               />
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <span
-                className={`text-sm font-semibold ${
+                className={`text-xs sm:text-sm font-semibold ${
                   isAnnual ? "text-zinc-950" : "text-zinc-500"
                 }`}
               >
                 Annual Billing
               </span>
-              <span className="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-[10px] sm:text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
                 Save 25%
               </span>
             </div>
@@ -135,13 +135,13 @@ export function PricingSection() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch mb-14 sm:mb-20">
           {tiers.map((tier, idx) => {
             const price = isAnnual ? tier.priceAnnual : tier.priceMonthly;
             return (
               <div
                 key={idx}
-                className={`rounded-3xl p-8 flex flex-col justify-between transition-all relative ${
+                className={`rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all relative ${
                   tier.popular
                     ? "bg-white border-2 border-orange-500 shadow-xl shadow-orange-500/10 lg:-translate-y-2 ring-4 ring-orange-500/10"
                     : "bg-white border border-zinc-200 shadow-sm hover:shadow-md"

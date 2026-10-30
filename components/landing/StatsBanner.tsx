@@ -29,15 +29,15 @@ export function StatsBanner() {
   ];
 
   return (
-    <section className="py-12 bg-white border-y border-zinc-100">
+    <section className="py-8 sm:py-12 bg-white border-y border-zinc-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200/70 hover:border-orange-200 hover:bg-orange-50/30 transition-all group"
+                className="p-5 sm:p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200/70 hover:border-orange-200 hover:bg-orange-50/30 transition-all group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-orange-600 mb-4 group-hover:scale-110 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-2xs">
                   <Icon className="w-5 h-5" />

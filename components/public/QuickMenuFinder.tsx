@@ -76,7 +76,7 @@ export function QuickMenuFinder({ hotels }: QuickMenuFinderProps) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-zinc-400 pt-0.5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[11px] text-zinc-400 pt-1 gap-1 text-center sm:text-left">
           <span>Guests can also scan the QR code placed on their table</span>
           <span className="font-medium text-zinc-600">No install required</span>
         </div>

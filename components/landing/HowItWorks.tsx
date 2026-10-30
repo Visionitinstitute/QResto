@@ -41,29 +41,29 @@ export function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-20 bg-zinc-50 border-y border-zinc-200/70">
+    <section id="how-it-works" className="py-14 sm:py-20 bg-zinc-50 border-y border-zinc-200/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
             Effortless Workflow
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight mt-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
             How QResto transforms your dining service in 3 steps
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
             A frictionless flow engineered so your staff can focus on hospitality while technology handles the ordering.
           </p>
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
           {steps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm hover:shadow-xl hover:border-orange-300 transition-all flex flex-col justify-between relative group"
+                className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200 shadow-sm hover:shadow-xl hover:border-orange-300 transition-all flex flex-col justify-between relative group"
               >
                 {/* Step Top */}
                 <div>

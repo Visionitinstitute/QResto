@@ -38,24 +38,24 @@ export function TestimonialsSection() {
     <section id="testimonials" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
             Real Partner Stories
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight mt-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
             Loved by leading restaurants, cafes & rooftop bars
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
             Hear how hospitality operators use QResto to speed up service, boost diner spend, and simplify kitchen logistics.
           </p>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          in          {testimonials.map((item, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {testimonials.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-8 border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between relative group"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between relative group"
             >
               <div>
                 {/* Metric Badge */}

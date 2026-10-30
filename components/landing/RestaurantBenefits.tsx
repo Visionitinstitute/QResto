@@ -58,25 +58,25 @@ export function RestaurantBenefits() {
   ];
 
   return (
-    <section id="benefits" className="py-20 bg-white">
+    <section id="benefits" className="py-14 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
             Proven ROI & Impact
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-950 tracking-tight mt-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
             Why leading restaurants are retiring paper menus forever
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
             See how upgrading to QResto creates a win-win for your bottom line, kitchen efficiency, and guest happiness.
           </p>
         </div>
 
         {/* Side-by-Side Comparison Box */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {/* Traditional Way */}
-          <div className="bg-zinc-50 rounded-3xl p-8 border border-zinc-200">
+          <div className="bg-zinc-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold">
                 ✕
@@ -97,19 +97,20 @@ export function RestaurantBenefits() {
           </div>
 
           {/* QResto Way */}
-          <div className="bg-gradient-to-b from-orange-50/70 to-white rounded-3xl p-8 border-2 border-orange-500/80 shadow-xl shadow-orange-500/5 relative overflow-hidden">
-            <div className="absolute top-4 right-4 bg-orange-600 text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs">
-              <Sparkles className="w-3 h-3" />
-              <span>Modern Standard</span>
-            </div>
-
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                ✓
+          <div className="bg-gradient-to-b from-orange-50/70 to-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-orange-500/80 shadow-xl shadow-orange-500/5 relative overflow-hidden">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                  ✓
+                </div>
+                <h3 className="text-lg font-bold text-zinc-950">
+                  With QResto Digital Platform
+                </h3>
               </div>
-              <h3 className="text-lg font-bold text-zinc-950">
-                With QResto Digital Platform
-              </h3>
+              <div className="bg-orange-600 text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs shrink-0">
+                <Sparkles className="w-3 h-3" />
+                <span>Modern Standard</span>
+              </div>
             </div>
 
             <ul className="space-y-4">

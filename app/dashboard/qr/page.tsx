@@ -234,11 +234,11 @@ export default function QRManagementPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <Button variant="outline" size="sm" onClick={() => setIsBulkModalOpen(true)}>
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" onClick={() => setIsBulkModalOpen(true)} className="flex-1 sm:flex-initial">
             <Layers className="w-4 h-4 mr-1.5" /> Bulk Tables (1 to N)
           </Button>
-          <Button variant="primary" size="sm" onClick={handlePrintAll}>
+          <Button variant="primary" size="sm" onClick={handlePrintAll} className="flex-1 sm:flex-initial">
             <Printer className="w-4 h-4 mr-1.5" /> Print All QR Cards
           </Button>
         </div>

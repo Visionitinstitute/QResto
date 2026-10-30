@@ -192,7 +192,7 @@ export function HeroMockup() {
           </div>
 
           {/* Phone Shell */}
-          <div className="w-[310px] sm:w-[350px] bg-zinc-950 rounded-[44px] p-3 shadow-2xl shadow-zinc-950/20 border-4 border-zinc-800 relative ring-1 ring-zinc-700/50">
+          <div className="w-full max-w-[310px] sm:max-w-[350px] mx-auto bg-zinc-950 rounded-[40px] sm:rounded-[44px] p-2.5 sm:p-3 shadow-2xl shadow-zinc-950/20 border-4 border-zinc-800 relative ring-1 ring-zinc-700/50">
             {/* Speaker & Dynamic Island */}
             <div className="absolute top-5 left-1/2 -translate-x-1/2 w-24 h-5 bg-zinc-900 rounded-full flex items-center justify-center z-30">
               <div className="w-2.5 h-2.5 rounded-full bg-zinc-800 mr-2" />
