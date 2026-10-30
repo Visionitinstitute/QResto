@@ -12,13 +12,11 @@ import {
   Store,
   ExternalLink,
   Sparkles,
-  Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
-import { Modal } from "@/components/ui/Modal";
 import { createClient } from "@/lib/supabase/client";
 import { Hotel, RestaurantTable } from "@/types";
 
@@ -26,11 +24,6 @@ export default function QRManagementPage() {
   const [loading, setLoading] = useState(true);
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [tables, setTables] = useState<RestaurantTable[]>([]);
-
-  // Bulk Generator State
-  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
-  const [bulkCount, setBulkCount] = useState<number>(10);
-  const [generatingBulk, setGeneratingBulk] = useState(false);
 
   // Manual Add Table State
   const [manualTableNumber, setManualTableNumber] = useState<string>("");
@@ -96,49 +89,6 @@ export default function QRManagementPage() {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-  };
-
-  // Bulk Tables Generator (1 to N) (Prompt 8.1)
-  const handleGenerateBulk = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!hotel || bulkCount <= 0 || bulkCount > 100) return;
-
-    setGeneratingBulk(true);
-
-    try {
-      const supabase = createClient();
-      const existingNumbers = new Set(tables.map((t) => t.table_number));
-      const toInsert: Array<{ hotel_id: string; table_number: number }> = [];
-
-      for (let i = 1; i <= bulkCount; i++) {
-        if (!existingNumbers.has(i)) {
-          toInsert.push({
-            hotel_id: hotel.id,
-            table_number: i,
-          });
-        }
-      }
-
-      if (toInsert.length > 0) {
-        const { data, error } = await supabase
-          .from("tables")
-          .insert(toInsert)
-          .select();
-
-        if (error) throw error;
-        if (data) {
-          setTables((prev) =>
-            [...prev, ...data].sort((a, b) => a.table_number - b.table_number)
-          );
-        }
-      }
-
-      setIsBulkModalOpen(false);
-    } catch (err) {
-      console.error("Error bulk generating tables:", err);
-    } finally {
-      setGeneratingBulk(false);
-    }
   };
 
   // Manual Add Table
@@ -235,11 +185,8 @@ export default function QRManagementPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          <Button variant="outline" size="sm" onClick={() => setIsBulkModalOpen(true)} className="h-8 text-xs flex-1 sm:flex-initial">
-            <Layers className="w-3.5 h-3.5 mr-1" /> Bulk Tables
-          </Button>
-          <Button variant="primary" size="sm" onClick={handlePrintAll} className="h-8 text-xs flex-1 sm:flex-initial">
+        <div className="flex items-center gap-2">
+          <Button variant="primary" size="sm" onClick={handlePrintAll} className="h-8 text-xs">
             <Printer className="w-3.5 h-3.5 mr-1" /> Print QR Cards
           </Button>
         </div>
@@ -334,17 +281,9 @@ export default function QRManagementPage() {
             <h3 className="text-sm font-bold text-zinc-800">
               Koi table nahi mili
             </h3>
-            <p className="text-xs text-zinc-500 mt-0.5 mb-3">
-              &quot;Bulk Tables&quot; button par click karke ek baar me tables generate karein.
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Upar diye gaye form se table number enter karke add karein.
             </p>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => setIsBulkModalOpen(true)}
-              className="h-8 text-xs"
-            >
-              Generate Tables
-            </Button>
           </Card>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 print:grid-cols-2 print:gap-6">
@@ -409,55 +348,6 @@ export default function QRManagementPage() {
           </div>
         )}
       </div>
-
-      {/* ------------------------------------------------------------- */}
-      {/* BULK GENERATOR MODAL                                          */}
-      {/* ------------------------------------------------------------- */}
-      <Modal
-        isOpen={isBulkModalOpen}
-        onClose={() => setIsBulkModalOpen(false)}
-        title="Bulk Tables Generate Karein"
-        maxWidth="sm"
-      >
-        <form onSubmit={handleGenerateBulk} className="space-y-4 pt-2">
-          <div>
-            <label className="block text-xs font-bold text-zinc-700 mb-1">
-              Kitne Tables Generate Karne Hain? (1 se N)
-            </label>
-            <Input
-              type="number"
-              placeholder="e.g. 10 ya 20"
-              value={bulkCount}
-              onChange={(e) => setBulkCount(parseInt(e.target.value, 10) || 0)}
-              min="1"
-              max="100"
-              required
-            />
-            <p className="text-[11px] text-zinc-400 mt-1">
-              Table 1 se lekar Table {bulkCount || "N"} tak ke sabhi unique QR codes auto generate honge.
-            </p>
-          </div>
-
-          <div className="flex justify-end gap-2 pt-2">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsBulkModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              size="sm"
-              isLoading={generatingBulk}
-            >
-              Generate Tables
-            </Button>
-          </div>
-        </form>
-      </Modal>
     </div>
   );
 }
