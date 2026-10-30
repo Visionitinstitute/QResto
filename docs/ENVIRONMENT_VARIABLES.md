@@ -97,3 +97,4 @@ NEXT_PUBLIC_ADMIN_URL=http://localhost:3004
 
 ---
 *End of Master Environment Variables Specification.*
+

@@ -1,12 +1,19 @@
 {
-  "name": "qresto",
-  "version": "0.1.0",
+  "name": "meraresto",
+  "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "turbo:dev": "turbo dev",
+    "turbo:build": "turbo build",
+    "turbo:type-check": "turbo type-check"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

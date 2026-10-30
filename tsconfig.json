@@ -19,7 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@meraresto/types": ["./packages/types/src/index.ts"],
+      "@meraresto/utils": ["./packages/utils/src/index.ts"],
+      "@meraresto/database": ["./packages/database/src/index.ts"],
+      "@meraresto/auth": ["./packages/auth/src/index.ts"],
+      "@meraresto/ui": ["./packages/ui/src/index.ts"]
     }
   },
   "include": [

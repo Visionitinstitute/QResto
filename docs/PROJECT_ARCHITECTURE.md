@@ -227,3 +227,4 @@ sequenceDiagram
 
 ---
 *End of Project Architecture Specification.*
+
