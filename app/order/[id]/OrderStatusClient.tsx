@@ -14,11 +14,19 @@ import {
   Send,
   AlertCircle,
   Sparkles,
+  Bell,
+  Volume2,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { createClient } from "@/lib/supabase/client";
 import { Order, OrderItem } from "@/types";
+import {
+  notifyDiner,
+  playChimeSound,
+  requestNotificationPermission,
+  getNotificationPermissionStatus,
+} from "@/lib/notifications";
 
 interface ExtendedOrder extends Order {
   hotels?: {
@@ -59,6 +67,27 @@ export default function OrderStatusClient({
   const [reviewSuccess, setReviewSuccess] = useState(false);
   const [reviewError, setReviewError] = useState<string | null>(null);
 
+  // Web Notification State
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">("default");
+  const [notifToast, setNotifToast] = useState<{ title: string; body: string } | null>(null);
+
+  useEffect(() => {
+    setNotifPermission(getNotificationPermissionStatus());
+  }, []);
+
+  const handleEnableNotifications = async () => {
+    const granted = await requestNotificationPermission();
+    setNotifPermission(granted ? "granted" : "denied");
+    if (granted) {
+      playChimeSound("bell");
+      setNotifToast({
+        title: "Live Alerts Enabled! 🔔",
+        body: `You will hear a chime and receive updates whenever your order status changes.`,
+      });
+      setTimeout(() => setNotifToast(null), 4000);
+    }
+  };
+
   // Supabase Realtime Listener (Prompt 6.4)
   useEffect(() => {
     const supabase = createClient();
@@ -75,10 +104,58 @@ export default function OrderStatusClient({
         },
         (payload) => {
           if (payload.new) {
-            setOrder((prev) => ({
-              ...prev,
-              ...(payload.new as Order),
-            }));
+            const updated = payload.new as Order;
+            setOrder((prev) => {
+              // Trigger live audio & web notification on status progression
+              if (prev.status !== updated.status) {
+                if (updated.status === "accepted") {
+                  notifyDiner(
+                    "Order Accepted! 👨‍🍳",
+                    `Chef has accepted your order for Table #${updated.table_number}.`,
+                    "bell"
+                  );
+                  setNotifToast({
+                    title: "Order Accepted! 👨‍🍳",
+                    body: "The kitchen is reviewing your meal.",
+                  });
+                } else if (updated.status === "preparing") {
+                  notifyDiner(
+                    "Cooking in Kitchen 🍳",
+                    `Your fresh dishes are now being prepared!`,
+                    "kitchen"
+                  );
+                  setNotifToast({
+                    title: "Kitchen Update 🍳",
+                    body: "Your food is sizzling in the kitchen!",
+                  });
+                } else if (updated.status === "ready") {
+                  notifyDiner(
+                    "Food is Ready! 🛎️",
+                    `Your dishes are plated! Waiter is bringing them to Table #${updated.table_number}.`,
+                    "bell"
+                  );
+                  setNotifToast({
+                    title: "Order Plated & Ready! 🛎️",
+                    body: `Waiter is delivering to Table #${updated.table_number}.`,
+                  });
+                } else if (updated.status === "served") {
+                  notifyDiner(
+                    "Order Delivered! 🍽️",
+                    `Enjoy your meal at Table #${updated.table_number}!`,
+                    "served"
+                  );
+                  setNotifToast({
+                    title: "Served at Table! 🍽️",
+                    body: "Bon appétit! Enjoy your delicious meal.",
+                  });
+                }
+                setTimeout(() => setNotifToast(null), 5000);
+              }
+              return {
+                ...prev,
+                ...updated,
+              };
+            });
           }
         }
       )
@@ -141,7 +218,20 @@ export default function OrderStatusClient({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 pb-20 font-sans">
+    <div className="min-h-screen bg-zinc-50 pb-20 font-sans relative">
+      {/* Floating Live Notification Toast */}
+      {notifToast && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 max-w-sm w-[92%] bg-[#0B192C] text-white border border-[#39ff14]/50 p-4 rounded-2xl shadow-2xl shadow-[#39ff14]/20 flex items-start gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="w-8 h-8 rounded-xl bg-[#39ff14] text-[#0B192C] flex items-center justify-center shrink-0 font-bold text-sm">
+            🔔
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-white">{notifToast.title}</p>
+            <p className="text-[11px] text-zinc-300 mt-0.5">{notifToast.body}</p>
+          </div>
+        </div>
+      )}
+
       {/* Top Header */}
       <header className="bg-white border-b border-zinc-200/80 sticky top-0 z-30">
         <div className="max-w-2xl mx-auto px-4 py-3.5 flex items-center justify-between">
@@ -149,11 +239,22 @@ export default function OrderStatusClient({
             href={`/menu/${order.hotels?.slug || ""}`}
             className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900"
           >
-            <ArrowLeft className="w-4 h-4" /> Menu Par Jayein
+            <ArrowLeft className="w-4 h-4" /> Back to Menu
           </Link>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Live Tracking
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => playChimeSound("bell")}
+              title="Test Table Chime Sound"
+              aria-label="Test Table Chime Sound"
+              className="p-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-600 hover:text-zinc-900 cursor-pointer"
+            >
+              <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
+            </button>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              Live Tracking
+            </div>
           </div>
         </div>
       </header>
@@ -161,7 +262,7 @@ export default function OrderStatusClient({
       <main className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         {/* Status Banner */}
         <div className="text-center">
-          <span className="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-extrabold mb-2">
+          <span className="inline-block px-3 py-1 rounded-full bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 text-xs font-extrabold mb-2 shadow-2xs">
             Table {order.table_number}
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 tracking-tight">
@@ -175,6 +276,33 @@ export default function OrderStatusClient({
             {order.hotels?.name} • Order #{order.id.slice(0, 8)}
           </p>
         </div>
+
+        {/* Live In-Browser Web Notification Permission Banner */}
+        {notifPermission !== "granted" && notifPermission !== "unsupported" && (
+          <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 flex items-center justify-center shrink-0">
+                <Bell className="w-4 h-4 animate-bounce" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-zinc-900 leading-tight">
+                  Enable Live Table Chimes & Web Alerts
+                </p>
+                <p className="text-[10px] text-zinc-600">
+                  Hear audio bells when your food is cooking and delivered
+                </p>
+              </div>
+            </div>
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleEnableNotifications}
+              className="bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold text-xs shrink-0 py-1.5 px-3 cursor-pointer shadow-xs"
+            >
+              Enable Alerts
+            </Button>
+          </div>
+        )}
 
         {/* ------------------------------------------------------------- */}
         {/* PROGRESS STEPPER (Prompt 6.3 & 6.4)                           */}
@@ -198,7 +326,7 @@ export default function OrderStatusClient({
               <div className="relative flex items-center justify-between">
                 <div className="absolute top-4 left-6 right-6 h-1 bg-zinc-200 -z-0">
                   <div
-                    className="h-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-emerald-500 to-[#39ff14] transition-all duration-500"
                     style={{
                       width: `${(currentStep / (steps.length - 1)) * 100}%`,
                     }}
@@ -218,7 +346,7 @@ export default function OrderStatusClient({
                       <div
                         className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl flex items-center justify-center transition-all ${
                           isPassed || isCurrent
-                            ? "bg-orange-600 text-white shadow-md shadow-orange-500/30 scale-105"
+                            ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 shadow-md shadow-[#39ff14]/20 scale-105"
                             : "bg-zinc-100 text-zinc-400 border border-zinc-200"
                         }`}
                       >
@@ -227,7 +355,7 @@ export default function OrderStatusClient({
                       <span
                         className={`text-[10px] sm:text-xs font-bold mt-2 ${
                           isCurrent
-                            ? "text-orange-600"
+                            ? "text-emerald-700 font-black"
                             : isPassed
                             ? "text-zinc-800"
                             : "text-zinc-400"

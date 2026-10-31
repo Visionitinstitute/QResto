@@ -14,6 +14,7 @@ export async function POST(request: Request) {
       table_number,
       customer_name,
       customer_phone,
+      diner_username,
       note,
       items,
     }: {
@@ -21,6 +22,7 @@ export async function POST(request: Request) {
       table_number?: number;
       customer_name?: string;
       customer_phone?: string;
+      diner_username?: string;
       note?: string;
       items?: OrderRequestItem[];
     } = body;
@@ -120,13 +122,26 @@ export async function POST(request: Request) {
       });
     }
 
+    // Format unique diner handle into customer_name for universal identification across KDS & CRM
+    const cleanHandle = diner_username
+      ? diner_username.replace(/^@+/, "").trim().toLowerCase()
+      : null;
+    let finalCustomerName: string | null = customer_name?.trim() || null;
+    if (cleanHandle) {
+      if (finalCustomerName && !finalCustomerName.includes(`@${cleanHandle}`)) {
+        finalCustomerName = `${finalCustomerName} (@${cleanHandle})`;
+      } else if (!finalCustomerName) {
+        finalCustomerName = `@${cleanHandle}`;
+      }
+    }
+
     // 3. Insert into `orders` table
     const { data: order, error: orderError } = await supabase
       .from("orders")
       .insert({
         hotel_id,
         table_number: tableNum,
-        customer_name: customer_name?.trim() || null,
+        customer_name: finalCustomerName,
         customer_phone: customer_phone?.trim() || null,
         note: note?.trim() || null,
         total_amount: calculatedTotal,

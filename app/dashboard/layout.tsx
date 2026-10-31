@@ -18,6 +18,7 @@ import {
   Sparkles,
   Lock,
   ArrowRight,
+  Users,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -110,6 +111,7 @@ export default function DashboardLayout({
   const navItems = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { name: "Live Orders", href: "/dashboard/orders", icon: UtensilsCrossed },
+    { name: "Customers", href: "/dashboard/customers", icon: Users },
     { name: "Menu Dishes", href: "/dashboard/menu", icon: ChefHat },
     { name: "QR Codes", href: "/dashboard/qr", icon: QrCode },
     { name: "Reviews", href: "/dashboard/reviews", icon: Star },

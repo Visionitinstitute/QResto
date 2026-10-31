@@ -13,11 +13,22 @@ import {
   AlertCircle,
   Hash,
   ArrowRight,
+  AtSign,
+  Edit2,
+  Check,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { useCartStore } from "@/store/useCartStore";
+import {
+  getStoredDinerIdentity,
+  saveDinerIdentity,
+  generateDefaultHandle,
+  sanitizeHandle,
+  formatHandle,
+} from "@/lib/dinerSession";
 
 interface HotelData {
   id: string;
@@ -39,6 +50,9 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [dinerUsername, setDinerUsername] = useState("");
+  const [isCustomizingHandle, setIsCustomizingHandle] = useState(false);
+  const [isHandleTouched, setIsHandleTouched] = useState(false);
   const [note, setNote] = useState("");
   const [tableInput, setTableInput] = useState<string>(
     tableNumber ? tableNumber.toString() : ""
@@ -54,7 +68,34 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
     if (tableNumber) {
       setTableInput(tableNumber.toString());
     }
+
+    // Load persistent universal guest identity if available
+    const storedIdentity = getStoredDinerIdentity();
+    if (storedIdentity) {
+      if (storedIdentity.displayName) setCustomerName(storedIdentity.displayName);
+      if (storedIdentity.phone) setCustomerPhone(storedIdentity.phone);
+      if (storedIdentity.username) {
+        setDinerUsername(storedIdentity.username);
+        setIsHandleTouched(true);
+      }
+    } else {
+      setDinerUsername(generateDefaultHandle("diner"));
+    }
   }, [tableNumber]);
+
+  // When customer enters name, auto-suggest unique handle if not explicitly touched
+  const handleNameChange = (name: string) => {
+    setCustomerName(name);
+    if (!isHandleTouched && name.trim().length > 0) {
+      setDinerUsername(generateDefaultHandle(name));
+    }
+  };
+
+  const handleUsernameCustomization = (customInput: string) => {
+    const cleaned = sanitizeHandle(customInput);
+    setDinerUsername(cleaned);
+    setIsHandleTouched(true);
+  };
 
   const totalAmount = mounted ? getTotalAmount() : 0;
 
@@ -93,12 +134,24 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
     setTableNumber(parsedTable);
     setIsSubmitting(true);
 
+    const finalHandle =
+      dinerUsername.trim() || generateDefaultHandle(customerName || "diner");
+
+    // Save persistent universal guest identity
+    saveDinerIdentity({
+      username: finalHandle,
+      displayName: customerName.trim() || finalHandle,
+      phone: customerPhone.trim() || undefined,
+      favoriteHotels: [hotel.slug],
+    });
+
     try {
       const payload = {
         hotel_id: hotel.id,
         table_number: parsedTable,
         customer_name: customerName.trim() || null,
         customer_phone: customerPhone.trim() || null,
+        diner_username: finalHandle,
         note: note.trim() || null,
         items: cartItems.map((item) => ({
           menu_item_id: item.menu_item_id,
@@ -117,7 +170,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Order place karne me samasya aayi.");
+        throw new Error(data.error || "Failed to place order. Please try again.");
       }
 
       // Clear the cart upon successful order creation
@@ -142,9 +195,9 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
             href={`/menu/${hotel.slug}`}
             className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900"
           >
-            <ArrowLeft className="w-4 h-4" /> Menu Par Wapas Jayein
+            <ArrowLeft className="w-4 h-4" /> Back to Menu
           </Link>
-          <span className="text-xs font-extrabold text-orange-600 uppercase tracking-wider">
+          <span className="text-[11px] font-black text-[#0B192C] bg-[#39ff14]/20 border border-[#39ff14]/50 px-2.5 py-1 rounded-full uppercase tracking-wider">
             Order Checkout
           </span>
         </div>
@@ -175,6 +228,55 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
             <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-2 flex items-center gap-2">
               <Hash className="w-4 h-4 text-emerald-600" /> Table & Contact Details
             </h2>
+
+            {/* Universal Diner Identity Handle Badge */}
+            <div className="p-3 bg-zinc-50 rounded-2xl border border-zinc-200/80 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 flex items-center justify-center font-black text-sm shadow-2xs">
+                    @
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-zinc-900 block leading-tight">
+                      @{dinerUsername || "diner"}
+                    </span>
+                    <span className="text-[10px] text-zinc-500">
+                      Universal guest handle (no password needed)
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsCustomizingHandle(!isCustomizingHandle)}
+                  className="text-xs font-bold text-emerald-700 hover:text-emerald-900 px-2.5 py-1 rounded-lg hover:bg-emerald-50 transition cursor-pointer flex items-center gap-1"
+                >
+                  <Edit2 className="w-3 h-3" />
+                  <span>{isCustomizingHandle ? "Done" : "Customize"}</span>
+                </button>
+              </div>
+
+              {isCustomizingHandle && (
+                <div className="pt-2 border-t border-zinc-200/60 animate-in fade-in">
+                  <label
+                    htmlFor="customHandle"
+                    className="block text-[11px] font-bold text-zinc-700 mb-1"
+                  >
+                    Unique Handle (3-20 characters, letters/numbers):
+                  </label>
+                  <div className="relative">
+                    <Input
+                      id="customHandle"
+                      type="text"
+                      placeholder="e.g. rahul_foodie"
+                      value={dinerUsername}
+                      onChange={(e) => handleUsernameCustomization(e.target.value)}
+                      className="pl-8 text-xs font-mono"
+                    />
+                    <AtSign className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                </div>
+              )}
+            </div>
 
             <div>
               <label
@@ -213,9 +315,9 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
                   <Input
                     id="customerName"
                     type="text"
-                    placeholder="Rahul"
+                    placeholder="Rahul Sharma"
                     value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
+                    onChange={(e) => handleNameChange(e.target.value)}
                     className="pl-10"
                   />
                   <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
