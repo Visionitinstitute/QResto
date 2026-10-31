@@ -99,7 +99,7 @@ export function HeroMockup() {
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-4 sm:py-8">
+    <div className="relative w-full max-w-5xl mx-auto py-4 sm:py-8" suppressHydrationWarning>
       {/* Background Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-[#39ff14]/15 rounded-full blur-3xl pointer-events-none -z-10" />
 

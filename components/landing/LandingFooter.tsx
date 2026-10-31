@@ -126,7 +126,7 @@ export function LandingFooter() {
 
         {/* Bottom Bar */}
         <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-zinc-400 text-center sm:text-left">
-          <p>© {new Date().getFullYear()} MeraResto Inc. All rights reserved.</p>
+          <p suppressHydrationWarning>© 2026 MeraResto Inc. All rights reserved.</p>
           <div className="flex items-center gap-4 sm:gap-6">
             <span className="hover:text-zinc-600 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-zinc-600 cursor-pointer">Terms of Service</span>
