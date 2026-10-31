@@ -49,7 +49,7 @@ export function HowItWorks() {
             Effortless Workflow
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
-            How QResto transforms your dining service in 3 steps
+            How MeraResto transforms your dining service in 3 steps
           </h2>
           <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
             A frictionless flow engineered so your staff can focus on hospitality while technology handles the ordering.

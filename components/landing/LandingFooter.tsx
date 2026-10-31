@@ -9,15 +9,15 @@ export function LandingFooter() {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-                <UtensilsCrossed className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl bg-[#0B192C] flex items-center justify-center text-white shadow-md">
+                <UtensilsCrossed className="w-5 h-5 text-[#0E8388]" />
               </div>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold tracking-tight text-zinc-950">
-                  QResto
+                <span className="text-xl font-bold tracking-tight text-[#0B192C]">
+                  Mera<span className="text-[#0E8388]">Resto</span>
                 </span>
-                <span className="text-[10px] font-semibold bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
-                  OS
+                <span className="text-[10px] font-semibold bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                  SaaS
                 </span>
               </div>
             </Link>
@@ -126,7 +126,7 @@ export function LandingFooter() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>© 2026 QResto Technologies Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} MeraResto Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span className="hover:text-zinc-600 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-zinc-600 cursor-pointer">Terms of Service</span>

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QResto – Digital QR Menu & Table Ordering",
-  description: "Modern contactless QR code menu and instant table ordering system for restaurants and cafes.",
+  title: "MeraResto — Your Restaurant, Your Digital World",
+  description: "Modern digital QR menu, live kitchen display (KDS), and instant table ordering SaaS platform for restaurants and cafes.",
 };
 
 export default function RootLayout({

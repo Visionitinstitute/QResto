@@ -61,7 +61,7 @@ export default async function TestDbPage() {
                   Supabase Credentials Missing
                 </h3>
                 <p className="text-xs text-amber-700 mt-1 leading-relaxed">
-                  Please create a <code>.env.local</code> file in the <code>qresto/</code> folder with your real keys:
+                  Please create a <code>.env.local</code> file in the project root folder with your real keys:
                 </p>
                 <pre className="mt-2 text-xs bg-amber-100/80 p-2.5 rounded-lg text-amber-900 font-mono overflow-x-auto">
 {`NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co

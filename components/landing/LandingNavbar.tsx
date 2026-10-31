@@ -124,20 +124,20 @@ export function LandingNavbar() {
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
-              <UtensilsCrossed className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-[#0B192C] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+              <UtensilsCrossed className="w-5 h-5 text-[#0E8388]" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="text-xl font-bold tracking-tight text-zinc-950 font-sans">
-                  QResto
+                <span className="text-xl font-bold tracking-tight text-[#0B192C] font-sans">
+                  Mera<span className="text-[#0E8388]">Resto</span>
                 </span>
-                <span className="text-[10px] font-semibold bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
-                  QR OS
+                <span className="text-[10px] font-semibold bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                  SaaS
                 </span>
               </div>
-              <span className="text-[11px] font-medium text-zinc-600 hidden sm:block">
-                Digital Menus & Table Ordering
+              <span className="text-[11px] font-medium text-zinc-500 hidden sm:block">
+                Your Restaurant, Your Digital World.
               </span>
             </div>
           </Link>

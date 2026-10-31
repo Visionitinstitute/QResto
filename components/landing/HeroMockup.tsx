@@ -136,7 +136,7 @@ export function HeroMockup() {
 
             <div className="bg-zinc-50 p-4 rounded-2xl border border-zinc-100 flex items-center justify-center relative">
               <QRCodeSVG
-                value="https://qresto.app/menu/royal-spice?table=4"
+                value="https://menu.meraresto.in/royal-spice?table=4"
                 size={160}
                 level="M"
                 bgColor="#ffffff"

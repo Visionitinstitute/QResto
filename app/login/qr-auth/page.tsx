@@ -83,7 +83,7 @@ function QRAuthContent() {
         body: JSON.stringify({
           action: "approve",
           sessionId,
-          userEmail: currentUserEmail || "manager@qresto.com",
+          userEmail: currentUserEmail || "manager@meraresto.in",
           hotelName: hotelName,
           accessToken: session?.access_token,
           refreshToken: session?.refresh_token,
@@ -111,8 +111,8 @@ function QRAuthContent() {
     <div className="max-w-md w-full bg-white rounded-3xl border border-zinc-200/90 shadow-xl p-6 sm:p-8 text-center font-sans">
       {/* Brand Header */}
       <div className="flex justify-center mb-5">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-          <UtensilsCrossed className="w-6 h-6" />
+        <div className="w-12 h-12 rounded-2xl bg-[#0B192C] flex items-center justify-center text-white shadow-md shadow-zinc-900/20">
+          <UtensilsCrossed className="w-6 h-6 text-[#0E8388]" />
         </div>
       </div>
 
@@ -120,7 +120,7 @@ function QRAuthContent() {
         Portal Login Request
       </h1>
       <p className="text-xs sm:text-sm text-zinc-500 mt-1">
-        A desktop browser is requesting access to QResto Portal
+        A desktop browser is requesting access to MeraResto Portal
       </p>
 
       {/* State: Loading */}
@@ -154,7 +154,7 @@ function QRAuthContent() {
               <div className="flex justify-between">
                 <span className="text-zinc-500">Account:</span>
                 <span className="font-semibold text-zinc-900">
-                  {currentUserEmail || "demo@qresto.com (Staff)"}
+                  {currentUserEmail || "demo@meraresto.in (Staff)"}
                 </span>
               </div>
               <div className="flex justify-between">

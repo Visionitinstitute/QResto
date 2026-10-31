@@ -120,7 +120,7 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
           // Try sign in with demo credentials if available
           try {
             await supabase.auth.signInWithPassword({
-              email: data.userEmail || "demo@qresto.com",
+              email: data.userEmail || "demo@meraresto.in",
               password: "demo1234",
             });
           } catch {
@@ -198,7 +198,7 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
           body: JSON.stringify({
             action: "approve",
             sessionId,
-            userEmail: "manager@qresto.com",
+            userEmail: "manager@meraresto.in",
             hotelName: "Royal Spice Restaurant & Cafe",
           }),
         });
@@ -241,7 +241,7 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
           ) : (
             <div className="relative">
               <QRCodeSVG
-                value={authUrl || "https://qresto.app/login"}
+                value={authUrl || "https://app.meraresto.in/login"}
                 size={200}
                 level="H"
                 bgColor="#ffffff"

@@ -127,7 +127,7 @@ export async function POST(request: Request) {
     // Action 3: Approve login from mobile device or simulated test
     if (action === "approve") {
       session.status = "approved";
-      session.userEmail = userEmail || "manager@qresto.com";
+      session.userEmail = userEmail || "manager@meraresto.in";
       session.hotelName = hotelName || "Royal Spice Restaurant & Cafe";
       session.accessToken = accessToken;
       session.refreshToken = refreshToken;

@@ -85,7 +85,7 @@ export default function QRManagementPage() {
     const pngUrl = canvas.toDataURL("image/png");
     const downloadLink = document.createElement("a");
     downloadLink.href = pngUrl;
-    downloadLink.download = `${hotel?.slug || "qresto"}-table-${tableNum}.png`;
+    downloadLink.download = `${hotel?.slug || "meraresto"}-table-${tableNum}.png`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);

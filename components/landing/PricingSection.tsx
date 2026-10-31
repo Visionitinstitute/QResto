@@ -72,11 +72,11 @@ export function PricingSection() {
     },
     {
       q: "Do I need to purchase expensive hardware or tablets?",
-      a: "Not at all. You can run QResto's kitchen display and manager dashboard on any standard smartphone, tablet, iPad, or existing computer you already own.",
+      a: "Not at all. You can run MeraResto's kitchen display and manager dashboard on any standard smartphone, tablet, iPad, or existing computer you already own.",
     },
     {
       q: "How do I print the QR codes for my restaurant tables?",
-      a: "From your dashboard, click 'Export QR Stands'. QResto generates professional, print-ready PDF sheets pre-sized for acrylic table tents, wooden blocks, and stickers.",
+      a: "From your dashboard, click 'Export QR Stands'. MeraResto generates professional, print-ready PDF sheets pre-sized for acrylic table tents, wooden blocks, and stickers.",
     },
     {
       q: "Can I update item prices or mark dishes sold-out during service?",
@@ -216,7 +216,7 @@ export function PricingSection() {
               Frequently Asked Questions
             </h3>
             <p className="text-xs text-zinc-500 mt-1">
-              Have questions about deploying QResto in your dining room?
+              Have questions about deploying MeraResto in your dining room?
             </p>
           </div>
 

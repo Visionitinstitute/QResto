@@ -154,11 +154,11 @@ export default function LoginPage() {
     <div className="min-h-screen bg-linear-to-b from-orange-50/70 via-white to-zinc-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
         <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/25 group-hover:scale-105 transition-transform">
-            <UtensilsCrossed className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-[#0B192C] flex items-center justify-center text-white shadow-lg shadow-zinc-900/20 group-hover:scale-105 transition-transform">
+            <UtensilsCrossed className="w-6 h-6 text-[#0E8388]" />
           </div>
-          <span className="text-2xl font-black tracking-tight text-zinc-900">
-            QResto
+          <span className="text-2xl font-black tracking-tight text-[#0B192C]">
+            Mera<span className="text-[#0E8388]">Resto</span>
           </span>
         </Link>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">

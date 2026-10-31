@@ -55,7 +55,7 @@ export function KeyFeatures() {
       tag: "Revenue Engine",
       title: "Automated Upselling & Combos",
       description:
-        "QResto intelligently suggests pairing mocktails with spicy starters and desserts after main courses, expanding your average check size effortlessly.",
+        "MeraResto intelligently suggests pairing mocktails with spicy starters and desserts after main courses, expanding your average check size effortlessly.",
       badge: "+24% Revenue",
     },
   ];

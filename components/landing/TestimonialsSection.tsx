@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       restaurant: "Spice & Wood Bistro",
       city: "Connaught Place, New Delhi",
       quote:
-        "Switching from paper menus to QResto completely changed our Friday dinner rush. Guests order drinks immediately after sitting, and our table turnover time decreased by 25 minutes per table. Our check averages jumped by 22% in our very first month.",
+        "Switching from paper menus to MeraResto completely changed our Friday dinner rush. Guests order drinks immediately after sitting, and our table turnover time decreased by 25 minutes per table. Our check averages jumped by 22% in our very first month.",
       metric: "+22% Higher Check Average",
       rating: 5,
     },
@@ -28,7 +28,7 @@ export function TestimonialsSection() {
       restaurant: "Urban Tadka Lounge",
       city: "Bandra West, Mumbai",
       quote:
-        "Whenever a dessert or signature cocktail runs out on a busy Saturday night, we mark it out-of-stock from our smartphone in 3 seconds. No awkward waiter apologies or reprinted paper inserts. QResto paid for itself tenfold in printing savings alone.",
+        "Whenever a dessert or signature cocktail runs out on a busy Saturday night, we mark it out-of-stock from our smartphone in 3 seconds. No awkward waiter apologies or reprinted paper inserts. MeraResto paid for itself tenfold in printing savings alone.",
       metric: "₹1,20,000 Saved on Printing",
       rating: 5,
     },
@@ -46,7 +46,7 @@ export function TestimonialsSection() {
             Loved by leading restaurants, cafes & rooftop bars
           </h2>
           <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
-            Hear how hospitality operators use QResto to speed up service, boost diner spend, and simplify kitchen logistics.
+            Hear how hospitality operators use MeraResto to speed up service, boost diner spend, and simplify kitchen logistics.
           </p>
         </div>
 
