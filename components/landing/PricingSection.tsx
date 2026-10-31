@@ -89,7 +89,7 @@ export function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
             Transparent Pricing
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
@@ -111,10 +111,10 @@ export function PricingSection() {
             <button
               onClick={() => setIsAnnual(!isAnnual)}
               aria-label="Toggle annual or monthly billing"
-              className="w-13 sm:w-14 h-7 sm:h-8 bg-zinc-300 rounded-full p-1 transition-colors relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-13 sm:w-14 h-7 sm:h-8 bg-[#0B192C] border border-zinc-700 rounded-full p-1 transition-colors relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#39ff14]"
             >
               <div
-                className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-orange-600 shadow-md transition-transform ${
+                className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#39ff14] shadow-[0_0_8px_#39ff14] transition-transform ${
                   isAnnual ? "translate-x-6" : "translate-x-0"
                 }`}
               />
@@ -127,7 +127,7 @@ export function PricingSection() {
               >
                 Annual Billing
               </span>
-              <span className="text-[10px] sm:text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-[10px] sm:text-[11px] font-bold bg-[#39ff14]/20 text-zinc-950 px-2 py-0.5 rounded-full border border-[#39ff14]/40">
                 Save 25%
               </span>
             </div>
@@ -143,19 +143,19 @@ export function PricingSection() {
                 key={idx}
                 className={`rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all relative ${
                   tier.popular
-                    ? "bg-white border-2 border-orange-500 shadow-xl shadow-orange-500/10 lg:-translate-y-2 ring-4 ring-orange-500/10"
+                    ? "bg-white border-2 border-[#39ff14] shadow-xl shadow-[#39ff14]/15 lg:-translate-y-2 ring-4 ring-[#39ff14]/20"
                     : "bg-white border border-zinc-200 shadow-sm hover:shadow-md"
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-600 to-amber-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B192C] border border-[#39ff14]/50 text-[#39ff14] text-xs font-black px-4 py-1.5 rounded-full shadow-lg shadow-[#39ff14]/20 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#39ff14]" />
                     <span>MOST POPULAR CHOICE</span>
                   </div>
                 )}
 
                 <div>
-                  <span className="text-xs font-bold text-orange-600 uppercase tracking-wider block">
+                  <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block">
                     {tier.badge}
                   </span>
                   <h3 className="text-2xl font-extrabold text-zinc-950 mt-1">
@@ -190,9 +190,9 @@ export function PricingSection() {
                 <div className="mt-8 pt-6">
                   <Link
                     href="/signup"
-                    className={`w-full py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm ${
+                    className={`w-full py-3.5 rounded-xl font-black text-xs flex items-center justify-center gap-2 transition-all shadow-sm ${
                       tier.popular
-                        ? "bg-orange-600 hover:bg-orange-500 text-white shadow-orange-600/20 hover:shadow-md"
+                        ? "bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] shadow-lg shadow-[#39ff14]/30 hover:shadow-xl hover:shadow-[#39ff14]/40 border border-[#39ff14]"
                         : "bg-zinc-900 hover:bg-zinc-800 text-white"
                     }`}
                   >
@@ -211,7 +211,7 @@ export function PricingSection() {
         {/* FAQs Accordion */}
         <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-zinc-200/90 p-8 shadow-sm">
           <div className="text-center mb-8">
-            <HelpCircle className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+            <HelpCircle className="w-8 h-8 text-[#0B192C] mx-auto mb-2" />
             <h3 className="text-2xl font-bold text-zinc-950">
               Frequently Asked Questions
             </h3>

@@ -62,7 +62,7 @@ export function RestaurantBenefits() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
             Proven ROI & Impact
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
@@ -97,18 +97,18 @@ export function RestaurantBenefits() {
           </div>
 
           {/* MeraResto Way */}
-          <div className="bg-gradient-to-b from-teal-50/70 to-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-[#0E8388] shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/15 to-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-[#39ff14] shadow-xl shadow-[#39ff14]/10 relative overflow-hidden">
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-lg bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 flex items-center justify-center font-bold">
                   ✓
                 </div>
                 <h3 className="text-lg font-bold text-zinc-950">
                   With MeraResto Digital Platform
                 </h3>
               </div>
-              <div className="bg-[#0E8388] text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs shrink-0">
-                <Sparkles className="w-3 h-3" />
+              <div className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs shrink-0">
+                <Sparkles className="w-3 h-3 text-[#39ff14]" />
                 <span>Modern Standard</span>
               </div>
             </div>
@@ -131,12 +131,12 @@ export function RestaurantBenefits() {
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-orange-300 hover:shadow-lg transition-all group"
+                className="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-[#39ff14] hover:shadow-lg hover:shadow-[#39ff14]/10 transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-4 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] flex items-center justify-center mb-4 group-hover:bg-[#39ff14] group-hover:text-[#0B192C] transition-all">
                   <Icon className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-bold text-orange-700 bg-orange-100/70 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-zinc-950 bg-[#39ff14]/20 border border-[#39ff14]/40 px-2 py-0.5 rounded-md uppercase tracking-wider">
                   {persona.tag}
                 </span>
                 <h4 className="text-base font-bold text-zinc-950 mt-2">

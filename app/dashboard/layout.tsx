@@ -94,12 +94,12 @@ export default function DashboardLayout({
         {/* Brand Header */}
         <div className="h-14 border-b border-zinc-100 flex items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#0B192C] flex items-center justify-center text-white shadow-2xs">
-              <UtensilsCrossed className="w-4 h-4 text-[#0E8388]" />
+            <div className="w-8 h-8 rounded-lg bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white shadow-2xs">
+              <UtensilsCrossed className="w-4 h-4 text-[#39ff14]" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-base tracking-tight text-[#0B192C] leading-none">
-                Mera<span className="text-[#0E8388]">Resto</span>
+              <span className="font-black text-base tracking-tight text-[#0B192C] leading-none">
+                Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-sm ml-0.5 text-xs font-bold">Resto</span>
               </span>
               <span className="text-[9px] text-zinc-400 font-semibold tracking-wider uppercase mt-0.5">
                 Portal
@@ -182,11 +182,11 @@ export default function DashboardLayout({
       {/* Mobile Top Header */}
       <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-zinc-200 px-3.5 h-12 flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-[#0B192C] flex items-center justify-center text-white">
-            <UtensilsCrossed className="w-3 h-3 text-[#0E8388]" />
+          <div className="w-6 h-6 rounded-md bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white">
+            <UtensilsCrossed className="w-3 h-3 text-[#39ff14]" />
           </div>
           <span className="font-bold text-sm text-[#0B192C]">
-            Mera<span className="text-[#0E8388]">Resto</span>
+            Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-sm ml-0.5 text-xs">Resto</span>
           </span>
         </Link>
 

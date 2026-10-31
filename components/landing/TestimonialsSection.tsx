@@ -39,7 +39,7 @@ export function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
             Real Partner Stories
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
@@ -55,7 +55,7 @@ export function TestimonialsSection() {
           {testimonials.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-all flex flex-col justify-between relative group"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 hover:border-[#39ff14] hover:shadow-xl hover:shadow-[#39ff14]/10 transition-all flex flex-col justify-between relative group"
             >
               <div>
                 {/* Metric Badge */}
@@ -68,7 +68,7 @@ export function TestimonialsSection() {
                       />
                     ))}
                   </div>
-                  <span className="text-[11px] font-bold text-orange-700 bg-orange-50 border border-orange-200/80 px-2.5 py-1 rounded-lg">
+                  <span className="text-[11px] font-bold text-zinc-950 bg-[#39ff14]/20 border border-[#39ff14]/40 px-2.5 py-1 rounded-lg">
                     {item.metric}
                   </span>
                 </div>
@@ -80,7 +80,7 @@ export function TestimonialsSection() {
 
               {/* Author Box */}
               <div className="mt-8 pt-5 border-t border-zinc-100 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold text-sm flex items-center justify-center shadow-xs">
+                <div className="w-10 h-10 rounded-full bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold text-sm flex items-center justify-center shadow-xs">
                   {item.name.charAt(0)}
                 </div>
                 <div>

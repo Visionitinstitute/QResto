@@ -9,14 +9,14 @@ export function LandingFooter() {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#0B192C] flex items-center justify-center text-white shadow-md">
-                <UtensilsCrossed className="w-5 h-5 text-[#0E8388]" />
+              <div className="w-9 h-9 rounded-xl bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white shadow-md shadow-[#39ff14]/15">
+                <UtensilsCrossed className="w-5 h-5 text-[#39ff14]" />
               </div>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-xl font-bold tracking-tight text-[#0B192C]">
-                  Mera<span className="text-[#0E8388]">Resto</span>
+                  Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-md ml-0.5 font-black text-sm">Resto</span>
                 </span>
-                <span className="text-[10px] font-semibold bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                <span className="text-[10px] font-bold bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
                   SaaS
                 </span>
               </div>
@@ -27,7 +27,7 @@ export function LandingFooter() {
             </p>
 
             <div className="flex items-center gap-2 pt-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#39ff14] shadow-[0_0_8px_#39ff14] animate-pulse" />
               <span className="text-xs font-semibold text-zinc-800">
                 All Systems Operational
               </span>
@@ -43,27 +43,27 @@ export function LandingFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#features" className="hover:text-orange-600 transition-colors">
+                <a href="#features" className="hover:text-emerald-700 transition-colors">
                   QR Code Generator
                 </a>
               </li>
               <li>
-                <a href="#features" className="hover:text-orange-600 transition-colors">
+                <a href="#features" className="hover:text-emerald-700 transition-colors">
                   Kitchen Display (KDS)
                 </a>
               </li>
               <li>
-                <a href="#features" className="hover:text-orange-600 transition-colors">
+                <a href="#features" className="hover:text-emerald-700 transition-colors">
                   Dietary & Allergen Badges
                 </a>
               </li>
               <li>
-                <a href="#features" className="hover:text-orange-600 transition-colors">
+                <a href="#features" className="hover:text-emerald-700 transition-colors">
                   Automated Upsell Engine
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="hover:text-orange-600 transition-colors">
+                <a href="#pricing" className="hover:text-emerald-700 transition-colors">
                   Pricing Plans
                 </a>
               </li>
@@ -77,27 +77,27 @@ export function LandingFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <span className="hover:text-orange-600 transition-colors cursor-pointer">
+                <span className="hover:text-emerald-700 transition-colors cursor-pointer">
                   Casual Dining & Bistros
                 </span>
               </li>
               <li>
-                <span className="hover:text-orange-600 transition-colors cursor-pointer">
+                <span className="hover:text-emerald-700 transition-colors cursor-pointer">
                   Cafes & Bakeries
                 </span>
               </li>
               <li>
-                <span className="hover:text-orange-600 transition-colors cursor-pointer">
+                <span className="hover:text-emerald-700 transition-colors cursor-pointer">
                   Rooftop Bars & Lounges
                 </span>
               </li>
               <li>
-                <span className="hover:text-orange-600 transition-colors cursor-pointer">
+                <span className="hover:text-emerald-700 transition-colors cursor-pointer">
                   Food Courts & QSRs
                 </span>
               </li>
               <li>
-                <span className="hover:text-orange-600 transition-colors cursor-pointer">
+                <span className="hover:text-emerald-700 transition-colors cursor-pointer">
                   Hotel In-Room Dining
                 </span>
               </li>
@@ -111,12 +111,12 @@ export function LandingFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/login" className="hover:text-orange-600 transition-colors">
+                <Link href="/login" className="hover:text-emerald-700 transition-colors">
                   Manager Sign In
                 </Link>
               </li>
               <li>
-                <Link href="/signup" className="hover:text-orange-600 transition-colors">
+                <Link href="/signup" className="hover:text-emerald-700 transition-colors">
                   Register Restaurant
                 </Link>
               </li>

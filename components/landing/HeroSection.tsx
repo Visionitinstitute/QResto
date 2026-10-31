@@ -6,24 +6,25 @@ export function HeroSection() {
   return (
     <section className="relative pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden bg-white">
       {/* Subtle Warm Gradient Wash at Top */}
-      <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-orange-50/60 via-amber-50/20 to-transparent pointer-events-none -z-10" />
+      <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-[#39ff14]/12 via-emerald-50/15 to-transparent pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Top Content */}
         <div className="max-w-4xl mx-auto text-center">
           {/* Top Pill */}
-          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-orange-100/90 border border-orange-200/90 text-orange-800 text-[11px] sm:text-xs font-semibold mb-5 sm:mb-6 shadow-2xs hover:bg-orange-100 transition-colors">
-            <span className="flex h-2 w-2 rounded-full bg-orange-600 animate-pulse" />
+          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] text-[11px] sm:text-xs font-semibold mb-5 sm:mb-6 shadow-sm shadow-[#39ff14]/15">
+            <span className="flex h-2 w-2 rounded-full bg-[#39ff14] shadow-[0_0_8px_#39ff14] animate-pulse" />
             <span>Digital Dining OS 2.0</span>
-            <span className="text-orange-400">•</span>
-            <span className="font-normal text-orange-950">Zero App Downloads Required</span>
+            <span className="text-zinc-500">•</span>
+            <span className="font-normal text-zinc-300">Zero App Downloads Required</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-zinc-950 tracking-tight leading-[1.12] sm:leading-[1.08]">
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-[#0B192C] tracking-tight leading-[1.12] sm:leading-[1.08]">
             Turn Every Dining Table into a{" "}
-            <span className="bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent underline decoration-orange-300 decoration-wavy decoration-from-font">
-              Revenue Engine.
+            <span className="relative inline-block text-zinc-950">
+              <span className="relative z-10">Revenue Engine.</span>
+              <span className="absolute bottom-2 sm:bottom-3 left-0 right-0 h-3 sm:h-4 bg-[#39ff14] -rotate-1 rounded-sm -z-0 opacity-80" />
             </span>
           </h1>
 
@@ -36,11 +37,11 @@ export function HeroSection() {
           <div className="mt-6 sm:mt-8 flex items-center justify-center px-2">
             <Link
               href="/signup"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl transition-all shadow-lg shadow-orange-600/25 hover:shadow-orange-600/35 hover:-translate-y-0.5 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] font-black text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl transition-all shadow-xl shadow-[#39ff14]/30 hover:shadow-2xl hover:shadow-[#39ff14]/45 hover:-translate-y-0.5 cursor-pointer border border-[#39ff14]"
             >
-              <Sparkles className="w-4 h-4 text-orange-200" />
+              <Sparkles className="w-4 h-4 text-[#0B192C]" />
               <span>Start 14-Day Free Trial</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-[#0B192C]" />
             </Link>
           </div>
 

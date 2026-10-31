@@ -45,7 +45,7 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-100/80 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
             Effortless Workflow
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
@@ -63,20 +63,20 @@ export function HowItWorks() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200 shadow-sm hover:shadow-xl hover:border-orange-300 transition-all flex flex-col justify-between relative group"
+                className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200 shadow-sm hover:shadow-xl hover:border-[#39ff14] hover:shadow-[#39ff14]/10 transition-all flex flex-col justify-between relative group"
               >
                 {/* Step Top */}
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-3xl font-black text-orange-500 font-mono tracking-tight">
+                    <span className="text-2xl font-black text-[#0B192C] bg-[#39ff14] px-2.5 py-0.5 rounded-lg border border-[#39ff14] font-mono tracking-tight shadow-xs">
                       {step.num}
                     </span>
-                    <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-2xs">
+                    <div className="w-12 h-12 rounded-2xl bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-[#39ff14] group-hover:bg-[#39ff14] group-hover:text-[#0B192C] transition-all shadow-xs">
                       <Icon className="w-6 h-6" />
                     </div>
                   </div>
 
-                  <span className="text-[11px] font-bold text-orange-700 bg-orange-50 px-2.5 py-1 rounded-md mb-2 inline-block">
+                  <span className="text-[11px] font-bold text-zinc-950 bg-[#39ff14]/20 border border-[#39ff14]/40 px-2.5 py-1 rounded-md mb-2 inline-block">
                     {step.tag}
                   </span>
 
@@ -91,7 +91,7 @@ export function HowItWorks() {
                   <ul className="mt-6 space-y-2.5 text-xs text-zinc-600 border-t border-zinc-100 pt-5">
                     {step.bullets.map((bullet, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{bullet}</span>
                       </li>
                     ))}

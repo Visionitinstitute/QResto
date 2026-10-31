@@ -24,20 +24,20 @@ export default function HomePage() {
       <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0B192C] text-white shadow-xs">
-              <UtensilsCrossed className="h-5 w-5 text-[#0E8388]" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0B192C] border border-[#39ff14]/40 text-white shadow-xs">
+              <UtensilsCrossed className="h-5 w-5 text-[#39ff14]" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-[#0B192C]">
-                Mera<span className="text-[#0E8388]">Resto</span>
+              <span className="text-xl font-black tracking-tight text-[#0B192C]">
+                Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-md ml-0.5 font-bold">Resto</span>
               </span>
             </div>
           </div>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600">
-            <a href="#features" className="hover:text-[#0B192C] transition-colors">Features</a>
-            <a href="#kds" className="hover:text-[#0B192C] transition-colors">Kitchen Display</a>
-            <a href="#pricing" className="hover:text-[#0B192C] transition-colors">Pricing</a>
+            <a href="#features" className="hover:text-emerald-700 transition-colors">Features</a>
+            <a href="#kds" className="hover:text-emerald-700 transition-colors">Kitchen Display</a>
+            <a href="#pricing" className="hover:text-emerald-700 transition-colors">Pricing</a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -49,7 +49,7 @@ export default function HomePage() {
             </a>
             <a
               href={`${dashboardUrl}/signup`}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#0B192C] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0B192C] border border-[#39ff14]/50 px-4 py-2 text-sm font-bold text-[#39ff14] shadow-sm hover:bg-black transition-colors"
             >
               Get Started Free
               <ArrowRight className="h-4 w-4" />
@@ -61,14 +61,17 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden px-6 pt-20 pb-16 md:pt-28 md:pb-24">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-200/80 bg-teal-50/70 px-4 py-1.5 text-xs font-semibold text-[#0E8388] mb-6">
-            <Sparkles className="h-3.5 w-3.5" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#39ff14]/40 bg-[#0B192C] px-4 py-1.5 text-xs font-semibold text-[#39ff14] mb-6 shadow-xs">
+            <Sparkles className="h-3.5 w-3.5 text-[#39ff14]" />
             Next-Gen Restaurant Operating Platform
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-[#0B192C]">
             Your Restaurant, <br />
-            <span className="text-[#0E8388]">Your Digital World.</span>
+            <span className="relative inline-block text-zinc-950">
+              <span className="relative z-10">Your Digital World.</span>
+              <span className="absolute bottom-2 left-0 right-0 h-3 sm:h-4 bg-[#39ff14] -rotate-1 rounded-sm -z-0 opacity-80" />
+            </span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-zinc-600 leading-relaxed">
@@ -80,7 +83,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`${dashboardUrl}/signup`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#0B192C] px-6 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-zinc-800 transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#39ff14] hover:bg-[#32e010] px-6 py-3.5 text-sm font-black text-[#0B192C] shadow-lg shadow-[#39ff14]/30 border border-[#39ff14] transition-all"
             >
               Start 14-Day Free Trial
               <ArrowRight className="h-4 w-4" />
@@ -91,7 +94,7 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white px-6 py-3.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors"
             >
-              <QrCode className="h-4 w-4 text-[#0E8388]" />
+              <QrCode className="h-4 w-4 text-emerald-600" />
               Experience Customer Menu Demo
             </a>
           </div>
@@ -123,8 +126,8 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#0E8388]/40 hover:shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-100/70 text-[#0E8388]">
+            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#39ff14] hover:shadow-lg hover:shadow-[#39ff14]/10">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 shadow-xs">
                 <QrCode className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-bold text-[#0B192C]">Smart Table QR Codes</h3>
@@ -133,8 +136,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#0E8388]/40 hover:shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100/70 text-[#0B192C]">
+            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#39ff14] hover:shadow-lg hover:shadow-[#39ff14]/10">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 shadow-xs">
                 <ChefHat className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-bold text-[#0B192C]">Real-Time Kitchen Display</h3>
@@ -143,8 +146,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#0E8388]/40 hover:shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100/70 text-emerald-800">
+            <div className="rounded-2xl border border-zinc-200 bg-[#fafaf9] p-7 transition-all hover:border-[#39ff14] hover:shadow-lg hover:shadow-[#39ff14]/10">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 shadow-xs">
                 <TrendingUp className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-bold text-[#0B192C]">Sales & Menu Insights</h3>
@@ -189,8 +192,8 @@ export default function HomePage() {
             </div>
 
             {/* Pro */}
-            <div className="relative rounded-2xl border-2 border-[#0E8388] bg-white p-7 shadow-md">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#0E8388] px-3 py-0.5 text-[11px] font-bold text-white uppercase tracking-wider">
+            <div className="relative rounded-2xl border-2 border-[#39ff14] ring-4 ring-[#39ff14]/15 bg-white p-7 shadow-xl shadow-[#39ff14]/10">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 px-3 py-0.5 text-[11px] font-black uppercase tracking-wider shadow-sm">
                 Most Popular
               </div>
               <h3 className="text-lg font-bold text-zinc-900">Pro Resto</h3>
@@ -205,7 +208,7 @@ export default function HomePage() {
               </ul>
               <a
                 href={`${dashboardUrl}/signup?plan=pro`}
-                className="mt-8 block text-center rounded-xl bg-[#0B192C] py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-zinc-800"
+                className="mt-8 block text-center rounded-xl bg-[#39ff14] hover:bg-[#32e010] py-2.5 text-xs font-black text-[#0B192C] shadow-md shadow-[#39ff14]/30 border border-[#39ff14] transition-all"
               >
                 Start Pro Trial
               </a>

@@ -101,13 +101,13 @@ export function HeroMockup() {
   return (
     <div className="relative w-full max-w-5xl mx-auto py-8">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-orange-400/20 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-[#39ff14]/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Column: QR Code Standee Preview & Real Scanner Card */}
         <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/80 border border-orange-200 text-orange-800 text-xs font-semibold">
-            <Scan className="w-4 h-4 text-orange-600 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] text-xs font-semibold shadow-xs">
+            <Scan className="w-4 h-4 text-[#39ff14] animate-pulse" />
             <span>Interactive Table QR Experience</span>
           </div>
 
@@ -121,7 +121,7 @@ export function HeroMockup() {
           </div>
 
           {/* Real QR Card on Acrylic Stand Mockup */}
-          <div className="bg-white rounded-3xl p-6 shadow-xl shadow-zinc-200/60 border border-zinc-200/90 relative group hover:border-orange-300 transition-all max-w-xs w-full text-center">
+          <div className="bg-white rounded-3xl p-6 shadow-xl shadow-zinc-200/60 border border-zinc-200/90 relative group hover:border-[#39ff14] hover:shadow-xl hover:shadow-[#39ff14]/10 transition-all max-w-xs w-full text-center">
             {/* Stand Clip Accent */}
             <div className="w-12 h-2.5 bg-zinc-300 rounded-full mx-auto -mt-8 mb-5 shadow-xs" />
 
@@ -144,8 +144,8 @@ export function HeroMockup() {
                 className="rounded-lg shadow-2xs"
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-9 h-9 rounded-lg bg-orange-600 text-white flex items-center justify-center shadow-md">
-                  <Sparkles className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-lg bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] flex items-center justify-center shadow-md">
+                  <Sparkles className="w-4 h-4 text-[#39ff14]" />
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@ export function HeroMockup() {
         <div className="lg:col-span-7 flex justify-center relative">
           {/* Floating Pill 1 (Top Left) */}
           <div className="hidden sm:flex absolute -top-4 -left-6 z-20 items-center gap-2.5 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-zinc-200/80 shadow-lg shadow-zinc-900/5 animate-float">
-            <div className="w-7 h-7 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
+            <div className="w-7 h-7 rounded-lg bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 flex items-center justify-center">
               <Flame className="w-4 h-4" />
             </div>
             <div>
@@ -213,9 +213,9 @@ export function HeroMockup() {
               </div>
 
               {/* Restaurant Header */}
-              <div className="px-4 py-3 bg-gradient-to-b from-orange-50/80 to-white border-b border-zinc-100">
+              <div className="px-4 py-3 bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/10 to-white border-b border-zinc-100">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold bg-orange-600 text-white px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                  <span className="text-[11px] font-bold bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                     Table #04
                   </span>
                   <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
@@ -237,7 +237,7 @@ export function HeroMockup() {
                   onClick={() => setSelectedCategory("all")}
                   className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
                     selectedCategory === "all"
-                      ? "bg-zinc-950 text-white"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
                       : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                   }`}
                 >
@@ -247,7 +247,7 @@ export function HeroMockup() {
                   onClick={() => setSelectedCategory("starters")}
                   className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
                     selectedCategory === "starters"
-                      ? "bg-orange-600 text-white"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
                       : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                   }`}
                 >
@@ -257,7 +257,7 @@ export function HeroMockup() {
                   onClick={() => setSelectedCategory("mains")}
                   className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
                     selectedCategory === "mains"
-                      ? "bg-orange-600 text-white"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
                       : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                   }`}
                 >
@@ -267,7 +267,7 @@ export function HeroMockup() {
                   onClick={() => setSelectedCategory("drinks")}
                   className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
                     selectedCategory === "drinks"
-                      ? "bg-orange-600 text-white"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
                       : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                   }`}
                 >
@@ -294,7 +294,7 @@ export function HeroMockup() {
                               {item.name}
                             </span>
                             {item.popular && (
-                              <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-1.5 py-0.2 rounded-xs">
+                              <span className="text-[10px] font-bold text-[#0B192C] bg-[#39ff14] px-1.5 py-0.2 rounded-xs">
                                 ★ Popular
                               </span>
                             )}
@@ -311,7 +311,7 @@ export function HeroMockup() {
                         </span>
 
                         {qty > 0 ? (
-                          <div className="flex items-center gap-2 bg-orange-600 text-white text-xs font-bold rounded-lg px-2 py-1 shadow-xs">
+                          <div className="flex items-center gap-2 bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 text-xs font-bold rounded-lg px-2 py-1 shadow-xs">
                             <button
                               onClick={() => removeItem(item.id)}
                               aria-label="Decrease quantity"
@@ -319,7 +319,7 @@ export function HeroMockup() {
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="px-1 min-w-[14px] text-center">{qty}</span>
+                            <span className="px-1 min-w-[14px] text-center text-white">{qty}</span>
                             <button
                               onClick={() => addItem(item.id)}
                               aria-label="Increase quantity"
@@ -331,7 +331,7 @@ export function HeroMockup() {
                         ) : (
                           <button
                             onClick={() => addItem(item.id)}
-                            className="text-xs font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200/80 px-3 py-1 rounded-lg transition-colors cursor-pointer"
+                            className="text-xs font-bold text-[#0B192C] bg-[#39ff14]/25 hover:bg-[#39ff14]/40 border border-[#39ff14]/50 px-3 py-1 rounded-lg transition-colors cursor-pointer"
                           >
                             + Add
                           </button>
@@ -344,11 +344,11 @@ export function HeroMockup() {
 
               {/* Order Confirmation Feedback Banner */}
               {orderSent && (
-                <div className="absolute inset-x-4 bottom-20 bg-emerald-600 text-white p-3 rounded-2xl shadow-xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-3 duration-200 z-30">
-                  <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-200" />
+                <div className="absolute inset-x-4 bottom-20 bg-[#0B192C] border border-[#39ff14] text-[#39ff14] p-3 rounded-2xl shadow-xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-3 duration-200 z-30">
+                  <CheckCircle2 className="w-5 h-5 shrink-0 text-[#39ff14]" />
                   <div className="text-xs">
-                    <p className="font-bold">Order Sent to Kitchen!</p>
-                    <p className="text-[11px] text-emerald-100">Chef ticket printed for Table #04</p>
+                    <p className="font-bold text-white">Order Sent to Kitchen!</p>
+                    <p className="text-[11px] text-[#39ff14]">Chef ticket printed for Table #04</p>
                   </div>
                 </div>
               )}
@@ -357,7 +357,7 @@ export function HeroMockup() {
               <div className="p-3.5 bg-zinc-950 text-white border-t border-zinc-800">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5 text-xs">
-                    <ShoppingBag className="w-3.5 h-3.5 text-orange-400" />
+                    <ShoppingBag className="w-3.5 h-3.5 text-[#39ff14]" />
                     <span className="text-zinc-300 font-medium">
                       {totalItems > 0 ? `${totalItems} items selected` : "Cart is empty"}
                     </span>
@@ -370,9 +370,9 @@ export function HeroMockup() {
                 <button
                   disabled={totalItems === 0 || orderSent}
                   onClick={handlePlaceOrder}
-                  className={`w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md ${
+                  className={`w-full py-2.5 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md ${
                     totalItems > 0
-                      ? "bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white cursor-pointer shadow-orange-500/20"
+                      ? "bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] cursor-pointer shadow-lg shadow-[#39ff14]/25 border border-[#39ff14]"
                       : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
                   }`}
                 >
