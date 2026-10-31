@@ -248,10 +248,10 @@ export default function ManagerOrdersPage() {
   if (!hotel) {
     return (
       <div className="p-6 text-center bg-white rounded-xl border border-zinc-200">
-        <Store className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-        <h2 className="text-base font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Store className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+        <h2 className="text-base font-bold text-zinc-900">Please set up your restaurant first</h2>
         <Link href="/dashboard" className="mt-3 inline-block">
-          <Button size="sm">Dashboard Overview par jayein</Button>
+          <Button size="sm">Go to Dashboard Overview</Button>
         </Link>
       </div>
     );
@@ -263,11 +263,11 @@ export default function ManagerOrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div>
           <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <UtensilsCrossed className="w-4 h-4 text-orange-600" />
+            <UtensilsCrossed className="w-4 h-4 text-emerald-600" />
             <span>Live Kitchen Orders</span>
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Realtime orders monitor karein aur status turant update karein.
+            Monitor real-time incoming orders and update kitchen fulfillment status instantly.
           </p>
         </div>
 

@@ -126,7 +126,7 @@ export default function DashboardOverviewPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        setOnboardingError("Aap login nahi hain. Kripya punah login karein.");
+        setOnboardingError("You are not signed in. Please sign in again.");
         setSubmittingOnboarding(false);
         return;
       }
@@ -147,7 +147,7 @@ export default function DashboardOverviewPage() {
       if (error) {
         if (error.code === "23505") {
           setOnboardingError(
-            `URL slug "${slug}" pehle se kisi aur hotel dwara liya ja chuka hai. Kripya alag slug chunein.`
+            `URL slug "${slug}" is already taken by another restaurant. Please choose a different slug.`
           );
         } else {
           setOnboardingError(error.message);
@@ -159,7 +159,7 @@ export default function DashboardOverviewPage() {
       setHotel(newHotel);
     } catch (err: unknown) {
       setOnboardingError(
-        err instanceof Error ? err.message : "Hotel save karne me samasya aayi."
+        err instanceof Error ? err.message : "An error occurred while saving restaurant details."
       );
       setSubmittingOnboarding(false);
     }
@@ -170,7 +170,7 @@ export default function DashboardOverviewPage() {
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Spinner size="lg" />
         <p className="text-sm font-medium text-zinc-500">
-          Dashboard load ho raha hai...
+          Loading dashboard...
         </p>
       </div>
     );
@@ -183,14 +183,14 @@ export default function DashboardOverviewPage() {
     return (
       <div className="max-w-2xl mx-auto py-6 sm:py-10">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mx-auto mb-4 shadow-sm">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4 shadow-sm">
             <Store className="w-7 h-7" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
-            Apne Hotel Ki Jankari Bharein
+            Set Up Your Restaurant Profile
           </h1>
           <p className="mt-2 text-sm text-zinc-600">
-            Aapka account ban chuka hai! Ab apne hotel ya cafe ko set up karein.
+            Your account is ready! Now let&apos;s set up your restaurant or cafe.
           </p>
         </div>
 
@@ -210,7 +210,7 @@ export default function DashboardOverviewPage() {
                 htmlFor="hotelName"
                 className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
               >
-                Hotel / Restaurant Ka Naam *
+                Restaurant / Hotel Name *
               </label>
               <div className="relative">
                 <Input
@@ -246,7 +246,7 @@ export default function DashboardOverviewPage() {
                 <Globe className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
               <p className="text-[11px] text-zinc-500 mt-1">
-                Aapka menu URL: <span className="font-mono text-orange-600">/menu/{slug || "hotel-slug"}</span>
+                Your customer menu URL: <span className="font-mono text-emerald-700 font-bold">/menu/{slug || "restaurant-slug"}</span>
               </p>
             </div>
 
@@ -255,7 +255,7 @@ export default function DashboardOverviewPage() {
                 htmlFor="phone"
                 className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
               >
-                Sampark Phone Number
+                Contact Phone Number
               </label>
               <div className="relative">
                 <Input
@@ -275,7 +275,7 @@ export default function DashboardOverviewPage() {
                 htmlFor="address"
                 className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
               >
-                Hotel Ka Pura Pata (Address)
+                Restaurant Address
               </label>
               <div className="relative">
                 <Input
@@ -294,10 +294,10 @@ export default function DashboardOverviewPage() {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full mt-4"
+              className="w-full mt-4 bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold"
               isLoading={submittingOnboarding}
             >
-              Hotel Create Karein & Shuru Karein <ArrowRight className="w-4 h-4 ml-1" />
+              Create Restaurant & Get Started <ArrowRight className="w-4 h-4 ml-1" />
             </Button>
           </form>
         </div>

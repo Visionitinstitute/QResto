@@ -98,8 +98,8 @@ export default function DashboardLayout({
               <UtensilsCrossed className="w-4 h-4 text-[#39ff14]" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-base tracking-tight text-[#0B192C] leading-none">
-                Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-sm ml-0.5 text-xs font-bold">Resto</span>
+              <span className="font-bold text-base tracking-tight text-[#0B192C] leading-none">
+                Mera<span className="text-emerald-600">Resto</span>
               </span>
               <span className="text-[9px] text-zinc-400 font-semibold tracking-wider uppercase mt-0.5">
                 Portal
@@ -186,7 +186,7 @@ export default function DashboardLayout({
             <UtensilsCrossed className="w-3 h-3 text-[#39ff14]" />
           </div>
           <span className="font-bold text-sm text-[#0B192C]">
-            Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-sm ml-0.5 text-xs">Resto</span>
+            Mera<span className="text-emerald-600">Resto</span>
           </span>
         </Link>
 

@@ -36,14 +36,14 @@ export async function POST(request: Request) {
     const tableNum = Number(table_number);
     if (!tableNum || tableNum <= 0) {
       return NextResponse.json(
-        { error: "Kripya sahi table number darj karein." },
+        { error: "Please provide a valid table number." },
         { status: 400 }
       );
     }
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json(
-        { error: "Cart khali hai. Kripya pehle items jodein." },
+        { error: "Your cart is empty. Please add items before submitting." },
         { status: 400 }
       );
     }
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       if (!dbItem.is_available) {
         return NextResponse.json(
           {
-            error: `"${dbItem.name}" abhi out of stock ho gaya hai. Kripya ise cart se hatayein.`,
+            error: `"${dbItem.name}" is currently out of stock. Please remove it from your cart.`,
           },
           { status: 400 }
         );

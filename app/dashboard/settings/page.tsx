@@ -98,13 +98,13 @@ export default function DashboardSettingsPage() {
       } else {
         setStatusMessage({
           type: "success",
-          text: "Hotel settings safaltapoorvak save ho gayi hain!",
+          text: "Restaurant settings saved successfully!",
         });
       }
     } catch (err: unknown) {
       setStatusMessage({
         type: "error",
-        text: err instanceof Error ? err.message : "Settings save nahi ho saki.",
+        text: err instanceof Error ? err.message : "Failed to save settings.",
       });
     } finally {
       setSaving(false);
@@ -115,7 +115,7 @@ export default function DashboardSettingsPage() {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Spinner size="lg" />
-        <p className="text-sm font-medium text-zinc-500">Settings load ho rahi hain...</p>
+        <p className="text-sm font-medium text-zinc-500">Loading settings...</p>
       </div>
     );
   }
@@ -123,13 +123,13 @@ export default function DashboardSettingsPage() {
   if (!hotel) {
     return (
       <div className="p-8 text-center bg-white rounded-2xl border border-zinc-200">
-        <Store className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Store className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
+        <h2 className="text-lg font-bold text-zinc-900">Please set up your restaurant first</h2>
         <p className="text-sm text-zinc-500 mt-1 mb-4">
-          Aapne abhi tak koi hotel add nahi kiya hai.
+          You haven&apos;t added a restaurant profile yet.
         </p>
         <Link href="/dashboard">
-          <Button>Overview par jayein</Button>
+          <Button>Go to Overview</Button>
         </Link>
       </div>
     );
@@ -139,10 +139,10 @@ export default function DashboardSettingsPage() {
     <div className="max-w-3xl space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">
-          Hotel Settings
+          Restaurant Settings
         </h1>
         <p className="text-sm text-zinc-500 mt-1">
-          Apne restaurant ki profile, contact number, pata aur branding manage karein.
+          Manage your restaurant profile, contact details, address, and branding.
         </p>
       </div>
 
@@ -278,10 +278,10 @@ export default function DashboardSettingsPage() {
                 />
                 <div>
                   <span className="text-sm font-semibold text-zinc-900">
-                    Hotel & Digital Menu Ko Live Rakhein
+                    Keep Restaurant & Digital Menu Live
                   </span>
                   <p className="text-xs text-zinc-500">
-                    Agar band karenge to customer QR scan karne par menu nahi dekh payenge.
+                    If disabled, guests will not be able to view the menu when scanning table QR codes.
                   </p>
                 </div>
               </label>
@@ -289,8 +289,8 @@ export default function DashboardSettingsPage() {
           </div>
 
           <div className="pt-4 border-t border-zinc-100 flex justify-end">
-            <Button type="submit" variant="primary" isLoading={saving}>
-              <Save className="w-4 h-4 mr-1.5" /> Changes Save Karein
+            <Button type="submit" variant="primary" isLoading={saving} className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+              <Save className="w-4 h-4 mr-1.5 text-[#39ff14]" /> Save Changes
             </Button>
           </div>
         </form>

@@ -160,10 +160,10 @@ export default function QRManagementPage() {
   if (!hotel) {
     return (
       <div className="p-8 text-center bg-white rounded-2xl border border-zinc-200">
-        <Store className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Store className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
+        <h2 className="text-lg font-bold text-zinc-900">Please set up your restaurant first</h2>
         <Link href="/dashboard" className="mt-4 inline-block">
-          <Button>Dashboard Overview par jayein</Button>
+          <Button>Go to Dashboard Overview</Button>
         </Link>
       </div>
     );
@@ -177,17 +177,17 @@ export default function QRManagementPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
         <div>
           <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <QrCode className="w-4 h-4 text-orange-600" />
+            <QrCode className="w-4 h-4 text-emerald-600" />
             <span>Table QR Codes</span>
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Apne restaurant ke har table ke liye unique QR code print aur download karein.
+            Print and export unique QR codes for every dining table in your restaurant.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="primary" size="sm" onClick={handlePrintAll} className="h-8 text-xs">
-            <Printer className="w-3.5 h-3.5 mr-1" /> Print QR Cards
+          <Button variant="primary" size="sm" onClick={handlePrintAll} className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+            <Printer className="w-3.5 h-3.5 mr-1 text-[#39ff14]" /> Print QR Cards
           </Button>
         </div>
       </div>
@@ -279,10 +279,10 @@ export default function QRManagementPage() {
           <Card className="text-center py-12 px-4">
             <QrCode className="w-10 h-10 text-zinc-300 mx-auto mb-2" />
             <h3 className="text-sm font-bold text-zinc-800">
-              Koi table nahi mili
+              No tables found
             </h3>
             <p className="text-xs text-zinc-500 mt-0.5">
-              Upar diye gaye form se table number enter karke add karein.
+              Enter a table number in the form above to add tables.
             </p>
           </Card>
         ) : (
@@ -322,7 +322,7 @@ export default function QRManagementPage() {
                   </div>
 
                   <p className="text-[10px] text-zinc-400 mt-1 print:text-zinc-600">
-                    Camera se scan karein
+                    Scan with phone camera
                   </p>
 
                   {/* Action Buttons - Hidden in Print */}

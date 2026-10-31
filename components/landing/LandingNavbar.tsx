@@ -130,7 +130,7 @@ export function LandingNavbar() {
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="text-xl font-black tracking-tight text-[#0B192C] font-sans">
-                  Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-md ml-0.5 shadow-2xs">Resto</span>
+                  Mera<span className="text-emerald-600">Resto</span>
                 </span>
                 <span className="text-[10px] font-bold bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
                   SaaS

@@ -28,8 +28,8 @@ export default function HomePage() {
               <UtensilsCrossed className="h-5 w-5 text-[#39ff14]" />
             </div>
             <div>
-              <span className="text-xl font-black tracking-tight text-[#0B192C]">
-                Mera<span className="text-zinc-950 bg-[#39ff14] px-1 py-0.5 rounded-md ml-0.5 font-bold">Resto</span>
+              <span className="text-xl font-bold tracking-tight text-[#0B192C]">
+                Mera<span className="text-emerald-600">Resto</span>
               </span>
             </div>
           </div>

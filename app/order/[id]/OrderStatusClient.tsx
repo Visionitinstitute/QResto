@@ -36,11 +36,11 @@ interface OrderStatusClientProps {
 }
 
 const steps = [
-  { key: "pending", label: "Placed", icon: Clock, desc: "Order hotel ko mil gaya hai" },
-  { key: "accepted", label: "Accepted", icon: CheckCircle2, desc: "Kitchen ne order accept kar liya" },
-  { key: "preparing", label: "Preparing", icon: ChefHat, desc: "Chef aapka khana bana rahe hain" },
-  { key: "ready", label: "Ready", icon: BellRing, desc: "Order serve hone ke liye taiyaar hai" },
-  { key: "served", label: "Served", icon: UtensilsCrossed, desc: "Aapke table par deliver ho gaya" },
+  { key: "pending", label: "Placed", icon: Clock, desc: "Order received by kitchen" },
+  { key: "accepted", label: "Accepted", icon: CheckCircle2, desc: "Order accepted by kitchen staff" },
+  { key: "preparing", label: "Preparing", icon: ChefHat, desc: "Chef is preparing your fresh meal" },
+  { key: "ready", label: "Ready", icon: BellRing, desc: "Order is plated and ready for pickup" },
+  { key: "served", label: "Served", icon: UtensilsCrossed, desc: "Delivered to your table" },
 ];
 
 export default function OrderStatusClient({
@@ -166,10 +166,10 @@ export default function OrderStatusClient({
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 tracking-tight">
             {isRejected
-              ? "Order Cancel / Reject Ho Gaya"
+              ? "Order Cancelled / Declined"
               : isCompleted
-              ? "Aapka Order Serve Ho Gaya! 🎉"
-              : "Khana Taiyaar Ho Raha Hai..."}
+              ? "Your Order Has Been Served! 🎉"
+              : "Your Meal is Being Prepared..."}
           </h1>
           <p className="text-xs sm:text-sm text-zinc-500 mt-1">
             {order.hotels?.name} • Order #{order.id.slice(0, 8)}
@@ -185,10 +185,10 @@ export default function OrderStatusClient({
               <XCircle className="w-6 h-6 text-red-600 shrink-0" />
               <div>
                 <h3 className="text-sm font-bold text-red-900">
-                  Order Reject Kar Diya Gaya
+                  Order Declined
                 </h3>
                 <p className="text-xs text-red-700 mt-0.5">
-                  Hotel staff dwara kisi kaaranवश order ko reject kar diya gaya hai. Kripya counter par sampark karein.
+                  Your order was declined by the restaurant staff. Please contact the front counter for assistance.
                 </p>
               </div>
             </div>
@@ -301,18 +301,18 @@ export default function OrderStatusClient({
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-5 h-5 text-amber-500" />
               <h2 className="text-base font-black text-zinc-900">
-                Aapka Khana Kaisa Raha?
+                How Was Your Meal?
               </h2>
             </div>
             <p className="text-xs text-zinc-500 mb-4">
-              Apna anubhav share karein aur restaurant ko rating dein.
+              Share your feedback and rate your dining experience.
             </p>
 
             {hasReviewed || reviewSuccess ? (
               <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                 <p className="text-xs sm:text-sm text-emerald-800 font-bold">
-                  Aapka review safaltapoorvak darj kar liya gaya hai. Dhanyavaad!
+                  Thank you! Your review has been submitted successfully.
                 </p>
               </div>
             ) : (
@@ -327,7 +327,7 @@ export default function OrderStatusClient({
                 {/* Star Selector */}
                 <div>
                   <label className="block text-xs font-bold text-zinc-700 mb-1.5">
-                    Rating (1 se 5 Stars)
+                    Rating (1 to 5 Stars)
                   </label>
                   <div className="flex items-center gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -354,27 +354,27 @@ export default function OrderStatusClient({
 
                 <div>
                   <label className="block text-xs font-bold text-zinc-700 mb-1">
-                    Aapka Naam
+                    Your Name
                   </label>
                   <input
                     type="text"
                     placeholder="Guest Customer"
                     value={reviewName}
                     onChange={(e) => setReviewName(e.target.value)}
-                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#39ff14]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-zinc-700 mb-1">
-                    Feedback / Comment
+                    Feedback / Comments
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="Khana bahut swadisht tha, service fast thi..."
+                    placeholder="Food was delicious, service was fast..."
                     value={reviewComment}
                     onChange={(e) => setReviewComment(e.target.value)}
-                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#39ff14]"
                   />
                 </div>
 
@@ -383,9 +383,9 @@ export default function OrderStatusClient({
                   variant="primary"
                   size="sm"
                   isLoading={submittingReview}
-                  className="w-full"
+                  className="w-full bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold"
                 >
-                  <Send className="w-3.5 h-3.5 mr-1.5" /> Rating Submit Karein
+                  <Send className="w-3.5 h-3.5 mr-1.5 text-[#39ff14]" /> Submit Rating
                 </Button>
               </form>
             )}

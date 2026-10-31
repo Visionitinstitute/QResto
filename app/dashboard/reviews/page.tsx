@@ -94,10 +94,10 @@ export default function DashboardReviewsPage() {
   if (!hotel) {
     return (
       <div className="p-8 text-center bg-white rounded-2xl border border-zinc-200">
-        <Store className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Store className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
+        <h2 className="text-lg font-bold text-zinc-900">Please set up your restaurant first</h2>
         <Link href="/dashboard" className="mt-4 inline-block">
-          <Button>Dashboard Overview par jayein</Button>
+          <Button>Go to Dashboard Overview</Button>
         </Link>
       </div>
     );
@@ -111,7 +111,7 @@ export default function DashboardReviewsPage() {
           <Star className="w-6 h-6 text-amber-500 fill-amber-500" /> Customer Reviews & Ratings
         </h1>
         <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
-          Apne restaurant ke customer feedback aur star ratings yahan monitor karein.
+          Monitor your customer feedback, star ratings, and dining experience reviews here.
         </p>
       </div>
 

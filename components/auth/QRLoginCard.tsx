@@ -336,9 +336,9 @@ export function QRLoginCard({ redirectPath }: QRLoginCardProps) {
           <Smartphone className="w-3.5 h-3.5 text-orange-600" /> 3 Steps to Login:
         </p>
         <ol className="text-xs text-zinc-600 space-y-1.5 list-decimal list-inside">
-          <li>Apne phone ka Camera ya QR scanner kholein.</li>
-          <li>Screen par dikh rahe QR code ko scan karein.</li>
-          <li>Phone me <span className="font-semibold text-zinc-900">&quot;Approve&quot;</span> par tap karein — desktop turant login ho jayega!</li>
+          <li>Open your smartphone camera or QR scanner.</li>
+          <li>Point your camera at the QR code on this screen.</li>
+          <li>Tap <span className="font-semibold text-zinc-900">&quot;Approve&quot;</span> on your phone — your desktop signs in instantly!</li>
         </ol>
       </div>
 

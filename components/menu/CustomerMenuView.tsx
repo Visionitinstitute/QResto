@@ -169,10 +169,10 @@ export default function CustomerMenuView({
           <div className="text-center py-16 px-4 bg-white rounded-3xl border border-zinc-200/80">
             <UtensilsCrossed className="w-12 h-12 text-zinc-300 mx-auto mb-3" />
             <h3 className="text-base font-bold text-zinc-800">
-              Koi dish nahi mili
+              No dishes found
             </h3>
             <p className="text-xs text-zinc-500 mt-1">
-              Search filter badal kar dobara koshish karein.
+              Try changing your search keywords or dietary filters.
             </p>
           </div>
         ) : (
@@ -308,8 +308,8 @@ export default function CustomerMenuView({
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="w-5 h-5 text-orange-600" />
-                <h2 className="text-lg font-black text-zinc-900">Aapka Order Cart</h2>
+                <ShoppingBag className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-lg font-black text-zinc-900">Your Order Cart</h2>
               </div>
               <button
                 onClick={() => setIsCartDrawerOpen(false)}
@@ -320,9 +320,9 @@ export default function CustomerMenuView({
             </div>
 
             {/* Table Number Bar */}
-            <div className="py-3 px-3.5 my-3 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-between">
-              <span className="text-xs font-bold text-orange-950">
-                Table: {tableNumber ? `Table ${tableNumber}` : "Table select nahi hui"}
+            <div className="py-3 px-3.5 my-3 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-between">
+              <span className="text-xs font-bold text-emerald-950">
+                Table: {tableNumber ? `Table ${tableNumber}` : "Table not selected"}
               </span>
               <button
                 onClick={() => {

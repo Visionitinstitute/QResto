@@ -169,7 +169,7 @@ function QRAuthContent() {
           <div className="bg-amber-50 border border-amber-200/70 rounded-xl p-3 flex items-start gap-2.5">
             <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <p className="text-[11px] text-amber-900 leading-relaxed">
-              Kripya confirm karein ki yeh request aapki screen par dikh rahi hai. Approve karne par desktop par dashboard khul jayega.
+              Please confirm this request matches your desktop screen. Approving will immediately unlock your desktop dashboard.
             </p>
           </div>
 
@@ -178,7 +178,7 @@ function QRAuthContent() {
             <button
               onClick={handleApprove}
               disabled={status === "approving"}
-              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-sm shadow-lg shadow-orange-600/25 flex items-center justify-center gap-2 transition disabled:opacity-50 cursor-pointer"
+              className="w-full py-3.5 px-4 rounded-xl bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold text-sm shadow-lg shadow-[#39ff14]/15 flex items-center justify-center gap-2 transition disabled:opacity-50 cursor-pointer"
             >
               {status === "approving" ? (
                 <>
@@ -187,7 +187,7 @@ function QRAuthContent() {
                 </>
               ) : (
                 <>
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircle2 className="w-4 h-4 text-[#39ff14]" />
                   <span>Approve & Log In Desktop</span>
                 </>
               )}
@@ -212,14 +212,14 @@ function QRAuthContent() {
           </div>
           <h2 className="text-lg font-black text-zinc-900">Login Approved!</h2>
           <p className="text-xs text-zinc-600 max-w-xs mx-auto">
-            Aapka desktop browser ab dashboard me authenticate ho chuka hai. Aap is phone window ko band kar sakte hain.
+            Your desktop browser is now authenticated. You can safely close this mobile window.
           </p>
           <div className="pt-4">
             <button
               onClick={() => router.push("/")}
-              className="text-xs text-orange-600 font-bold hover:underline"
+              className="text-xs text-emerald-700 font-bold hover:underline"
             >
-              Home par wapas jayein
+              Return to Home
             </button>
           </div>
         </div>
@@ -233,7 +233,7 @@ function QRAuthContent() {
           </div>
           <h2 className="text-lg font-black text-zinc-900">Login Rejected</h2>
           <p className="text-xs text-zinc-500">
-            Aapne is login request ko cancel kar diya hai. Desktop login nahi hua.
+            You have rejected this login request. Your desktop session remains locked.
           </p>
         </div>
       )}
@@ -246,7 +246,7 @@ function QRAuthContent() {
           </div>
           <h2 className="text-lg font-black text-zinc-900">Session Error</h2>
           <p className="text-xs text-red-600 max-w-xs mx-auto">
-            {errorMessage || "QR Code session expire ho chuka hai. Kripya desktop par QR refresh karein."}
+            {errorMessage || "The QR code session has expired. Please refresh the QR code on your desktop screen."}
           </p>
         </div>
       )}

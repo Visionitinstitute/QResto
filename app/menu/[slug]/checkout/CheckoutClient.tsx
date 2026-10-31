@@ -62,16 +62,16 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
     return (
       <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-6 font-sans">
         <div className="max-w-md w-full bg-white rounded-3xl border border-zinc-200/80 p-8 text-center shadow-xs">
-          <div className="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
             <ShoppingBag className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-bold text-zinc-900">Aapka Cart Khali Hai</h2>
+          <h2 className="text-xl font-bold text-zinc-900">Your Cart is Empty</h2>
           <p className="text-xs text-zinc-500 mt-1 mb-6">
-            Kripya pehle hotel menu se apni pasand ki dishes cart me jodein.
+            Please browse the menu and add your favorite dishes to your cart first.
           </p>
           <Link href={`/menu/${hotel.slug}`}>
-            <Button variant="primary" className="w-full">
-              Menu Dekhein
+            <Button variant="primary" className="w-full bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold">
+              Browse Menu
             </Button>
           </Link>
         </div>
@@ -85,7 +85,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
 
     const parsedTable = parseInt(tableInput, 10);
     if (!parsedTable || parsedTable <= 0) {
-      setErrorMessage("Kripya sahi Table Number enter karein (e.g. 1, 2, 5).");
+      setErrorMessage("Please enter a valid table number (e.g. 1, 2, 5).");
       return;
     }
 
@@ -127,7 +127,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
       router.push(`/order/${data.order_id}`);
     } catch (err: unknown) {
       setErrorMessage(
-        err instanceof Error ? err.message : "Kuch gadbad hui. Kripya punah prayas karein."
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
       );
       setIsSubmitting(false);
     }
@@ -153,10 +153,10 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
       <main className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight">
-            Order Confirm Karein
+            Confirm Your Order
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
-            {hotel.name} • Apni table jankari darj karein
+            {hotel.name} • Enter your dining details
           </p>
         </div>
 
@@ -173,7 +173,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
           {/* 1. Table & Contact Details Card */}
           <Card className="p-5 sm:p-6 space-y-4">
             <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-2 flex items-center gap-2">
-              <Hash className="w-4 h-4 text-orange-600" /> Table & Contact Details
+              <Hash className="w-4 h-4 text-emerald-600" /> Table & Contact Details
             </h2>
 
             <div>
@@ -197,7 +197,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
                 <Hash className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
               <p className="text-[11px] text-zinc-400 mt-1">
-                Aap jis table par baithe hain uska number enter karein.
+                Enter the number on your dining table.
               </p>
             </div>
 
@@ -207,7 +207,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
                   htmlFor="customerName"
                   className="block text-xs font-bold text-zinc-800 mb-1"
                 >
-                  Aapka Naam (Optional)
+                  Your Name (Optional)
                 </label>
                 <div className="relative">
                   <Input
@@ -254,10 +254,10 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
                 <textarea
                   id="cookingNote"
                   rows={2}
-                  placeholder="e.g. Kam mirch rakhna, extra tissue bhejna, spicy..."
+                  placeholder="e.g. Less spicy, extra tissues, no onions..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-orange-500 pl-10"
+                  className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#39ff14] pl-10"
                 />
                 <FileText className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3 pointer-events-none" />
               </div>
@@ -267,7 +267,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
           {/* 2. Order Summary Card */}
           <Card className="p-5 sm:p-6 space-y-4">
             <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-2 flex items-center gap-2">
-              <UtensilsCrossed className="w-4 h-4 text-orange-600" /> Order Summary ({cartItems.length} items)
+              <UtensilsCrossed className="w-4 h-4 text-emerald-600" /> Order Summary ({cartItems.length} items)
             </h2>
 
             <div className="divide-y divide-zinc-100">
@@ -277,7 +277,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
                   className="py-2.5 flex items-center justify-between text-xs sm:text-sm"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-orange-600">
+                    <span className="font-bold text-emerald-700">
                       {item.quantity}x
                     </span>
                     <span className="font-semibold text-zinc-800">
@@ -293,10 +293,10 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
 
             <div className="pt-3 border-t border-zinc-200 flex items-center justify-between text-base font-black">
               <span>Payable Amount</span>
-              <span className="text-orange-600 text-lg">₹{totalAmount}</span>
+              <span className="text-emerald-700 text-lg">₹{totalAmount}</span>
             </div>
             <p className="text-[11px] text-zinc-400 text-center">
-              (Payment table par serve hone ke baad cash ya online scanner se kiya ja sakta hai)
+              (Payment can be made at your table via cash or UPI / Card after service)
             </p>
           </Card>
 
@@ -305,7 +305,7 @@ export default function CheckoutClient({ hotel }: { hotel: HotelData }) {
             type="submit"
             variant="primary"
             size="lg"
-            className="w-full shadow-lg shadow-orange-600/30 text-base"
+            className="w-full bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold shadow-lg shadow-[#39ff14]/15 text-base"
             isLoading={isSubmitting}
           >
             Place Order Now <ArrowRight className="w-4 h-4 ml-1.5" />

@@ -244,7 +244,7 @@ export default function MenuManagementPage() {
       const priceNum = parseFloat(itemPrice);
 
       if (isNaN(priceNum) || priceNum < 0) {
-        throw new Error("Sahi price darj karein.");
+        throw new Error("Please enter a valid price.");
       }
 
       const itemPayload = {
@@ -405,10 +405,10 @@ export default function MenuManagementPage() {
   if (!hotel) {
     return (
       <div className="p-8 text-center bg-white rounded-2xl border border-zinc-200">
-        <Store className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-900">Pehle apna hotel set up karein</h2>
+        <Store className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
+        <h2 className="text-lg font-bold text-zinc-900">Please set up your restaurant first</h2>
         <Link href="/dashboard" className="mt-4 inline-block">
-          <Button>Dashboard Overview par jayein</Button>
+          <Button>Go to Dashboard Overview</Button>
         </Link>
       </div>
     );
@@ -420,10 +420,10 @@ export default function MenuManagementPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-orange-600" /> Menu & Categories
+            <ChefHat className="w-4 h-4 text-emerald-600" /> Menu & Categories
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Apne restaurant ka live menu, rate aur categories yahan se manage karein.
+            Manage your restaurant&apos;s live menu, prices, and categories from here.
           </p>
         </div>
 
@@ -431,8 +431,8 @@ export default function MenuManagementPage() {
           <Button variant="outline" size="sm" onClick={openAddCategory} className="h-8 text-xs">
             <Layers className="w-3.5 h-3.5 mr-1" /> + Category
           </Button>
-          <Button variant="primary" size="sm" onClick={openAddItem} className="h-8 text-xs">
-            <Plus className="w-3.5 h-3.5 mr-1" /> + Nayi Dish
+          <Button variant="primary" size="sm" onClick={openAddItem} className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+            <Plus className="w-3.5 h-3.5 mr-1 text-[#39ff14]" /> + Add Dish
           </Button>
         </div>
       </div>
@@ -515,7 +515,7 @@ export default function MenuManagementPage() {
       <div className="relative">
         <Input
           type="text"
-          placeholder="Dish ka naam ya description se search karein..."
+          placeholder="Search dishes by name or description..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-10"
@@ -743,13 +743,13 @@ export default function MenuManagementPage() {
       <Modal
         isOpen={isItemModalOpen}
         onClose={() => setIsItemModalOpen(false)}
-        title={editingItem ? "Dish Details Edit Karein" : "Nayi Dish Jodein"}
+        title={editingItem ? "Edit Dish Details" : "Add New Dish"}
         maxWidth="md"
       >
         <form onSubmit={handleSaveItem} className="space-y-4 pt-2">
           <div>
             <label className="block text-xs font-semibold text-zinc-700 mb-1">
-              Dish Ka Naam *
+              Dish Name *
             </label>
             <Input
               type="text"

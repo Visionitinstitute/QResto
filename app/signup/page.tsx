@@ -36,17 +36,17 @@ export default function SignupPage() {
     setSuccessMessage(null);
 
     if (!fullName || !email || !password) {
-      setErrorMessage("Kripya sabhi zaroori fields bharein.");
+      setErrorMessage("Please fill in all required fields.");
       return;
     }
 
     if (password.length < 6) {
-      setErrorMessage("Password kam se kam 6 aksharo (characters) ka hona chahiye.");
+      setErrorMessage("Password must be at least 6 characters long.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("Dono password match nahi ho rahe hain.");
+      setErrorMessage("Passwords do not match.");
       return;
     }
 
@@ -76,34 +76,34 @@ export default function SignupPage() {
         router.refresh();
       } else {
         setSuccessMessage(
-          "Aapka account safaltapoorvak ban gaya hai! Kripya apna email check karke confirm karein, phir Login karein."
+          "Account created successfully! Please check your email for a confirmation link, then sign in."
         );
         setIsLoading(false);
       }
     } catch (err: unknown) {
       setErrorMessage(
-        err instanceof Error ? err.message : "Signup me koi error aayi. Kripya punah prayas karein."
+        err instanceof Error ? err.message : "An error occurred during sign up. Please try again."
       );
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-orange-50/70 via-white to-zinc-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-linear-to-b from-emerald-50/40 via-white to-zinc-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
         <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group">
-          <div className="w-12 h-12 rounded-2xl bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white shadow-lg shadow-[#39ff14]/15 group-hover:scale-105 transition-transform">
-            <UtensilsCrossed className="w-6 h-6 text-[#39ff14]" />
+          <div className="w-11 h-11 rounded-2xl bg-[#0B192C] flex items-center justify-center text-white shadow-md shadow-zinc-900/10 group-hover:scale-105 transition-transform">
+            <UtensilsCrossed className="w-5 h-5 text-[#39ff14]" />
           </div>
           <span className="text-2xl font-black tracking-tight text-[#0B192C]">
-            Mera<span className="text-zinc-950 bg-[#39ff14] px-1.5 py-0.5 rounded-lg ml-0.5 font-bold">Resto</span>
+            Mera<span className="text-emerald-600">Resto</span>
           </span>
         </Link>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
-          Naya Hotel Register Karein
+          Register Your Restaurant
         </h2>
         <p className="mt-2 text-sm text-zinc-600">
-          Sirf 2 minute me apna digital QR menu aur ordering shuru karein
+          Start your digital QR menu and table ordering in 2 minutes
         </p>
       </div>
 
@@ -129,7 +129,7 @@ export default function SignupPage() {
                   href="/login"
                   className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-900"
                 >
-                  Ab Login Karein <ArrowRight className="w-3.5 h-3.5" />
+                  Sign In Now <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function SignupPage() {
                   htmlFor="fullName"
                   className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
                 >
-                  Aapka Naam / Manager Name
+                  Full Name / Manager Name
                 </label>
                 <div className="relative">
                   <Input
@@ -169,7 +169,7 @@ export default function SignupPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="manager@hotel.com"
+                    placeholder="manager@restaurant.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
@@ -184,7 +184,7 @@ export default function SignupPage() {
                   htmlFor="password"
                   className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
                 >
-                  Password (kam se kam 6 akshar)
+                  Password (minimum 6 characters)
                 </label>
                 <div className="relative">
                   <Input
@@ -200,7 +200,7 @@ export default function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition cursor-pointer"
                     aria-label="Toggle password visibility"
                   >
                     {showPassword ? (
@@ -237,22 +237,22 @@ export default function SignupPage() {
                 type="submit"
                 variant="primary"
                 size="lg"
-                className="w-full mt-3"
+                className="w-full mt-3 bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold shadow-md shadow-[#39ff14]/15"
                 isLoading={isLoading}
               >
-                Account Banayein <ArrowRight className="w-4 h-4 ml-1" />
+                Create Account <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </form>
           )}
 
           <div className="mt-8 pt-6 border-t border-zinc-100 text-center">
             <p className="text-xs sm:text-sm text-zinc-600">
-              Pehle se account hai?{" "}
+              Already have an account?{" "}
               <Link
                 href="/login"
-                className="font-bold text-orange-600 hover:text-orange-700 transition"
+                className="font-bold text-emerald-700 hover:text-emerald-800 transition"
               >
-                Login Karein
+                Sign In
               </Link>
             </p>
           </div>
