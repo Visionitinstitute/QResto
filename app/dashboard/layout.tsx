@@ -18,7 +18,6 @@ import {
   Sparkles,
   Lock,
   ArrowRight,
-  ShieldAlert,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -115,7 +114,6 @@ export default function DashboardLayout({
     { name: "QR Codes", href: "/dashboard/qr", icon: QrCode },
     { name: "Reviews", href: "/dashboard/reviews", icon: Star },
     { name: "Settings & Billing", href: "/dashboard/settings", icon: Settings },
-    { name: "All Restaurants", href: "/admin", icon: ShieldAlert },
   ];
 
   // Paywall guard: If user does not have a hotel or active subscription, and tries to visit sub-routes
