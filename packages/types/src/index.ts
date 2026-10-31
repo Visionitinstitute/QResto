@@ -204,7 +204,15 @@ export type OrderStatus =
   | "ready"
   | "served"
   | "completed"
-  | "rejected";
+  | "rejected"
+  | "cancelled"
+  | "PENDING"
+  | "ACCEPTED"
+  | "PREPARING"
+  | "READY"
+  | "SERVED"
+  | "COMPLETED"
+  | "CANCELLED";
 
 export interface Order {
   id: string;

@@ -76,16 +76,20 @@ export function isValidOrderStatusTransition(
   current: OrderStatus,
   next: OrderStatus
 ): boolean {
-  const allowedTransitions: Record<OrderStatus, OrderStatus[]> = {
-    pending: ["accepted", "rejected"],
-    accepted: ["preparing", "rejected"],
-    preparing: ["ready"],
-    ready: ["served"],
+  const c = current.toLowerCase();
+  const n = next.toLowerCase();
+
+  const allowedTransitions: Record<string, string[]> = {
+    pending: ["accepted", "rejected", "cancelled", "preparing"],
+    accepted: ["preparing", "rejected", "cancelled"],
+    preparing: ["ready", "cancelled"],
+    ready: ["served", "completed"],
     served: ["completed"],
     completed: [],
     rejected: [],
+    cancelled: [],
   };
 
-  return allowedTransitions[current]?.includes(next) ?? false;
+  return allowedTransitions[c]?.includes(n) ?? false;
 }
 
