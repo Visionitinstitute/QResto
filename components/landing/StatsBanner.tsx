@@ -6,7 +6,7 @@ export function StatsBanner() {
       icon: TrendingUp,
       value: "+24%",
       label: "Average Check Size",
-      sub: "Through visual dish previews and automatic side recommendations",
+      sub: "Through visual dish previews and side recommendations",
     },
     {
       icon: Clock,
@@ -29,26 +29,28 @@ export function StatsBanner() {
   ];
 
   return (
-    <section className="py-8 sm:py-12 bg-white border-y border-zinc-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <section className="py-6 sm:py-12 bg-white border-y border-zinc-100">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={idx}
-                className="p-5 sm:p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200/70 hover:border-orange-200 hover:bg-orange-50/30 transition-all group"
+                className="p-3.5 sm:p-6 rounded-2xl bg-zinc-50/80 border border-zinc-200/80 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all group flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-orange-600 mb-4 group-hover:scale-110 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-2xs">
-                  <Icon className="w-5 h-5" />
+                <div>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-emerald-600 mb-2.5 sm:mb-4 group-hover:scale-105 group-hover:bg-[#0B192C] group-hover:text-[#39ff14] transition-all shadow-2xs">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div className="text-2xl sm:text-4xl font-black text-zinc-950 tracking-tight font-sans">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold text-zinc-900 mt-0.5 sm:mt-1 leading-snug">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight font-sans">
-                  {stat.value}
-                </div>
-                <div className="text-sm font-bold text-zinc-900 mt-1">
-                  {stat.label}
-                </div>
-                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                <p className="text-[10px] sm:text-xs text-zinc-500 mt-1 sm:mt-2 leading-relaxed">
                   {stat.sub}
                 </p>
               </div>

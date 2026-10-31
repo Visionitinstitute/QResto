@@ -11,7 +11,7 @@ import { LandingFooter } from "@/components/landing/LandingFooter";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-zinc-900 flex flex-col font-sans antialiased selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-white text-zinc-900 flex flex-col font-sans antialiased selection:bg-[#39ff14] selection:text-[#0B192C] overflow-x-hidden">
       {/* 1. Sticky Modern Navigation */}
       <LandingNavbar />
 

@@ -183,9 +183,9 @@ export function LandingNavbar() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2.5 p-1.5 pr-3 rounded-full border border-zinc-200 hover:border-orange-300 hover:bg-orange-50/50 transition-all cursor-pointer bg-white shadow-xs"
+                  className="flex items-center gap-2.5 p-1.5 pr-3 rounded-full border border-zinc-200 hover:border-emerald-300 hover:bg-emerald-50/50 transition-all cursor-pointer bg-white shadow-xs"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                  <div className="w-8 h-8 rounded-full bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 font-bold text-xs flex items-center justify-center shadow-xs">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex flex-col text-left">
@@ -221,16 +221,16 @@ export function LandingNavbar() {
                       <Link
                         href="/dashboard"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-orange-50 hover:text-orange-600 transition"
+                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-emerald-50 hover:text-emerald-700 transition"
                       >
-                        <LayoutDashboard className="w-4 h-4 text-orange-600" />
+                        <LayoutDashboard className="w-4 h-4 text-emerald-600" />
                         <span>Manager Dashboard</span>
                       </Link>
 
                       <Link
                         href="/dashboard/orders"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-orange-50 hover:text-orange-600 transition"
+                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-emerald-50 hover:text-emerald-700 transition"
                       >
                         <Utensils className="w-4 h-4 text-zinc-400" />
                         <span>Live Orders</span>
@@ -239,7 +239,7 @@ export function LandingNavbar() {
                       <Link
                         href="/dashboard/settings"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-orange-50 hover:text-orange-600 transition"
+                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-emerald-50 hover:text-emerald-700 transition"
                       >
                         <Settings className="w-4 h-4 text-zinc-400" />
                         <span>Settings</span>

@@ -5,7 +5,6 @@ import {
   HeartHandshake,
   XCircle,
   CheckCircle2,
-  Sparkles,
 } from "lucide-react";
 
 export function RestaurantBenefits() {
@@ -19,10 +18,10 @@ export function RestaurantBenefits() {
     ],
     meraresto: [
       "100% real-time menu updates in seconds without reprinting costs",
-      "Staff focuses on hospitality & faster drink delivery, not order-taking",
+      "Staff focuses on hospitality & faster delivery, not order-taking",
       "Crystal clear digital tickets sent straight to Kitchen Display System",
-      "Guests order immediately upon sitting, reducing table turnover time by 30%",
-      "Automated smart upselling recommendations boost average check size by 24%",
+      "Guests order immediately upon sitting, reducing turnover time by 30%",
+      "Automated smart upselling recommendations boost check size by 24%",
     ],
   };
 
@@ -58,93 +57,89 @@ export function RestaurantBenefits() {
   ];
 
   return (
-    <section id="benefits" className="py-14 sm:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="benefits" className="py-10 sm:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
+        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-16">
+          <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3.5 py-1.5 rounded-full border border-[#39ff14]/40 shadow-xs">
             Proven ROI & Impact
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight mt-3 sm:mt-4">
+          <h2 className="text-2xl min-[400px]:text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-950 tracking-tight mt-2.5 sm:mt-4">
             Why leading restaurants are retiring paper menus forever
           </h2>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-zinc-600">
+          <p className="mt-2.5 sm:mt-4 text-xs sm:text-lg text-zinc-600 max-w-xl mx-auto">
             See how upgrading to MeraResto creates a win-win for your bottom line, kitchen efficiency, and guest happiness.
           </p>
         </div>
 
         {/* Side-by-Side Comparison Box */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16">
           {/* Traditional Way */}
-          <div className="bg-zinc-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold">
+          <div className="bg-zinc-50 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-zinc-200">
+            <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs sm:text-sm">
                 ✕
               </div>
-              <h3 className="text-lg font-bold text-zinc-900">
+              <h3 className="text-base sm:text-lg font-bold text-zinc-900">
                 Traditional Paper Menus
               </h3>
             </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-3 sm:space-y-4">
               {comparison.traditional.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-zinc-600">
-                  <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                  <span>{item}</span>
+                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-600">
+                  <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 shrink-0 mt-0.5" />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* MeraResto Way */}
-          <div className="bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/15 to-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-[#39ff14] shadow-xl shadow-[#39ff14]/10 relative overflow-hidden">
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 flex items-center justify-center font-bold">
-                  ✓
-                </div>
-                <h3 className="text-lg font-bold text-zinc-950">
-                  With MeraResto Digital Platform
-                </h3>
+          <div className="bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/15 to-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border-2 border-[#39ff14] shadow-xl shadow-[#39ff14]/10 relative overflow-hidden">
+            <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 flex items-center justify-center font-bold text-xs sm:text-sm">
+                ✓
               </div>
-              <div className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs shrink-0">
-                <Sparkles className="w-3 h-3 text-[#39ff14]" />
-                <span>Modern Standard</span>
-              </div>
+              <h3 className="text-base sm:text-lg font-bold text-zinc-950">
+                The MeraResto Platform
+              </h3>
             </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-3 sm:space-y-4">
               {comparison.meraresto.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-zinc-800 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>{item}</span>
+                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-900 font-medium">
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <span className="leading-snug">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* 4 Persona Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {personas.map((persona, idx) => {
-            const Icon = persona.icon;
+        {/* 4 Personas Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          {personas.map((p, idx) => {
+            const Icon = p.icon;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-[#39ff14] hover:shadow-lg hover:shadow-[#39ff14]/10 transition-all group"
+                className="p-4 sm:p-6 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-emerald-300 transition-all flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] flex items-center justify-center mb-4 group-hover:bg-[#39ff14] group-hover:text-[#0B192C] transition-all">
-                  <Icon className="w-5 h-5" />
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-emerald-600 mb-3 shadow-2xs">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] sm:text-[11px] font-bold text-emerald-800 uppercase tracking-wider block mb-1">
+                    {p.tag}
+                  </span>
+                  <h4 className="text-sm sm:text-base font-bold text-zinc-950">
+                    {p.title}
+                  </h4>
+                  <p className="mt-2 text-xs text-zinc-600 leading-relaxed">
+                    {p.description}
+                  </p>
                 </div>
-                <span className="text-[10px] font-bold text-zinc-950 bg-[#39ff14]/20 border border-[#39ff14]/40 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                  {persona.tag}
-                </span>
-                <h4 className="text-base font-bold text-zinc-950 mt-2">
-                  {persona.title}
-                </h4>
-                <p className="mt-2 text-xs text-zinc-600 leading-relaxed">
-                  {persona.description}
-                </p>
               </div>
             );
           })}

@@ -100,73 +100,68 @@ export function PricingSection() {
           </p>
 
           {/* Billing Toggle */}
-          <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            <span
-              className={`text-xs sm:text-sm font-semibold ${
-                !isAnnual ? "text-zinc-950" : "text-zinc-500"
+          <div className="mt-6 sm:mt-8 inline-flex items-center p-1 bg-white border border-zinc-200 rounded-full shadow-xs mx-auto">
+            <button
+              type="button"
+              onClick={() => setIsAnnual(false)}
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                !isAnnual
+                  ? "bg-[#0B192C] text-[#39ff14] shadow-xs"
+                  : "text-zinc-600 hover:text-zinc-950"
               }`}
             >
-              Monthly Billing
-            </span>
-            <button
-              onClick={() => setIsAnnual(!isAnnual)}
-              aria-label="Toggle annual or monthly billing"
-              className="w-13 sm:w-14 h-7 sm:h-8 bg-[#0B192C] border border-zinc-700 rounded-full p-1 transition-colors relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#39ff14]"
-            >
-              <div
-                className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#39ff14] shadow-[0_0_8px_#39ff14] transition-transform ${
-                  isAnnual ? "translate-x-6" : "translate-x-0"
-                }`}
-              />
+              Monthly
             </button>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span
-                className={`text-xs sm:text-sm font-semibold ${
-                  isAnnual ? "text-zinc-950" : "text-zinc-500"
-                }`}
-              >
-                Annual Billing
-              </span>
-              <span className="text-[10px] sm:text-[11px] font-bold bg-[#39ff14]/20 text-zinc-950 px-2 py-0.5 rounded-full border border-[#39ff14]/40">
+            <button
+              type="button"
+              onClick={() => setIsAnnual(true)}
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                isAnnual
+                  ? "bg-[#0B192C] text-[#39ff14] shadow-xs"
+                  : "text-zinc-600 hover:text-zinc-950"
+              }`}
+            >
+              <span>Annual</span>
+              <span className="text-[10px] bg-[#39ff14] text-[#0B192C] font-black px-1.5 py-0.5 rounded-full">
                 Save 25%
               </span>
-            </div>
+            </button>
           </div>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch mb-14 sm:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8 items-stretch mb-12 sm:mb-20">
           {tiers.map((tier, idx) => {
             const price = isAnnual ? tier.priceAnnual : tier.priceMonthly;
             return (
               <div
                 key={idx}
-                className={`rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all relative ${
+                className={`rounded-2xl sm:rounded-3xl p-5 sm:p-8 flex flex-col justify-between transition-all relative ${
                   tier.popular
                     ? "bg-white border-2 border-[#39ff14] shadow-xl shadow-[#39ff14]/15 lg:-translate-y-2 ring-4 ring-[#39ff14]/20"
                     : "bg-white border border-zinc-200 shadow-sm hover:shadow-md"
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B192C] border border-[#39ff14]/50 text-[#39ff14] text-xs font-black px-4 py-1.5 rounded-full shadow-lg shadow-[#39ff14]/20 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#39ff14]" />
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0B192C] border border-[#39ff14]/50 text-[#39ff14] text-[10px] sm:text-xs font-black px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg shadow-[#39ff14]/20 flex items-center gap-1.5 whitespace-nowrap">
+                    <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#39ff14]" />
                     <span>MOST POPULAR CHOICE</span>
                   </div>
                 )}
 
                 <div>
-                  <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block">
+                  <span className="text-[11px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider block">
                     {tier.badge}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-zinc-950 mt-1">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-950 mt-1">
                     {tier.name}
                   </h3>
-                  <p className="text-xs text-zinc-500 mt-2 min-h-[36px] leading-relaxed">
+                  <p className="text-xs text-zinc-500 mt-2 sm:min-h-[36px] leading-relaxed">
                     {tier.description}
                   </p>
 
-                  <div className="mt-6 flex items-baseline gap-1">
-                    <span className="text-4xl sm:text-5xl font-black text-zinc-950 tracking-tight">
+                  <div className="mt-5 sm:mt-6 flex items-baseline gap-1">
+                    <span className="text-3xl sm:text-5xl font-black text-zinc-950 tracking-tight">
                       ₹{price}
                     </span>
                     <span className="text-xs font-medium text-zinc-500">
@@ -174,12 +169,12 @@ export function PricingSection() {
                     </span>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-zinc-100 space-y-3">
-                    <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                  <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-zinc-100 space-y-2.5 sm:space-y-3">
+                    <p className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400">
                       What&apos;s Included:
                     </p>
                     {tier.features.map((feat, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-2.5 text-xs text-zinc-700">
+                      <div key={fIdx} className="flex items-start gap-2 sm:gap-2.5 text-xs text-zinc-700">
                         <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
@@ -187,10 +182,10 @@ export function PricingSection() {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6">
+                <div className="mt-6 sm:mt-8 pt-5 sm:pt-6">
                   <Link
                     href="/signup"
-                    className={`w-full py-3.5 rounded-xl font-black text-xs flex items-center justify-center gap-2 transition-all shadow-sm ${
+                    className={`w-full py-3 sm:py-3.5 rounded-xl font-black text-xs flex items-center justify-center gap-2 transition-all shadow-sm ${
                       tier.popular
                         ? "bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] shadow-lg shadow-[#39ff14]/30 hover:shadow-xl hover:shadow-[#39ff14]/40 border border-[#39ff14]"
                         : "bg-zinc-900 hover:bg-zinc-800 text-white"
@@ -199,7 +194,7 @@ export function PricingSection() {
                     <span>{tier.cta}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
-                  <p className="text-center text-[11px] text-zinc-400 mt-2">
+                  <p className="text-center text-[10px] sm:text-[11px] text-zinc-400 mt-2">
                     14-day free trial • Cancel anytime
                   </p>
                 </div>
@@ -209,10 +204,10 @@ export function PricingSection() {
         </div>
 
         {/* FAQs Accordion */}
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-zinc-200/90 p-8 shadow-sm">
-          <div className="text-center mb-8">
-            <HelpCircle className="w-8 h-8 text-[#0B192C] mx-auto mb-2" />
-            <h3 className="text-2xl font-bold text-zinc-950">
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl sm:rounded-3xl border border-zinc-200/90 p-5 sm:p-8 shadow-sm">
+          <div className="text-center mb-6 sm:mb-8">
+            <HelpCircle className="w-7 sm:w-8 h-7 sm:h-8 text-[#0B192C] mx-auto mb-2" />
+            <h3 className="text-xl sm:text-2xl font-bold text-zinc-950">
               Frequently Asked Questions
             </h3>
             <p className="text-xs text-zinc-500 mt-1">
@@ -220,10 +215,10 @@ export function PricingSection() {
             </p>
           </div>
 
-          <div className="space-y-6 divide-y divide-zinc-100">
+          <div className="space-y-5 sm:space-y-6 divide-y divide-zinc-100">
             {faqs.map((faq, idx) => (
-              <div key={idx} className={idx > 0 ? "pt-6" : ""}>
-                <h4 className="text-sm font-bold text-zinc-950 mb-2">
+              <div key={idx} className={idx > 0 ? "pt-5 sm:pt-6" : ""}>
+                <h4 className="text-xs sm:text-sm font-bold text-zinc-950 mb-1.5 sm:mb-2">
                   {faq.q}
                 </h4>
                 <p className="text-xs text-zinc-600 leading-relaxed">

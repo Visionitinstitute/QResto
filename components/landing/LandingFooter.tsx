@@ -3,12 +3,12 @@ import { UtensilsCrossed } from "lucide-react";
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-zinc-200 bg-white pt-16 pb-12 text-zinc-600">
+    <footer className="border-t border-zinc-200 bg-white pt-10 sm:pt-16 pb-8 sm:pb-12 text-zinc-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-zinc-100">
-          {/* Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-zinc-100">
+          {/* Brand Info - full width on mobile */}
+          <div className="col-span-2 md:col-span-4 lg:col-span-2 space-y-3.5">
+            <Link href="/" className="inline-flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white shadow-md shadow-[#39ff14]/15">
                 <UtensilsCrossed className="w-5 h-5 text-[#39ff14]" />
               </div>
@@ -26,7 +26,7 @@ export function LandingFooter() {
               The modern digital menu and QR table ordering platform designed to speed up service, boost check sizes, and eliminate paper printing costs for restaurants, cafes, and bars.
             </p>
 
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 pt-1 flex-wrap">
               <span className="w-2 h-2 rounded-full bg-[#39ff14] shadow-[0_0_8px_#39ff14] animate-pulse" />
               <span className="text-xs font-semibold text-zinc-800">
                 All Systems Operational
@@ -37,11 +37,11 @@ export function LandingFooter() {
           </div>
 
           {/* Product Links */}
-          <div>
-            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-4">
+          <div className="col-span-1">
+            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-3 sm:mb-4">
               Product
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs">
               <li>
                 <a href="#features" className="hover:text-emerald-700 transition-colors">
                   QR Code Generator
@@ -54,12 +54,12 @@ export function LandingFooter() {
               </li>
               <li>
                 <a href="#features" className="hover:text-emerald-700 transition-colors">
-                  Dietary & Allergen Badges
+                  Dietary Badges
                 </a>
               </li>
               <li>
                 <a href="#features" className="hover:text-emerald-700 transition-colors">
-                  Automated Upsell Engine
+                  Upsell Engine
                 </a>
               </li>
               <li>
@@ -71,14 +71,14 @@ export function LandingFooter() {
           </div>
 
           {/* Solutions Links */}
-          <div>
-            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-4">
+          <div className="col-span-1">
+            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-3 sm:mb-4">
               Solutions
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs">
               <li>
                 <span className="hover:text-emerald-700 transition-colors cursor-pointer">
-                  Casual Dining & Bistros
+                  Casual Dining
                 </span>
               </li>
               <li>
@@ -88,36 +88,36 @@ export function LandingFooter() {
               </li>
               <li>
                 <span className="hover:text-emerald-700 transition-colors cursor-pointer">
-                  Rooftop Bars & Lounges
+                  Rooftop Bars
                 </span>
               </li>
               <li>
                 <span className="hover:text-emerald-700 transition-colors cursor-pointer">
-                  Food Courts & QSRs
+                  Food Courts
                 </span>
               </li>
               <li>
                 <span className="hover:text-emerald-700 transition-colors cursor-pointer">
-                  Hotel In-Room Dining
+                  Hotel Dining
                 </span>
               </li>
             </ul>
           </div>
 
           {/* Portal Links */}
-          <div>
-            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-4">
+          <div className="col-span-2 sm:col-span-1">
+            <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-3 sm:mb-4">
               Access
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs flex sm:flex-col gap-4 sm:gap-0">
               <li>
-                <Link href="/login" className="hover:text-emerald-700 transition-colors">
-                  Manager Sign In
+                <Link href="/login" className="hover:text-emerald-700 transition-colors font-medium">
+                  Manager Sign In →
                 </Link>
               </li>
               <li>
-                <Link href="/signup" className="hover:text-emerald-700 transition-colors">
-                  Register Restaurant
+                <Link href="/signup" className="hover:text-emerald-700 transition-colors font-medium">
+                  Register Restaurant →
                 </Link>
               </li>
             </ul>
@@ -125,9 +125,9 @@ export function LandingFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-zinc-400 text-center sm:text-left">
           <p>© {new Date().getFullYear()} MeraResto Inc. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             <span className="hover:text-zinc-600 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-zinc-600 cursor-pointer">Terms of Service</span>
             <span className="hover:text-zinc-600 cursor-pointer">Security</span>

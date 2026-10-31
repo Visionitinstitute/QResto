@@ -99,70 +99,70 @@ export function HeroMockup() {
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-8">
+    <div className="relative w-full max-w-5xl mx-auto py-4 sm:py-8">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-[#39ff14]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-[#39ff14]/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Column: QR Code Standee Preview & Real Scanner Card */}
-        <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] text-xs font-semibold shadow-xs">
-            <Scan className="w-4 h-4 text-[#39ff14] animate-pulse" />
+        <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 sm:space-y-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] text-[11px] sm:text-xs font-semibold shadow-xs">
+            <Scan className="w-3.5 h-3.5 text-[#39ff14] animate-pulse" />
             <span>Interactive Table QR Experience</span>
           </div>
 
           <div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight leading-snug">
+            <h3 className="text-xl sm:text-3xl font-black text-zinc-950 tracking-tight leading-snug">
               Scan with your phone to test the guest experience
             </h3>
-            <p className="mt-2 text-sm text-zinc-600 leading-relaxed">
+            <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-sm">
               No app download or sign-up needed. Diners instantly view your menu, choose add-ons, and place orders directly to the kitchen.
             </p>
           </div>
 
           {/* Real QR Card on Acrylic Stand Mockup */}
-          <div className="bg-white rounded-3xl p-6 shadow-xl shadow-zinc-200/60 border border-zinc-200/90 relative group hover:border-[#39ff14] hover:shadow-xl hover:shadow-[#39ff14]/10 transition-all max-w-xs w-full text-center">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl shadow-zinc-200/60 border border-zinc-200/90 relative group hover:border-[#39ff14] hover:shadow-xl hover:shadow-[#39ff14]/10 transition-all max-w-[260px] min-[360px]:max-w-[280px] sm:max-w-xs w-full text-center">
             {/* Stand Clip Accent */}
-            <div className="w-12 h-2.5 bg-zinc-300 rounded-full mx-auto -mt-8 mb-5 shadow-xs" />
+            <div className="w-10 sm:w-12 h-2 sm:h-2.5 bg-zinc-300 rounded-full mx-auto -mt-6 sm:-mt-8 mb-4 sm:mb-5 shadow-xs" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-3 mb-4">
-              <span className="text-xs font-bold text-zinc-900 tracking-wider uppercase">
+            <div className="flex items-center justify-between border-b border-zinc-100 pb-2.5 mb-3">
+              <span className="text-[11px] sm:text-xs font-bold text-zinc-900 tracking-wider uppercase">
                 Table #04
               </span>
-              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                 Active Session
               </span>
             </div>
 
-            <div className="bg-zinc-50 p-4 rounded-2xl border border-zinc-100 flex items-center justify-center relative">
+            <div className="bg-zinc-50 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-zinc-100 flex items-center justify-center relative">
               <QRCodeSVG
                 value="https://menu.meraresto.in/royal-spice?table=4"
-                size={160}
+                size={135}
                 level="M"
                 bgColor="#ffffff"
                 fgColor="#0f172a"
-                className="rounded-lg shadow-2xs"
+                className="rounded-lg shadow-2xs w-[125px] sm:w-[150px] h-[125px] sm:h-[150px]"
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-9 h-9 rounded-lg bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] flex items-center justify-center shadow-md">
-                  <Sparkles className="w-4 h-4 text-[#39ff14]" />
+                <div className="w-8 h-8 rounded-lg bg-[#0B192C] border border-[#39ff14]/40 text-[#39ff14] flex items-center justify-center shadow-md">
+                  <Sparkles className="w-3.5 h-3.5 text-[#39ff14]" />
                 </div>
               </div>
             </div>
 
-            <p className="mt-3 text-xs font-bold text-zinc-900">
-              Point your phone camera here to scan
+            <p className="mt-2.5 text-[11px] sm:text-xs font-bold text-zinc-900">
+              Point your phone camera to test live
             </p>
           </div>
 
           {/* Social Proof Stat */}
-          <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-zinc-200 px-4 py-2.5 rounded-2xl shadow-xs">
-            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-sm">
+          <div className="flex items-center gap-2.5 bg-white/90 backdrop-blur-xs border border-zinc-200 px-3.5 py-2 rounded-xl shadow-2xs max-w-xs">
+            <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs shrink-0">
               ✓
             </div>
-            <div className="text-left text-xs">
+            <div className="text-left text-[11px]">
               <span className="font-bold text-zinc-950 block">Instant Setup</span>
-              <span className="text-zinc-500">Print QR standees directly from your dashboard</span>
+              <span className="text-zinc-500">Print QR standees directly from dashboard</span>
             </div>
           </div>
         </div>
@@ -187,88 +187,88 @@ export function HeroMockup() {
             </div>
             <div>
               <p className="text-[11px] font-bold text-zinc-900">+28% Avg Check Size</p>
-              <p className="text-[10px] text-zinc-500">With high-res dish photos & upselling</p>
+              <p className="text-[10px] text-zinc-500">With dish photos & upselling</p>
             </div>
           </div>
 
           {/* Phone Shell */}
-          <div className="w-full max-w-[310px] sm:max-w-[350px] mx-auto bg-zinc-950 rounded-[40px] sm:rounded-[44px] p-2.5 sm:p-3 shadow-2xl shadow-zinc-950/20 border-4 border-zinc-800 relative ring-1 ring-zinc-700/50">
+          <div className="w-full max-w-[285px] min-[360px]:max-w-[315px] sm:max-w-[350px] mx-auto bg-zinc-950 rounded-[36px] sm:rounded-[44px] p-2 sm:p-2.5 shadow-2xl shadow-zinc-950/20 border-4 border-zinc-800 relative ring-1 ring-zinc-700/50">
             {/* Speaker & Dynamic Island */}
-            <div className="absolute top-5 left-1/2 -translate-x-1/2 w-24 h-5 bg-zinc-900 rounded-full flex items-center justify-center z-30">
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-800 mr-2" />
-              <div className="w-2 h-2 rounded-full bg-zinc-700" />
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-4 sm:h-5 bg-zinc-900 rounded-full flex items-center justify-center z-30">
+              <div className="w-2 h-2 rounded-full bg-zinc-800 mr-2" />
+              <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
             </div>
 
             {/* Inner Mobile Screen */}
-            <div className="bg-white rounded-[34px] overflow-hidden flex flex-col h-[580px] sm:h-[620px] select-none text-left relative">
+            <div className="bg-white rounded-[28px] sm:rounded-[34px] overflow-hidden flex flex-col h-[520px] sm:h-[620px] select-none text-left relative">
               {/* Phone Status Bar */}
-              <div className="pt-3 px-6 pb-1 flex justify-between items-center text-[11px] font-semibold text-zinc-800 bg-zinc-50/80">
+              <div className="pt-2.5 px-5 pb-1 flex justify-between items-center text-[10px] sm:text-[11px] font-semibold text-zinc-800 bg-zinc-50/80">
                 <span>9:41</span>
                 <div className="flex items-center gap-1.5 text-zinc-600">
-                  <span className="text-[10px]">5G</span>
-                  <div className="w-4 h-2 border border-zinc-600 rounded-xs flex items-center p-0.5">
+                  <span className="text-[9px]">5G</span>
+                  <div className="w-3.5 h-2 border border-zinc-600 rounded-2xs flex items-center p-0.5">
                     <div className="w-full h-full bg-zinc-600 rounded-2xs" />
                   </div>
                 </div>
               </div>
 
               {/* Restaurant Header */}
-              <div className="px-4 py-3 bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/10 to-white border-b border-zinc-100">
+              <div className="px-3.5 py-2.5 bg-gradient-to-b from-[#39ff14]/10 via-emerald-50/10 to-white border-b border-zinc-100">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                  <span className="text-[10px] font-bold bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30 px-2 py-0.5 rounded-md uppercase tracking-wider">
                     Table #04
                   </span>
-                  <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="flex items-center gap-1 text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Kitchen Open
+                    Kitchen Live
                   </span>
                 </div>
-                <h4 className="font-bold text-zinc-950 text-base mt-1.5 tracking-tight">
-                  Royal Spice Bistro & Bar
+                <h4 className="font-bold text-zinc-950 text-sm sm:text-base mt-1 tracking-tight">
+                  Royal Spice Bistro
                 </h4>
-                <p className="text-[11px] text-zinc-500 flex items-center gap-1 mt-0.5">
+                <p className="text-[10px] text-zinc-500 flex items-center gap-1 mt-0.5">
                   <Clock className="w-3 h-3 text-zinc-400" /> Average prep: 12-15 mins
                 </p>
               </div>
 
               {/* Category Pills */}
-              <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-zinc-100 overflow-x-auto text-xs font-semibold bg-white scrollbar-none">
+              <div className="flex items-center gap-1 px-3 py-2 border-b border-zinc-100 overflow-x-auto text-[11px] font-semibold bg-white scrollbar-none">
                 <button
                   onClick={() => setSelectedCategory("all")}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors cursor-pointer ${
                     selectedCategory === "all"
-                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
-                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs font-bold"
+                      : "bg-zinc-100 text-zinc-600"
                   }`}
                 >
-                  All Items
+                  All
                 </button>
                 <button
                   onClick={() => setSelectedCategory("starters")}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors cursor-pointer ${
                     selectedCategory === "starters"
-                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
-                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs font-bold"
+                      : "bg-zinc-100 text-zinc-600"
                   }`}
                 >
                   Starters
                 </button>
                 <button
                   onClick={() => setSelectedCategory("mains")}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors cursor-pointer ${
                     selectedCategory === "mains"
-                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
-                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs font-bold"
+                      : "bg-zinc-100 text-zinc-600"
                   }`}
                 >
                   Mains
                 </button>
                 <button
                   onClick={() => setSelectedCategory("drinks")}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors cursor-pointer ${
                     selectedCategory === "drinks"
-                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs"
-                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                      ? "bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/50 shadow-2xs font-bold"
+                      : "bg-zinc-100 text-zinc-600"
                   }`}
                 >
                   Drinks
@@ -276,62 +276,64 @@ export function HeroMockup() {
               </div>
 
               {/* Interactive Menu List */}
-              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+              <div className="flex-1 overflow-y-auto px-3 py-2 space-y-2.5">
                 {filteredItems.map((item) => {
                   const qty = cart[item.id] || 0;
                   return (
                     <div
                       key={item.id}
-                      className="p-3 rounded-2xl border border-zinc-100 bg-white hover:border-zinc-200 transition-all shadow-2xs flex flex-col justify-between gap-2"
+                      className="p-2.5 rounded-xl border border-zinc-100 bg-white hover:border-zinc-200 transition-all shadow-2xs flex flex-col justify-between gap-1.5"
                     >
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-3.5 h-3.5 border border-emerald-600 flex items-center justify-center p-0.5 rounded-xs">
+                      <div className="flex items-start justify-between gap-1.5">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="w-3 h-3 border border-emerald-600 flex items-center justify-center p-0.5 rounded-2xs">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
                             </span>
-                            <span className="font-bold text-zinc-900 text-xs sm:text-sm">
+                            <span className="font-bold text-zinc-900 text-xs truncate max-w-[170px]">
                               {item.name}
                             </span>
                             {item.popular && (
-                              <span className="text-[10px] font-bold text-[#0B192C] bg-[#39ff14] px-1.5 py-0.2 rounded-xs">
+                              <span className="text-[9px] font-bold text-[#0B192C] bg-[#39ff14] px-1 py-0.2 rounded-2xs">
                                 ★ Popular
                               </span>
                             )}
                           </div>
-                          <p className="text-[11px] text-zinc-500 mt-1 line-clamp-2 leading-relaxed">
+                          <p className="text-[10px] text-zinc-500 mt-0.5 line-clamp-1 leading-snug">
                             {item.desc}
                           </p>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between pt-1 border-t border-zinc-50">
-                        <span className="text-xs sm:text-sm font-extrabold text-zinc-950">
+                        <span className="text-xs font-black text-zinc-950">
                           ₹{item.price}
                         </span>
 
                         {qty > 0 ? (
-                          <div className="flex items-center gap-2 bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 text-xs font-bold rounded-lg px-2 py-1 shadow-xs">
+                          <div className="flex items-center gap-1.5 bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 text-xs font-bold rounded-lg px-2 py-0.5 shadow-2xs">
                             <button
                               onClick={() => removeItem(item.id)}
-                              aria-label="Decrease quantity"
+                              aria-label="Decrease"
                               className="hover:opacity-80 p-0.5 cursor-pointer"
                             >
-                              <Minus className="w-3 h-3" />
+                              <Minus className="w-2.5 h-2.5" />
                             </button>
-                            <span className="px-1 min-w-[14px] text-center text-white">{qty}</span>
+                            <span className="px-0.5 min-w-[12px] text-center text-white text-[11px]">
+                              {qty}
+                            </span>
                             <button
                               onClick={() => addItem(item.id)}
-                              aria-label="Increase quantity"
+                              aria-label="Increase"
                               className="hover:opacity-80 p-0.5 cursor-pointer"
                             >
-                              <Plus className="w-3 h-3" />
+                              <Plus className="w-2.5 h-2.5" />
                             </button>
                           </div>
                         ) : (
                           <button
                             onClick={() => addItem(item.id)}
-                            className="text-xs font-bold text-[#0B192C] bg-[#39ff14]/25 hover:bg-[#39ff14]/40 border border-[#39ff14]/50 px-3 py-1 rounded-lg transition-colors cursor-pointer"
+                            className="text-[11px] font-bold text-[#0B192C] bg-[#39ff14]/25 hover:bg-[#39ff14]/40 border border-[#39ff14]/50 px-2.5 py-0.5 rounded-lg transition-colors cursor-pointer"
                           >
                             + Add
                           </button>
@@ -344,25 +346,25 @@ export function HeroMockup() {
 
               {/* Order Confirmation Feedback Banner */}
               {orderSent && (
-                <div className="absolute inset-x-4 bottom-20 bg-[#0B192C] border border-[#39ff14] text-[#39ff14] p-3 rounded-2xl shadow-xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-3 duration-200 z-30">
-                  <CheckCircle2 className="w-5 h-5 shrink-0 text-[#39ff14]" />
-                  <div className="text-xs">
-                    <p className="font-bold text-white">Order Sent to Kitchen!</p>
-                    <p className="text-[11px] text-[#39ff14]">Chef ticket printed for Table #04</p>
+                <div className="absolute inset-x-3 bottom-16 bg-[#0B192C] border border-[#39ff14] text-[#39ff14] p-2.5 rounded-xl shadow-xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-150 z-30">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-[#39ff14]" />
+                  <div className="text-[11px]">
+                    <p className="font-bold text-white leading-tight">Order Sent to Kitchen!</p>
+                    <p className="text-[10px] text-[#39ff14]">Chef ticket printed for Table #04</p>
                   </div>
                 </div>
               )}
 
               {/* Bottom Sticky Cart Tray inside Phone */}
-              <div className="p-3.5 bg-zinc-950 text-white border-t border-zinc-800">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1.5 text-xs">
-                    <ShoppingBag className="w-3.5 h-3.5 text-[#39ff14]" />
+              <div className="p-2.5 sm:p-3 bg-zinc-950 text-white border-t border-zinc-800">
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center gap-1.5 text-[11px]">
+                    <ShoppingBag className="w-3 h-3 text-[#39ff14]" />
                     <span className="text-zinc-300 font-medium">
-                      {totalItems > 0 ? `${totalItems} items selected` : "Cart is empty"}
+                      {totalItems > 0 ? `${totalItems} items` : "Cart empty"}
                     </span>
                   </div>
-                  <span className="text-sm font-bold text-white">
+                  <span className="text-xs font-bold text-white">
                     ₹{totalPrice}
                   </span>
                 </div>
@@ -370,14 +372,14 @@ export function HeroMockup() {
                 <button
                   disabled={totalItems === 0 || orderSent}
                   onClick={handlePlaceOrder}
-                  className={`w-full py-2.5 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md ${
+                  className={`w-full py-2 rounded-lg font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md ${
                     totalItems > 0
-                      ? "bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] cursor-pointer shadow-lg shadow-[#39ff14]/25 border border-[#39ff14]"
+                      ? "bg-[#39ff14] hover:bg-[#32e010] text-[#0B192C] cursor-pointer shadow-md shadow-[#39ff14]/20 border border-[#39ff14]"
                       : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
                   }`}
                 >
                   <span>{orderSent ? "Order Dispatched ✓" : "Send Order to Kitchen"}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
