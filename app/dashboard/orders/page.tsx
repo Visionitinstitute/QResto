@@ -14,12 +14,21 @@ import {
   FileText,
   Volume2,
   VolumeX,
+  Lock,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 import { createClient } from "@/lib/supabase/client";
 import { Order, OrderItem, Hotel, OrderStatus } from "@/types";
+import {
+  getStoredSubscription,
+  UserSubscription,
+  SUBSCRIPTION_PLANS,
+} from "@/lib/subscription";
+import { PlanUpgradeModal } from "@/components/dashboard/PlanUpgradeModal";
 
 interface OrderWithItems extends Order {
   order_items?: OrderItem[];
@@ -32,10 +41,15 @@ export default function ManagerOrdersPage() {
   const [activeTab, setActiveTab] = useState<"pending" | "active" | "completed" | "all">("pending");
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
-  // Play synthetic web audio bell chime on new order
+  const activePlan = subscription?.plan || SUBSCRIPTION_PLANS.starter;
+  const isKdsEnabled = activePlan.kdsEnabled;
+
+  // Play synthetic web audio bell chime on new order (only if enabled on plan)
   const playNewOrderBeep = useCallback(() => {
-    if (!soundEnabled || typeof window === "undefined") return;
+    if (!soundEnabled || !isKdsEnabled || typeof window === "undefined") return;
     try {
       const audioCtx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       const osc = audioCtx.createOscillator();
@@ -54,9 +68,9 @@ export default function ManagerOrdersPage() {
       osc.start();
       osc.stop(audioCtx.currentTime + 0.6);
     } catch {
-      // Audio context might be restricted before user interaction
+      // Audio context fallback
     }
-  }, [soundEnabled]);
+  }, [soundEnabled, isKdsEnabled]);
 
   // Load initial orders
   useEffect(() => {
@@ -73,6 +87,9 @@ export default function ManagerOrdersPage() {
             .select("*")
             .eq("owner_id", user.id)
             .maybeSingle();
+
+          const sub = getStoredSubscription(user, hotelData?.id);
+          setSubscription(sub);
 
           if (hotelData) {
             setHotel(hotelData);
@@ -96,7 +113,7 @@ export default function ManagerOrdersPage() {
     loadHotelAndOrders();
   }, []);
 
-  // Supabase Realtime Subscription (Prompt 7.4)
+  // Supabase Realtime Subscription
   useEffect(() => {
     if (!hotel) return;
 
@@ -115,7 +132,6 @@ export default function ManagerOrdersPage() {
         async (payload) => {
           if (payload.eventType === "INSERT") {
             const newOrder = payload.new as Order;
-            // Fetch items for this new order
             const { data: items } = await supabase
               .from("order_items")
               .select("*")
@@ -165,7 +181,7 @@ export default function ManagerOrdersPage() {
     };
   }, [orders]);
 
-  // Status Update Handler (Prompt 7.2 & 7.3)
+  // Status Update Handler
   const handleUpdateStatus = async (orderId: string, nextStatus: OrderStatus) => {
     setActionLoadingId(orderId);
     try {
@@ -177,7 +193,6 @@ export default function ManagerOrdersPage() {
 
       if (error) throw error;
 
-      // Optimistic update
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status: nextStatus } : o))
       );
@@ -240,7 +255,7 @@ export default function ManagerOrdersPage() {
     return (
       <div className="min-h-[40vh] flex flex-col items-center justify-center gap-2">
         <Spinner size="md" />
-        <p className="text-xs font-medium text-zinc-500">Live Orders load ho rahe hain...</p>
+        <p className="text-xs font-medium text-zinc-500">Loading live orders...</p>
       </div>
     );
   }
@@ -258,13 +273,27 @@ export default function ManagerOrdersPage() {
   }
 
   return (
-    <div className="space-y-3.5">
+    <div className="space-y-4">
+      {/* Plan Upgrade Modal */}
+      <PlanUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        currentPlanId={subscription?.planId}
+        onPlanUpdated={(newSub) => setSubscription(newSub)}
+        highlightFeature="Live Kitchen Display System (KDS)"
+      />
+
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <UtensilsCrossed className="w-4 h-4 text-emerald-600" />
+          <h1 className="text-lg sm:text-xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
+            <UtensilsCrossed className="w-5 h-5 text-emerald-600" />
             <span>Live Kitchen Orders</span>
+            {isKdsEnabled && (
+              <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/30">
+                KDS Active
+              </span>
+            )}
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
             Monitor real-time incoming orders and update kitchen fulfillment status instantly.
@@ -272,36 +301,72 @@ export default function ManagerOrdersPage() {
         </div>
 
         {/* Sound toggle */}
-        <button
-          onClick={() => setSoundEnabled(!soundEnabled)}
-          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border transition ${
-            soundEnabled
-              ? "bg-white text-zinc-800 border-zinc-200 shadow-2xs hover:border-zinc-300"
-              : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:text-zinc-600"
-          }`}
-          title="Toggle notification sound"
-        >
-          {soundEnabled ? (
-            <>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <Volume2 className="w-3.5 h-3.5 text-zinc-700" />
-              <span>Alerts ON</span>
-            </>
-          ) : (
-            <>
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
-              <VolumeX className="w-3.5 h-3.5 text-zinc-400" />
-              <span>Muted</span>
-            </>
-          )}
-        </button>
+        {isKdsEnabled ? (
+          <button
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
+              soundEnabled
+                ? "bg-white text-zinc-800 border-zinc-300 shadow-2xs hover:border-zinc-400"
+                : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:text-zinc-600"
+            }`}
+            title="Toggle kitchen notification sound"
+          >
+            {soundEnabled ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <Volume2 className="w-4 h-4 text-emerald-700" />
+                <span>Audio Chimes ON</span>
+              </>
+            ) : (
+              <>
+                <span className="w-2 h-2 rounded-full bg-zinc-300" />
+                <VolumeX className="w-4 h-4 text-zinc-400" />
+                <span>Muted</span>
+              </>
+            )}
+          </button>
+        ) : (
+          <Button
+            size="sm"
+            onClick={() => setIsUpgradeModalOpen(true)}
+            className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold text-xs hover:bg-black"
+          >
+            <Lock className="w-3.5 h-3.5 mr-1" /> Unlock KDS
+          </Button>
+        )}
       </div>
+
+      {/* KDS LOCKED PAYWALL BANNER FOR STARTER PLAN */}
+      {!isKdsEnabled && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-[#0B192C] to-zinc-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-[#39ff14]/30 shadow-md">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+              <Lock className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                Kitchen Display System (KDS) is Locked on {activePlan.name}
+              </h3>
+              <p className="text-xs text-zinc-300 mt-0.5 max-w-xl">
+                Real-time audio chime alerts, chef prep dispatch, and kitchen station timers require the Pro Resto or Enterprise plan.
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={() => setIsUpgradeModalOpen(true)}
+            size="sm"
+            className="bg-[#39ff14] hover:bg-emerald-400 text-[#0B192C] font-black text-xs shrink-0 cursor-pointer"
+          >
+            Upgrade to Pro Resto (Unlock KDS) <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Button>
+        </div>
+      )}
 
       {/* Filter Tabs */}
       <div className="flex items-center gap-1 bg-zinc-100/90 p-1 rounded-xl border border-zinc-200/70 select-none overflow-x-auto">
         <button
           onClick={() => setActiveTab("pending")}
-          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "pending"
               ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
@@ -321,7 +386,7 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("active")}
-          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "active"
               ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
@@ -341,7 +406,7 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("completed")}
-          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[95px] py-1 px-2.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "completed"
               ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
@@ -361,7 +426,7 @@ export default function ManagerOrdersPage() {
 
         <button
           onClick={() => setActiveTab("all")}
-          className={`py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+          className={`py-1 px-2.5 rounded-lg text-xs font-medium transition cursor-pointer ${
             activeTab === "all"
               ? "bg-white text-zinc-900 shadow-2xs font-semibold"
               : "text-zinc-600 hover:text-zinc-900"
@@ -376,10 +441,10 @@ export default function ManagerOrdersPage() {
         <Card className="text-center py-12 px-4">
           <Clock className="w-10 h-10 text-zinc-300 mx-auto mb-2" />
           <h3 className="text-sm font-bold text-zinc-800">
-            Abhi koi order nahi hai
+            No orders found
           </h3>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Jaise hi table se naya order aayega, yahan realtime me update dikhega.
+            As soon as a guest orders from a table, it will appear here in real time.
           </p>
         </Card>
       ) : (
@@ -491,7 +556,7 @@ export default function ManagerOrdersPage() {
                         size="sm"
                         isLoading={isActionLoading}
                         onClick={() => handleUpdateStatus(order.id, "accepted")}
-                        className="h-8 px-3 text-xs flex-1 sm:flex-initial"
+                        className="h-8 px-3 text-xs flex-1 sm:flex-initial bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black"
                       >
                         <CheckCircle2 className="w-3 h-3 mr-1" /> Accept
                       </Button>
@@ -504,7 +569,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "preparing")}
-                      className="h-8 px-3 text-xs w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black"
                     >
                       <ChefHat className="w-3 h-3 mr-1" /> Start Cooking
                     </Button>
@@ -516,7 +581,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "ready")}
-                      className="h-8 px-3 text-xs w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
                     >
                       <BellRing className="w-3 h-3 mr-1" /> Mark Ready
                     </Button>
@@ -528,7 +593,7 @@ export default function ManagerOrdersPage() {
                       size="sm"
                       isLoading={isActionLoading}
                       onClick={() => handleUpdateStatus(order.id, "served")}
-                      className="h-8 px-3 text-xs w-full sm:w-auto"
+                      className="h-8 px-3 text-xs w-full sm:w-auto bg-zinc-900 hover:bg-black text-white font-bold"
                     >
                       <CheckCircle2 className="w-3 h-3 mr-1" /> Mark Served
                     </Button>

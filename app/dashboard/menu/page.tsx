@@ -16,6 +16,7 @@ import {
   Layers,
   Store,
   DollarSign,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -25,12 +26,20 @@ import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
 import { createClient } from "@/lib/supabase/client";
 import { Category, MenuItem, Hotel } from "@/types";
+import {
+  getStoredSubscription,
+  UserSubscription,
+  SUBSCRIPTION_PLANS,
+} from "@/lib/subscription";
+import { PlanUpgradeModal } from "@/components/dashboard/PlanUpgradeModal";
 
 export default function MenuManagementPage() {
   const [loading, setLoading] = useState(true);
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   // Filters
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -88,6 +97,9 @@ export default function MenuManagementPage() {
             .eq("owner_id", user.id)
             .maybeSingle();
 
+          const sub = getStoredSubscription(user, hotelData?.id);
+          setSubscription(sub);
+
           if (hotelData) {
             setHotel(hotelData);
 
@@ -118,16 +130,20 @@ export default function MenuManagementPage() {
     loadData();
   }, []);
 
+  const activePlan = subscription?.plan || SUBSCRIPTION_PLANS.starter;
+  const maxMenuItems = activePlan.maxMenuItems;
+  const isLimitReached = menuItems.length >= maxMenuItems;
+
   // Filtered Menu Items
   const filteredItems = useMemo(() => {
     return menuItems.filter((item) => {
       const matchesCategory =
         selectedCategory === "all" || item.category_id === selectedCategory;
-      const matchesSearch =
+      const matchesQuery =
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (item.description &&
           item.description.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesQuery;
     });
   }, [menuItems, selectedCategory, searchQuery]);
 
@@ -156,7 +172,6 @@ export default function MenuManagementPage() {
     try {
       const supabase = createClient();
       if (editingCategory) {
-        // Update
         const { error } = await supabase
           .from("categories")
           .update({ name: categoryName.trim() })
@@ -171,10 +186,9 @@ export default function MenuManagementPage() {
         );
         setFeedback({
           type: "success",
-          text: `Category "${categoryName}" update ho gayi!`,
+          text: `Category "${categoryName}" updated successfully!`,
         });
       } else {
-        // Insert
         const nextOrder = categories.length + 1;
         const { data, error } = await supabase
           .from("categories")
@@ -190,7 +204,7 @@ export default function MenuManagementPage() {
         if (data) setCategories((prev) => [...prev, data]);
         setFeedback({
           type: "success",
-          text: `Nayi category "${categoryName}" add ho gayi!`,
+          text: `Category "${categoryName}" added successfully!`,
         });
       }
 
@@ -198,7 +212,7 @@ export default function MenuManagementPage() {
     } catch (err: unknown) {
       setFeedback({
         type: "error",
-        text: err instanceof Error ? err.message : "Category save nahi ho saki.",
+        text: err instanceof Error ? err.message : "Failed to save category.",
       });
     } finally {
       setSavingCategory(false);
@@ -209,6 +223,15 @@ export default function MenuManagementPage() {
   // MENU ITEM ACTIONS
   // -------------------------------------------------------------
   const openAddItem = () => {
+    if (isLimitReached) {
+      setFeedback({
+        type: "error",
+        text: `You have reached the limit of ${maxMenuItems} dishes for the ${activePlan.name} plan. Upgrade to add more dishes.`,
+      });
+      setIsUpgradeModalOpen(true);
+      return;
+    }
+
     setEditingItem(null);
     setItemName("");
     setItemCategoryId(categories[0]?.id || "");
@@ -235,6 +258,15 @@ export default function MenuManagementPage() {
   const handleSaveItem = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!hotel || !itemName.trim() || !itemPrice) return;
+
+    if (!editingItem && isLimitReached) {
+      setFeedback({
+        type: "error",
+        text: `Menu item limit of ${maxMenuItems} reached on ${activePlan.name}. Please upgrade to add more dishes.`,
+      });
+      setIsUpgradeModalOpen(true);
+      return;
+    }
 
     setSavingItem(true);
     setFeedback(null);
@@ -273,7 +305,7 @@ export default function MenuManagementPage() {
         );
         setFeedback({
           type: "success",
-          text: `Dish "${itemName}" update ho gayi!`,
+          text: `Dish "${itemName}" updated successfully!`,
         });
       } else {
         const { data, error } = await supabase
@@ -286,7 +318,7 @@ export default function MenuManagementPage() {
         if (data) setMenuItems((prev) => [data, ...prev]);
         setFeedback({
           type: "success",
-          text: `Nayi dish "${itemName}" add ho gayi!`,
+          text: `Dish "${itemName}" added successfully!`,
         });
       }
 
@@ -294,17 +326,16 @@ export default function MenuManagementPage() {
     } catch (err: unknown) {
       setFeedback({
         type: "error",
-        text: err instanceof Error ? err.message : "Dish save nahi ho saki.",
+        text: err instanceof Error ? err.message : "Failed to save dish.",
       });
     } finally {
       setSavingItem(false);
     }
   };
 
-  // Quick Inline Availability Toggle (Optimistic)
+  // Quick Inline Availability Toggle
   const handleToggleAvailability = async (item: MenuItem) => {
     const newStatus = !item.is_available;
-    // Optimistic UI update
     setMenuItems((prev) =>
       prev.map((i) => (i.id === item.id ? { ...i, is_available: newStatus } : i))
     );
@@ -317,7 +348,6 @@ export default function MenuManagementPage() {
         .eq("id", item.id);
 
       if (error) {
-        // Revert on error
         setMenuItems((prev) =>
           prev.map((i) =>
             i.id === item.id ? { ...i, is_available: !newStatus } : i
@@ -325,7 +355,7 @@ export default function MenuManagementPage() {
         );
         setFeedback({
           type: "error",
-          text: "Status update nahi ho saka.",
+          text: "Failed to update item availability.",
         });
       }
     } catch (err) {
@@ -348,12 +378,16 @@ export default function MenuManagementPage() {
 
     try {
       const supabase = createClient();
-      await supabase
+      const { error } = await supabase
         .from("menu_items")
         .update({ price: priceNum })
         .eq("id", itemId);
+
+      if (error) throw error;
+      setFeedback({ type: "success", text: "Price updated successfully!" });
     } catch (err) {
       console.error(err);
+      setFeedback({ type: "error", text: "Failed to update price." });
     }
   };
 
@@ -364,32 +398,44 @@ export default function MenuManagementPage() {
 
     try {
       const supabase = createClient();
-      if (deleteConfirm.type === "item") {
-        const { error } = await supabase
-          .from("menu_items")
-          .delete()
-          .eq("id", deleteConfirm.id);
-        if (error) throw error;
-        setMenuItems((prev) => prev.filter((i) => i.id !== deleteConfirm.id));
-        setFeedback({ type: "success", text: "Dish delete ho gayi." });
-      } else {
+      if (deleteConfirm.type === "category") {
         const { error } = await supabase
           .from("categories")
           .delete()
           .eq("id", deleteConfirm.id);
+
         if (error) throw error;
         setCategories((prev) => prev.filter((c) => c.id !== deleteConfirm.id));
-        if (selectedCategory === deleteConfirm.id) setSelectedCategory("all");
-        setFeedback({ type: "success", text: "Category delete ho gayi." });
+        setMenuItems((prev) =>
+          prev.map((i) =>
+            i.category_id === deleteConfirm.id ? { ...i, category_id: null } : i
+          )
+        );
+        setFeedback({
+          type: "success",
+          text: `Category "${deleteConfirm.name}" deleted.`,
+        });
+      } else {
+        const { error } = await supabase
+          .from("menu_items")
+          .delete()
+          .eq("id", deleteConfirm.id);
+
+        if (error) throw error;
+        setMenuItems((prev) => prev.filter((i) => i.id !== deleteConfirm.id));
+        setFeedback({
+          type: "success",
+          text: `Dish "${deleteConfirm.name}" deleted.`,
+        });
       }
+      setDeleteConfirm(null);
     } catch (err: unknown) {
       setFeedback({
         type: "error",
-        text: err instanceof Error ? err.message : "Delete nahi ho saka.",
+        text: err instanceof Error ? err.message : "Failed to delete item.",
       });
     } finally {
       setIsDeleting(false);
-      setDeleteConfirm(null);
     }
   };
 
@@ -397,7 +443,7 @@ export default function MenuManagementPage() {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Spinner size="lg" />
-        <p className="text-sm font-medium text-zinc-500">Menu load ho raha hai...</p>
+        <p className="text-sm font-medium text-zinc-500">Loading menu dishes...</p>
       </div>
     );
   }
@@ -416,31 +462,87 @@ export default function MenuManagementPage() {
 
   return (
     <div className="space-y-4">
+      {/* Plan Upgrade Modal */}
+      <PlanUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        currentPlanId={subscription?.planId}
+        onPlanUpdated={(newSub) => setSubscription(newSub)}
+        highlightFeature="Additional Menu Dishes"
+      />
+
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-emerald-600" /> Menu & Categories
+          <h1 className="text-lg sm:text-xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
+            <ChefHat className="w-5 h-5 text-emerald-600" />
+            <span>Menu & Categories</span>
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Manage your restaurant&apos;s live menu, prices, and categories from here.
+            Manage your restaurant&apos;s live menu dishes, prices, and categories.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={openAddCategory} className="h-8 text-xs">
+          <Button variant="outline" size="sm" onClick={openAddCategory} className="h-8 text-xs cursor-pointer">
             <Layers className="w-3.5 h-3.5 mr-1" /> + Category
           </Button>
-          <Button variant="primary" size="sm" onClick={openAddItem} className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={openAddItem}
+            className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black cursor-pointer"
+          >
             <Plus className="w-3.5 h-3.5 mr-1 text-[#39ff14]" /> + Add Dish
           </Button>
         </div>
       </div>
 
+      {/* PLAN QUOTA STATUS BANNER */}
+      <div className="p-3 sm:p-4 rounded-2xl bg-white border border-zinc-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 font-bold text-xs shrink-0">
+            {menuItems.length}/{maxMenuItems}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-zinc-900">
+                Plan Quota: {menuItems.length} of {maxMenuItems} Dishes Created
+              </span>
+              <span className="text-[10px] font-bold uppercase bg-[#0B192C] text-[#39ff14] px-2 py-0.5 rounded-full border border-[#39ff14]/30">
+                {activePlan.name}
+              </span>
+            </div>
+            <p className="text-[11px] text-zinc-500 mt-0.5">
+              {isLimitReached
+                ? `Limit reached. Upgrade your plan to add more than ${maxMenuItems} menu dishes.`
+                : `${maxMenuItems - menuItems.length} more dishes can be created under this plan.`}
+            </p>
+          </div>
+        </div>
+
+        {isLimitReached ? (
+          <Button
+            size="sm"
+            onClick={() => setIsUpgradeModalOpen(true)}
+            className="bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold text-xs shrink-0"
+          >
+            Upgrade Plan <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Button>
+        ) : (
+          <button
+            onClick={() => setIsUpgradeModalOpen(true)}
+            className="text-xs font-bold text-emerald-700 hover:text-emerald-900 underline shrink-0 cursor-pointer"
+          >
+            Upgrade Menu Limit
+          </button>
+        )}
+      </div>
+
       {/* Alert Feedback Banner */}
       {feedback && (
         <div
-          className={`p-3 rounded-lg border flex items-start gap-2.5 animate-in fade-in ${
+          className={`p-3 rounded-xl border flex items-start gap-2.5 animate-in fade-in ${
             feedback.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
               : "bg-red-50 border-red-200 text-red-800"
@@ -459,13 +561,13 @@ export default function MenuManagementPage() {
       <div className="bg-white p-2 rounded-xl border border-zinc-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto select-none">
         <button
           onClick={() => setSelectedCategory("all")}
-          className={`px-3 py-1 rounded-lg text-xs font-semibold transition shrink-0 ${
+          className={`px-3 py-1 rounded-lg text-xs font-semibold transition shrink-0 cursor-pointer ${
             selectedCategory === "all"
-              ? "bg-zinc-900 text-white shadow-2xs"
+              ? "bg-[#0B192C] text-[#39ff14] shadow-2xs font-bold"
               : "bg-zinc-100 text-zinc-600 hover:text-zinc-900"
           }`}
         >
-          All ({menuItems.length})
+          All Dishes ({menuItems.length})
         </button>
 
         {categories.map((cat) => {
@@ -477,18 +579,19 @@ export default function MenuManagementPage() {
               key={cat.id}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium shrink-0 transition ${
                 isSelected
-                  ? "bg-zinc-900 text-white shadow-2xs font-semibold"
+                  ? "bg-[#0B192C] text-[#39ff14] shadow-2xs font-bold"
                   : "bg-zinc-100 text-zinc-600 hover:text-zinc-900"
               }`}
             >
               <button
                 onClick={() => setSelectedCategory(cat.id)}
+                className="cursor-pointer"
               >
                 {cat.name} ({count})
               </button>
               <button
                 onClick={() => openEditCategory(cat)}
-                className="opacity-70 hover:opacity-100 p-0.5"
+                className="opacity-70 hover:opacity-100 p-0.5 cursor-pointer"
                 title="Edit category"
               >
                 <Edit2 className="w-3 h-3" />
@@ -501,7 +604,7 @@ export default function MenuManagementPage() {
                     name: cat.name,
                   })
                 }
-                className="opacity-70 hover:opacity-100 p-0.5 text-red-400 hover:text-red-600"
+                className="opacity-70 hover:opacity-100 p-0.5 text-red-400 hover:text-red-600 cursor-pointer"
                 title="Delete category"
               >
                 <Trash2 className="w-3 h-3" />
@@ -529,18 +632,18 @@ export default function MenuManagementPage() {
           <div className="text-center py-16 px-4">
             <ChefHat className="w-12 h-12 text-zinc-300 mx-auto mb-3" />
             <h3 className="text-base font-bold text-zinc-800">
-              Koi dish nahi mili
+              No dishes found
             </h3>
             <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
-              Aapne abhi tak is category me koi dish add nahi ki hai, ya search se match nahi ho raha.
+              You haven&apos;t added any dishes to this category yet, or no items match your search.
             </p>
             <Button
               variant="primary"
               size="sm"
               onClick={openAddItem}
-              className="mt-4"
+              className="mt-4 bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black cursor-pointer"
             >
-              <Plus className="w-4 h-4 mr-1.5" /> Pehli Dish Jodein
+              <Plus className="w-4 h-4 mr-1.5" /> Add First Dish
             </Button>
           </div>
         ) : (
@@ -611,18 +714,18 @@ export default function MenuManagementPage() {
                             type="number"
                             value={tempPrice}
                             onChange={(e) => setTempPrice(e.target.value)}
-                            className="w-16 px-1.5 py-0.5 text-xs font-bold border border-orange-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500"
+                            className="w-16 px-1.5 py-0.5 text-xs font-bold border border-emerald-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500"
                             autoFocus
                           />
                           <button
                             onClick={() => handleSaveInlinePrice(item.id)}
-                            className="p-1 text-emerald-600 hover:bg-emerald-50 rounded"
+                            className="p-1 text-emerald-600 hover:bg-emerald-50 rounded cursor-pointer"
                           >
                             <Check className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => setEditingPriceId(null)}
-                            className="p-1 text-zinc-400 hover:bg-zinc-100 rounded"
+                            className="p-1 text-zinc-400 hover:bg-zinc-100 rounded cursor-pointer"
                           >
                             <X className="w-3.5 h-3.5" />
                           </button>
@@ -633,13 +736,13 @@ export default function MenuManagementPage() {
                             setEditingPriceId(item.id);
                             setTempPrice(item.price.toString());
                           }}
-                          className="group flex items-center gap-1 px-2 py-0.5 rounded hover:bg-orange-50 transition"
+                          className="group flex items-center gap-1 px-2 py-0.5 rounded hover:bg-emerald-50 transition cursor-pointer"
                           title="Click to edit price"
                         >
-                          <span className="text-xs font-bold text-zinc-900 group-hover:text-orange-600">
+                          <span className="text-xs font-bold text-zinc-900 group-hover:text-emerald-700">
                             ₹{item.price}
                           </span>
-                          <Edit2 className="w-2.5 h-2.5 text-zinc-300 group-hover:text-orange-500 opacity-0 group-hover:opacity-100 transition" />
+                          <Edit2 className="w-2.5 h-2.5 text-zinc-300 group-hover:text-emerald-600 opacity-0 group-hover:opacity-100 transition" />
                         </button>
                       )}
                     </div>
@@ -647,7 +750,7 @@ export default function MenuManagementPage() {
                     {/* Quick Availability Toggle Switch */}
                     <button
                       onClick={() => handleToggleAvailability(item)}
-                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition flex items-center gap-1.5 ${
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition flex items-center gap-1.5 cursor-pointer ${
                         item.is_available
                           ? "bg-emerald-50 text-emerald-700 border border-emerald-200/80 hover:bg-emerald-100"
                           : "bg-zinc-100 text-zinc-600 border border-zinc-200/80 hover:bg-zinc-200"
@@ -665,7 +768,7 @@ export default function MenuManagementPage() {
                     <div className="flex items-center gap-0.5">
                       <button
                         onClick={() => openEditItem(item)}
-                        className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition"
+                        className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition cursor-pointer"
                         title="Edit Dish"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
@@ -678,7 +781,7 @@ export default function MenuManagementPage() {
                             name: item.name,
                           })
                         }
-                        className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                        className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer"
                         title="Delete Dish"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -698,7 +801,7 @@ export default function MenuManagementPage() {
       <Modal
         isOpen={isCategoryModalOpen}
         onClose={() => setIsCategoryModalOpen(false)}
-        title={editingCategory ? "Edit Category" : "Nayi Category Jodein"}
+        title={editingCategory ? "Edit Category" : "Add New Category"}
         maxWidth="sm"
       >
         <form onSubmit={handleSaveCategory} className="space-y-4 pt-2">
@@ -730,6 +833,7 @@ export default function MenuManagementPage() {
               variant="primary"
               size="sm"
               isLoading={savingCategory}
+              className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black"
             >
               Save Category
             </Button>
@@ -768,10 +872,10 @@ export default function MenuManagementPage() {
               <select
                 value={itemCategoryId}
                 onChange={(e) => setItemCategoryId(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+                className="w-full px-3 py-2 text-sm rounded-xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium"
                 required
               >
-                <option value="">Category Chunein</option>
+                <option value="">Select Category</option>
                 {categories.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
@@ -809,7 +913,7 @@ export default function MenuManagementPage() {
               placeholder="Crispy fried sweet corn tossed with green chillies & fresh herbs"
               value={itemDescription}
               onChange={(e) => setItemDescription(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-3 py-2 text-sm rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
@@ -835,7 +939,7 @@ export default function MenuManagementPage() {
                 <button
                   type="button"
                   onClick={() => setItemIsVeg(true)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold border transition ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold border transition cursor-pointer ${
                     itemIsVeg
                       ? "bg-emerald-600 text-white border-emerald-600"
                       : "bg-white text-zinc-600 border-zinc-200"
@@ -846,7 +950,7 @@ export default function MenuManagementPage() {
                 <button
                   type="button"
                   onClick={() => setItemIsVeg(false)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold border transition ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold border transition cursor-pointer ${
                     !itemIsVeg
                       ? "bg-red-600 text-white border-red-600"
                       : "bg-white text-zinc-600 border-zinc-200"
@@ -859,12 +963,12 @@ export default function MenuManagementPage() {
 
             <div>
               <label className="block text-xs font-bold text-zinc-800 mb-1">
-                Live Stock Status
+                Stock Availability
               </label>
               <button
                 type="button"
                 onClick={() => setItemIsAvailable(!itemIsAvailable)}
-                className={`mt-1.5 px-3 py-1 rounded-lg text-xs font-bold border transition ${
+                className={`mt-1.5 px-3 py-1 rounded-lg text-xs font-bold border transition cursor-pointer ${
                   itemIsAvailable
                     ? "bg-emerald-50 text-emerald-800 border-emerald-300"
                     : "bg-zinc-200 text-zinc-600 border-zinc-300"
@@ -889,6 +993,7 @@ export default function MenuManagementPage() {
               variant="primary"
               size="sm"
               isLoading={savingItem}
+              className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black"
             >
               Save Dish
             </Button>
@@ -907,11 +1012,11 @@ export default function MenuManagementPage() {
       >
         <div className="pt-2 space-y-4">
           <p className="text-sm text-zinc-600">
-            Kya aap sach me{" "}
+            Are you sure you want to delete{" "}
             <span className="font-bold text-zinc-900">
               &quot;{deleteConfirm?.name}&quot;
-            </span>{" "}
-            ko delete karna chahte hain? Yeh wapas nahi laya ja sakega.
+            </span>
+            ? This action cannot be undone.
           </p>
 
           <div className="flex justify-end gap-2">

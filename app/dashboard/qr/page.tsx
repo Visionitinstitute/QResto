@@ -12,6 +12,8 @@ import {
   Store,
   ExternalLink,
   Sparkles,
+  Lock,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -19,15 +21,24 @@ import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 import { createClient } from "@/lib/supabase/client";
 import { Hotel, RestaurantTable } from "@/types";
+import {
+  getStoredSubscription,
+  UserSubscription,
+  SUBSCRIPTION_PLANS,
+} from "@/lib/subscription";
+import { PlanUpgradeModal } from "@/components/dashboard/PlanUpgradeModal";
 
 export default function QRManagementPage() {
   const [loading, setLoading] = useState(true);
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [tables, setTables] = useState<RestaurantTable[]>([]);
+  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   // Manual Add Table State
   const [manualTableNumber, setManualTableNumber] = useState<string>("");
   const [addingTable, setAddingTable] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Deleting Table State
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -52,6 +63,9 @@ export default function QRManagementPage() {
             .eq("owner_id", user.id)
             .maybeSingle();
 
+          const sub = getStoredSubscription(user, hotelData?.id);
+          setSubscription(sub);
+
           if (hotelData) {
             setHotel(hotelData);
 
@@ -74,6 +88,10 @@ export default function QRManagementPage() {
     loadHotelAndTables();
   }, []);
 
+  const activePlan = subscription?.plan || SUBSCRIPTION_PLANS.starter;
+  const maxTables = activePlan.maxTables;
+  const isLimitReached = tables.length >= maxTables;
+
   // Download Single QR PNG
   const handleDownloadQR = (tableNum: number | "hotel") => {
     const canvas = document.getElementById(
@@ -94,8 +112,21 @@ export default function QRManagementPage() {
   // Manual Add Table
   const handleAddManualTable = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
+
+    if (isLimitReached) {
+      setErrorMsg(`You have reached the ${maxTables} table limit on the ${activePlan.name} plan. Upgrade to add more.`);
+      setIsUpgradeModalOpen(true);
+      return;
+    }
+
     const num = parseInt(manualTableNumber, 10);
     if (!hotel || !num || num <= 0) return;
+
+    if (tables.some((t) => t.table_number === num)) {
+      setErrorMsg(`Table ${num} already exists.`);
+      return;
+    }
 
     setAddingTable(true);
 
@@ -119,6 +150,7 @@ export default function QRManagementPage() {
       }
     } catch (err) {
       console.error("Error adding table:", err);
+      setErrorMsg("Failed to add table. Please try again.");
     } finally {
       setAddingTable(false);
     }
@@ -143,7 +175,7 @@ export default function QRManagementPage() {
     }
   };
 
-  // Print All (Prompt 8.3)
+  // Print All
   const handlePrintAll = () => {
     window.print();
   };
@@ -152,7 +184,7 @@ export default function QRManagementPage() {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Spinner size="lg" />
-        <p className="text-sm font-medium text-zinc-500">QR Codes load ho rahe hain...</p>
+        <p className="text-sm font-medium text-zinc-500">Loading Table QR Codes...</p>
       </div>
     );
   }
@@ -173,11 +205,20 @@ export default function QRManagementPage() {
 
   return (
     <div className="space-y-4">
+      {/* Plan Upgrade Modal */}
+      <PlanUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        currentPlanId={subscription?.planId}
+        onPlanUpdated={(newSub) => setSubscription(newSub)}
+        highlightFeature="Additional Dining Tables"
+      />
+
       {/* Top Header - Hidden when printing */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
-            <QrCode className="w-4 h-4 text-emerald-600" />
+          <h1 className="text-lg sm:text-xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
+            <QrCode className="w-5 h-5 text-emerald-600" />
             <span>Table QR Codes</span>
           </h1>
           <p className="text-xs text-zinc-500 mt-0.5">
@@ -186,21 +227,73 @@ export default function QRManagementPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="primary" size="sm" onClick={handlePrintAll} className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handlePrintAll}
+            className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black cursor-pointer"
+          >
             <Printer className="w-3.5 h-3.5 mr-1 text-[#39ff14]" /> Print QR Cards
           </Button>
         </div>
       </div>
 
+      {/* PLAN QUOTA STATUS BANNER */}
+      <div className="p-3 sm:p-4 rounded-2xl bg-white border border-zinc-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden shadow-2xs">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 font-bold text-xs shrink-0">
+            {tables.length}/{maxTables}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-zinc-900">
+                Plan Quota: {tables.length} of {maxTables} Tables Active
+              </span>
+              <span className="text-[10px] font-bold uppercase bg-[#0B192C] text-[#39ff14] px-2 py-0.5 rounded-full border border-[#39ff14]/30">
+                {activePlan.name}
+              </span>
+            </div>
+            <p className="text-[11px] text-zinc-500 mt-0.5">
+              {isLimitReached
+                ? `Limit reached. Upgrade your plan to add more than ${maxTables} tables.`
+                : `${maxTables - tables.length} more tables can be added under this plan.`}
+            </p>
+          </div>
+        </div>
+
+        {isLimitReached ? (
+          <Button
+            size="sm"
+            onClick={() => setIsUpgradeModalOpen(true)}
+            className="bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold text-xs shrink-0"
+          >
+            Upgrade Plan <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Button>
+        ) : (
+          <button
+            onClick={() => setIsUpgradeModalOpen(true)}
+            className="text-xs font-bold text-emerald-700 hover:text-emerald-900 underline shrink-0 cursor-pointer"
+          >
+            Upgrade Capacity
+          </button>
+        )}
+      </div>
+
+      {errorMsg && (
+        <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium print:hidden">
+          {errorMsg}
+        </div>
+      )}
+
       {/* Manual Add Table Row - Hidden when printing */}
       <Card className="p-3 sm:p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-            <Plus className="w-3.5 h-3.5" />
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+            <Plus className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs sm:text-sm font-bold text-zinc-900">Manual Table Jodein</h3>
-            <p className="text-[11px] text-zinc-500">Kisi specific table number ka QR code jodne ke liye</p>
+            <h3 className="text-xs sm:text-sm font-bold text-zinc-900">Add Dining Table</h3>
+            <p className="text-[11px] text-zinc-500">Create a specific table number and generate its QR code</p>
           </div>
         </div>
 
@@ -210,19 +303,25 @@ export default function QRManagementPage() {
             placeholder="Table No (e.g. 15)"
             value={manualTableNumber}
             onChange={(e) => setManualTableNumber(e.target.value)}
-            className="w-full sm:w-32 h-8 text-xs"
+            className="w-full sm:w-36 h-8 text-xs"
             min="1"
+            disabled={isLimitReached}
             required
           />
-          <Button type="submit" variant="primary" size="sm" isLoading={addingTable} className="h-8 text-xs">
-            Add
+          <Button
+            type="submit"
+            variant="primary"
+            size="sm"
+            isLoading={addingTable}
+            disabled={isLimitReached}
+            className="h-8 text-xs bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black"
+          >
+            {isLimitReached ? "Limit Reached" : "Add Table"}
           </Button>
         </form>
       </Card>
 
-      {/* ------------------------------------------------------------- */}
-      {/* GENERAL HOTEL LEVEL QR CODE (Prompt 8.2)                      */}
-      {/* ------------------------------------------------------------- */}
+      {/* GENERAL HOTEL LEVEL COUNTER QR */}
       <Card className="p-4 sm:p-5 bg-white border border-zinc-200/80 shadow-2xs print:hidden">
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
           <div className="p-2.5 bg-zinc-50 rounded-xl border border-zinc-200/80 shrink-0">
@@ -241,10 +340,10 @@ export default function QRManagementPage() {
               <span>Counter QR</span>
             </div>
             <h3 className="text-sm sm:text-base font-bold text-zinc-900">
-              General Hotel Menu QR
+              General Restaurant Menu QR
             </h3>
             <p className="text-xs text-zinc-500 max-w-md">
-              Counter, reception ya entry gate par lagayein. Customer checkout par table number select kar sakte hain.
+              Display at the reception counter, bar, or entrance. Guests can select their table number upon checkout.
             </p>
             <div className="pt-0.5 flex items-center justify-center sm:justify-start gap-2.5">
               <Button
@@ -258,7 +357,7 @@ export default function QRManagementPage() {
               <Link
                 href={hotelMenuUrl}
                 target="_blank"
-                className="text-xs font-semibold text-orange-600 hover:text-orange-700 flex items-center gap-1"
+                className="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1"
               >
                 Open Menu <ExternalLink className="w-3 h-3" />
               </Link>
@@ -267,9 +366,7 @@ export default function QRManagementPage() {
         </div>
       </Card>
 
-      {/* ------------------------------------------------------------- */}
-      {/* TABLE-WISE QR CODE GRID (Prompt 8.2 & 8.3)                     */}
-      {/* ------------------------------------------------------------- */}
+      {/* TABLE-WISE QR CODE GRID */}
       <div ref={printRef} className="space-y-3">
         <h2 className="text-xs font-bold text-zinc-900 uppercase tracking-wider print:text-center print:text-xl print:mb-6">
           All Table QR Codes ({tables.length} Tables)
@@ -282,7 +379,7 @@ export default function QRManagementPage() {
               No tables found
             </h3>
             <p className="text-xs text-zinc-500 mt-0.5">
-              Enter a table number in the form above to add tables.
+              Enter a table number in the form above to add dining tables.
             </p>
           </Card>
         ) : (
@@ -295,7 +392,6 @@ export default function QRManagementPage() {
                   key={table.id}
                   className="bg-white rounded-xl border border-zinc-200/80 p-3.5 shadow-2xs hover:shadow-xs transition flex flex-col items-center text-center print:border-2 print:border-black print:rounded-2xl print:p-6 print:break-inside-avoid"
                 >
-                  {/* Hotel Name & Branding */}
                   <div className="mb-1.5">
                     <span className="text-[10px] font-semibold text-zinc-400 tracking-wider uppercase">
                       Scan To Order
@@ -305,7 +401,6 @@ export default function QRManagementPage() {
                     </h3>
                   </div>
 
-                  {/* QR Canvas */}
                   <div className="p-2 bg-zinc-50 rounded-lg border border-zinc-100 my-1">
                     <QRCodeCanvas
                       id={`qr-code-${table.table_number}`}
@@ -316,27 +411,25 @@ export default function QRManagementPage() {
                     />
                   </div>
 
-                  {/* Table Badge */}
-                  <div className="mt-2 px-2.5 py-0.5 rounded-md bg-zinc-900 text-white font-bold text-xs tracking-wide">
+                  <div className="mt-2 px-2.5 py-0.5 rounded-md bg-[#0B192C] text-[#39ff14] font-black text-xs tracking-wide border border-[#39ff14]/30">
                     T-{table.table_number}
                   </div>
 
                   <p className="text-[10px] text-zinc-400 mt-1 print:text-zinc-600">
-                    Scan with phone camera
+                    Scan with smartphone camera
                   </p>
 
-                  {/* Action Buttons - Hidden in Print */}
                   <div className="mt-3 pt-2 border-t border-zinc-100 w-full flex items-center justify-between print:hidden">
                     <button
                       onClick={() => handleDownloadQR(table.table_number)}
-                      className="text-[11px] font-medium text-zinc-600 hover:text-zinc-900 flex items-center gap-1"
+                      className="text-[11px] font-medium text-zinc-600 hover:text-zinc-900 flex items-center gap-1 cursor-pointer"
                     >
                       <Download className="w-3 h-3" /> PNG
                     </button>
                     <button
                       onClick={() => handleDeleteTable(table.id)}
                       disabled={deletingId === table.id}
-                      className="p-1 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded transition"
+                      className="p-1 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded transition cursor-pointer"
                       title="Delete Table"
                     >
                       <Trash2 className="w-3.5 h-3.5" />

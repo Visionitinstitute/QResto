@@ -15,8 +15,19 @@ import {
   X,
   ExternalLink,
   Store,
+  Sparkles,
+  Lock,
+  ArrowRight,
+  ShieldAlert,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import {
+  getStoredSubscription,
+  UserSubscription,
+  SubscriptionPlanId,
+} from "@/lib/subscription";
+import { PlanUpgradeModal } from "@/components/dashboard/PlanUpgradeModal";
+import { Button } from "@/components/ui/Button";
 
 interface HotelSummary {
   id: string;
@@ -33,9 +44,12 @@ export default function DashboardLayout({
   const router = useRouter();
 
   const [hotel, setHotel] = useState<HotelSummary | null>(null);
+  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadUserAndHotel() {
@@ -56,13 +70,29 @@ export default function DashboardLayout({
           if (hotelData) {
             setHotel(hotelData);
           }
+
+          const sub = getStoredSubscription(user, hotelData?.id);
+          setSubscription(sub);
         }
       } catch (err) {
         console.error("Error loading user/hotel in dashboard layout:", err);
+      } finally {
+        setLoading(false);
       }
     }
 
     loadUserAndHotel();
+
+    const handleSubUpdated = (e: Event) => {
+      const customEvent = e as CustomEvent<UserSubscription>;
+      if (customEvent.detail) {
+        setSubscription(customEvent.detail);
+      }
+    };
+    window.addEventListener("meraresto:subscription-updated", handleSubUpdated);
+    return () => {
+      window.removeEventListener("meraresto:subscription-updated", handleSubUpdated);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -81,16 +111,28 @@ export default function DashboardLayout({
   const navItems = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { name: "Live Orders", href: "/dashboard/orders", icon: UtensilsCrossed },
-    { name: "Menu Items", href: "/dashboard/menu", icon: ChefHat },
+    { name: "Menu Dishes", href: "/dashboard/menu", icon: ChefHat },
     { name: "QR Codes", href: "/dashboard/qr", icon: QrCode },
     { name: "Reviews", href: "/dashboard/reviews", icon: Star },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Settings & Billing", href: "/dashboard/settings", icon: Settings },
   ];
+
+  // Paywall guard: If user does not have a hotel or active subscription, and tries to visit sub-routes
+  const isSetupIncomplete = !loading && (!hotel || !subscription);
+  const isSubRoute = pathname !== "/dashboard";
 
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row font-sans">
+      {/* Plan Upgrade Modal */}
+      <PlanUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        currentPlanId={subscription?.planId || "starter"}
+        onPlanUpdated={(newSub) => setSubscription(newSub)}
+      />
+
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:w-56 flex-col bg-white border-r border-zinc-200/80 sticky top-0 h-screen select-none">
+      <aside className="hidden md:flex md:w-60 flex-col bg-white border-r border-zinc-200/80 sticky top-0 h-screen select-none">
         {/* Brand Header */}
         <div className="h-14 border-b border-zinc-100 flex items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center gap-2">
@@ -102,7 +144,7 @@ export default function DashboardLayout({
                 Mera<span className="text-emerald-600">Resto</span>
               </span>
               <span className="text-[9px] text-zinc-400 font-semibold tracking-wider uppercase mt-0.5">
-                Portal
+                Manager Portal
               </span>
             </div>
           </Link>
@@ -110,24 +152,44 @@ export default function DashboardLayout({
 
         {/* Hotel Identity Card */}
         {hotel && (
-          <div className="p-2.5 mx-2.5 my-2 rounded-lg bg-zinc-50 border border-zinc-200/80">
+          <div className="p-2.5 mx-2.5 my-2 rounded-xl bg-zinc-50 border border-zinc-200/80">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
-                <Store className="w-3 h-3" />
+              <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                <Store className="w-3.5 h-3.5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-zinc-900 truncate">
+                <p className="text-xs font-bold text-zinc-900 truncate">
                   {hotel.name}
                 </p>
                 <Link
                   href={`/menu/${hotel.slug}`}
                   target="_blank"
-                  className="text-[10px] text-zinc-500 hover:text-orange-600 flex items-center gap-1 font-medium transition"
+                  className="text-[10px] text-zinc-500 hover:text-emerald-700 flex items-center gap-1 font-medium transition"
                 >
-                  View Menu <ExternalLink className="w-2.5 h-2.5" />
+                  View Public Menu <ExternalLink className="w-2.5 h-2.5" />
                 </Link>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Active Plan Widget in Sidebar */}
+        {subscription && (
+          <div className="mx-2.5 mb-2 p-2.5 rounded-xl bg-[#0B192C] text-white flex items-center justify-between shadow-xs">
+            <div>
+              <p className="text-[9px] uppercase tracking-wider text-[#39ff14] font-black">
+                Plan
+              </p>
+              <p className="text-xs font-bold text-white truncate max-w-[95px]">
+                {subscription.plan.name}
+              </p>
+            </div>
+            <button
+              onClick={() => setIsUpgradeModalOpen(true)}
+              className="px-2 py-1 rounded-lg bg-[#39ff14] hover:bg-emerald-400 text-[#0B192C] text-[10px] font-black uppercase transition cursor-pointer"
+            >
+              Upgrade
+            </button>
           </div>
         )}
 
@@ -143,13 +205,13 @@ export default function DashboardLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs transition ${
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition ${
                   isActive
-                    ? "bg-orange-50 text-orange-950 font-semibold border border-orange-200/60 shadow-2xs"
-                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 font-medium"
+                    ? "bg-[#0B192C] text-[#39ff14] font-bold shadow-2xs"
+                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-medium"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-orange-600" : "text-zinc-400"}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#39ff14]" : "text-zinc-400"}`} />
                 {item.name}
               </Link>
             );
@@ -163,7 +225,7 @@ export default function DashboardLayout({
               <p className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">
                 Logged In
               </p>
-              <p className="text-[11px] text-zinc-700 font-medium truncate max-w-[120px]">
+              <p className="text-[11px] text-zinc-700 font-medium truncate max-w-[140px]">
                 {userEmail || "Manager"}
               </p>
             </div>
@@ -171,7 +233,7 @@ export default function DashboardLayout({
           <button
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="w-full flex items-center justify-center gap-1.5 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:text-red-600 hover:bg-red-50/80 rounded-lg transition border border-zinc-200/70 hover:border-red-200"
+            className="w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition border border-zinc-200 hover:border-red-200 cursor-pointer"
           >
             <LogOut className="w-3 h-3" />
             {isLoggingOut ? "Logging out..." : "Logout"}
@@ -180,23 +242,34 @@ export default function DashboardLayout({
       </aside>
 
       {/* Mobile Top Header */}
-      <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-zinc-200 px-3.5 h-12 flex items-center justify-between">
+      <div className="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200 px-3.5 h-13 flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white">
-            <UtensilsCrossed className="w-3 h-3 text-[#39ff14]" />
+          <div className="w-7 h-7 rounded-lg bg-[#0B192C] border border-[#39ff14]/40 flex items-center justify-center text-white">
+            <UtensilsCrossed className="w-3.5 h-3.5 text-[#39ff14]" />
           </div>
           <span className="font-bold text-sm text-[#0B192C]">
             Mera<span className="text-emerald-600">Resto</span>
           </span>
         </Link>
 
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-1 rounded-md text-zinc-600 hover:bg-zinc-100 transition"
-          aria-label="Toggle Navigation Menu"
-        >
-          {mobileMenuOpen ? <X className="w-4 h-4" /> : <MenuIcon className="w-4 h-4" />}
-        </button>
+        <div className="flex items-center gap-2">
+          {subscription && (
+            <button
+              onClick={() => setIsUpgradeModalOpen(true)}
+              className="px-2 py-0.5 rounded-full bg-[#0B192C] text-[#39ff14] text-[10px] font-bold border border-[#39ff14]/40"
+            >
+              {subscription.plan.name}
+            </button>
+          )}
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-1.5 rounded-lg text-zinc-600 hover:bg-zinc-100 transition cursor-pointer"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -208,7 +281,7 @@ export default function DashboardLayout({
               <Link
                 href={`/menu/${hotel.slug}`}
                 target="_blank"
-                className="text-[11px] text-orange-600 font-medium inline-flex items-center gap-1 mt-0.5"
+                className="text-[11px] text-emerald-700 font-medium inline-flex items-center gap-1 mt-0.5"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 View Public Menu <ExternalLink className="w-2.5 h-2.5" />
@@ -227,25 +300,25 @@ export default function DashboardLayout({
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium ${
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium ${
                   isActive
-                    ? "bg-orange-50 text-orange-950 font-semibold border border-orange-200/60"
+                    ? "bg-[#0B192C] text-[#39ff14] font-bold"
                     : "text-zinc-700 hover:bg-zinc-100"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-orange-600" : "text-zinc-400"}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#39ff14]" : "text-zinc-400"}`} />
                 {item.name}
               </Link>
             );
           })}
 
-          <div className="pt-1.5 border-t border-zinc-100">
+          <div className="pt-2 border-t border-zinc-100">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 handleLogout();
               }}
-              className="w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-600 hover:text-red-600 hover:bg-red-50 rounded-lg"
+              className="w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-600 hover:text-red-600 hover:bg-red-50 rounded-lg cursor-pointer"
             >
               <LogOut className="w-3 h-3" /> Logout
             </button>
@@ -255,7 +328,31 @@ export default function DashboardLayout({
 
       {/* Main Content Area */}
       <main className="flex-1 min-w-0 p-3 sm:p-5 lg:p-6 overflow-y-auto">
-        <div className="max-w-7xl mx-auto">{children}</div>
+        <div className="max-w-7xl mx-auto">
+          {/* Sub-route Paywall Protection: Block access if onboarding/payment is incomplete */}
+          {isSetupIncomplete && isSubRoute ? (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center text-center p-6 max-w-md mx-auto animate-in fade-in">
+              <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 shadow-xs">
+                <Lock className="w-8 h-8" />
+              </div>
+              <h2 className="text-2xl font-black text-zinc-950 tracking-tight">
+                Subscription Plan Required
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 mt-2 mb-6 leading-relaxed">
+                You must select a subscription plan and complete activation before accessing this feature.
+              </p>
+              <Button
+                onClick={() => router.push("/dashboard")}
+                size="lg"
+                className="bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold"
+              >
+                Complete Setup & Select Plan <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          ) : (
+            children
+          )}
+        </div>
       </main>
     </div>
   );

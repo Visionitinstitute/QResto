@@ -12,6 +12,13 @@ import {
   AlertCircle,
   Store,
   Upload,
+  Sparkles,
+  CreditCard,
+  QrCode,
+  ChefHat,
+  UtensilsCrossed,
+  ShieldCheck,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -19,11 +26,19 @@ import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 import { createClient } from "@/lib/supabase/client";
 import { Hotel } from "@/types";
+import {
+  getStoredSubscription,
+  UserSubscription,
+  SUBSCRIPTION_PLANS,
+} from "@/lib/subscription";
+import { PlanUpgradeModal } from "@/components/dashboard/PlanUpgradeModal";
 
 export default function DashboardSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [hotel, setHotel] = useState<Hotel | null>(null);
+  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
@@ -52,6 +67,9 @@ export default function DashboardSettingsPage() {
             .select("*")
             .eq("owner_id", user.id)
             .maybeSingle();
+
+          const sub = getStoredSubscription(user, data?.id);
+          setSubscription(sub);
 
           if (data) {
             setHotel(data);
@@ -135,14 +153,24 @@ export default function DashboardSettingsPage() {
     );
   }
 
+  const activePlan = subscription?.plan || SUBSCRIPTION_PLANS.starter;
+
   return (
-    <div className="max-w-3xl space-y-6">
+    <div className="max-w-4xl space-y-6">
+      {/* Plan Upgrade Modal */}
+      <PlanUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        currentPlanId={subscription?.planId}
+        onPlanUpdated={(newSub) => setSubscription(newSub)}
+      />
+
       <div>
-        <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">
-          Restaurant Settings
+        <h1 className="text-2xl font-black text-zinc-950 tracking-tight">
+          Restaurant Settings & Subscription
         </h1>
         <p className="text-sm text-zinc-500 mt-1">
-          Manage your restaurant profile, contact details, address, and branding.
+          Manage your restaurant profile, subscription plan tier, and operational quotas.
         </p>
       </div>
 
@@ -163,7 +191,115 @@ export default function DashboardSettingsPage() {
         </div>
       )}
 
+      {/* ------------------------------------------------------------- */}
+      {/* 1. SUBSCRIPTION & BILLING PLAN SECTION                        */}
+      {/* ------------------------------------------------------------- */}
+      <Card className="p-6 sm:p-7 border-zinc-200/80 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-100">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#39ff14] bg-[#0B192C] px-3 py-1 rounded-full border border-[#39ff14]/40">
+                Active Subscription
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Paid & Active
+              </span>
+            </div>
+            <h2 className="text-xl font-black text-zinc-950 mt-2">
+              {activePlan.name} Plan
+            </h2>
+            <p className="text-xs text-zinc-500 mt-0.5">{activePlan.tagline}</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => setIsUpgradeModalOpen(true)}
+              className="bg-[#0B192C] hover:bg-black text-[#39ff14] border border-[#39ff14]/40 font-bold text-xs cursor-pointer"
+            >
+              Change / Upgrade Plan <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Quota & Feature Entitlement Breakdown */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5">
+          <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/70">
+            <div className="flex items-center gap-1.5 text-zinc-500 text-xs font-semibold">
+              <QrCode className="w-3.5 h-3.5 text-emerald-600" /> Max Tables
+            </div>
+            <p className="text-lg font-black text-zinc-900 mt-1">
+              {activePlan.maxTables} Tables
+            </p>
+            <p className="text-[10px] text-zinc-400">High-res printable QR</p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/70">
+            <div className="flex items-center gap-1.5 text-zinc-500 text-xs font-semibold">
+              <ChefHat className="w-3.5 h-3.5 text-amber-600" /> Menu Dishes
+            </div>
+            <p className="text-lg font-black text-zinc-900 mt-1">
+              {activePlan.maxMenuItems} Items
+            </p>
+            <p className="text-[10px] text-zinc-400">With photos & tags</p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/70">
+            <div className="flex items-center gap-1.5 text-zinc-500 text-xs font-semibold">
+              <UtensilsCrossed className="w-3.5 h-3.5 text-blue-600" /> Kitchen KDS
+            </div>
+            <p className="text-lg font-black text-zinc-900 mt-1">
+              {activePlan.kdsEnabled ? "Unlocked" : "Locked"}
+            </p>
+            <p className="text-[10px] text-zinc-400">
+              {activePlan.kdsEnabled ? "Live audio chimes" : "Pro plan required"}
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200/70">
+            <div className="flex items-center gap-1.5 text-zinc-500 text-xs font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-600" /> Support
+            </div>
+            <p className="text-sm font-black text-zinc-900 mt-1 truncate">
+              {activePlan.support.split(" ")[0]} Support
+            </p>
+            <p className="text-[10px] text-zinc-400 truncate">
+              {activePlan.support}
+            </p>
+          </div>
+        </div>
+
+        {subscription?.transactionId && (
+          <div className="mt-4 pt-3 border-t border-zinc-100 flex flex-wrap items-center justify-between text-[11px] text-zinc-500">
+            <span>
+              Transaction ID:{" "}
+              <strong className="font-mono text-zinc-800">
+                {subscription.transactionId}
+              </strong>
+            </span>
+            <span>
+              Billing Interval:{" "}
+              <strong className="capitalize text-zinc-800">
+                {subscription.billing}
+              </strong>
+            </span>
+            <span>
+              Expires:{" "}
+              <strong className="text-zinc-800">
+                {new Date(subscription.expiresAt).toLocaleDateString()}
+              </strong>
+            </span>
+          </div>
+        )}
+      </Card>
+
+      {/* ------------------------------------------------------------- */}
+      {/* 2. RESTAURANT PROFILE SETTINGS FORM                           */}
+      {/* ------------------------------------------------------------- */}
       <Card className="p-6 sm:p-8">
+        <h2 className="text-lg font-bold text-zinc-900 mb-4 pb-2 border-b border-zinc-100">
+          Restaurant Profile & Branding
+        </h2>
+
         <form onSubmit={handleSaveSettings} className="space-y-6">
           <div className="space-y-4">
             <div>
@@ -204,7 +340,7 @@ export default function DashboardSettingsPage() {
                 <Globe className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
               <p className="text-[11px] text-zinc-400 mt-1">
-                Slug ko badla nahi ja sakta kyonki isse aapke table QR codes jude hain.
+                Slug cannot be changed because your printed table QR codes are permanently linked to it.
               </p>
             </div>
 
@@ -233,7 +369,7 @@ export default function DashboardSettingsPage() {
                 htmlFor="address"
                 className="block text-xs sm:text-sm font-semibold text-zinc-700 mb-1.5"
               >
-                Address
+                Restaurant Address
               </label>
               <div className="relative">
                 <Input
@@ -274,7 +410,7 @@ export default function DashboardSettingsPage() {
                   type="checkbox"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 text-orange-600 rounded border-zinc-300 focus:ring-orange-500"
+                  className="w-4 h-4 text-emerald-600 rounded border-zinc-300 focus:ring-emerald-500 cursor-pointer"
                 />
                 <div>
                   <span className="text-sm font-semibold text-zinc-900">
@@ -289,7 +425,12 @@ export default function DashboardSettingsPage() {
           </div>
 
           <div className="pt-4 border-t border-zinc-100 flex justify-end">
-            <Button type="submit" variant="primary" isLoading={saving} className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black">
+            <Button
+              type="submit"
+              variant="primary"
+              isLoading={saving}
+              className="bg-[#0B192C] text-[#39ff14] border border-[#39ff14]/40 font-bold hover:bg-black cursor-pointer"
+            >
               <Save className="w-4 h-4 mr-1.5 text-[#39ff14]" /> Save Changes
             </Button>
           </div>
