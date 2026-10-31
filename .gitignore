@@ -14,7 +14,10 @@
 /coverage
 
 # next.js
+.next/
 /.next/
+apps/*/.next/
+packages/*/.next/
 /out/
 
 # production

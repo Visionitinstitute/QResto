@@ -1,7 +1,7 @@
 import type { OrderStatus } from "@meraresto/types";
 
 /**
- * Merges class names cleanly (simple drop-in without extra bloat)
+ * Merges class names cleanly
  */
 export function cn(...inputs: (string | undefined | null | false)[]): string {
   return inputs.filter(Boolean).join(" ");
@@ -32,12 +32,12 @@ export function slugify(text: string): string {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "-")        // Replace spaces with -
-    .replace(/&/g, "-and-")      // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "")    // Remove all non-word chars
-    .replace(/\-\-+/g, "-")      // Replace multiple - with single -
-    .replace(/^-+/, "")          // Trim - from start of text
-    .replace(/-+$/, "");         // Trim - from end of text
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 }
 
 /**
@@ -50,23 +50,75 @@ export function formatTime(dateString: string): string {
       minute: "2-digit",
     });
   } catch {
-    return "";
+    return dateString;
   }
 }
 
 /**
- * Formats a date string into readable date (e.g. 30 Oct 2026)
+ * Formats a date string into relative time (e.g. "5m ago", "Just now")
  */
-export function formatDate(dateString: string): string {
+export function formatRelativeTime(dateString: string): string {
   try {
-    return new Date(dateString).toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
+    const diff = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
+    if (diff < 60) return "Just now";
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return `${Math.floor(diff / 86400)}d ago`;
   } catch {
-    return "";
+    return dateString;
   }
+}
+
+/**
+ * Subscription Plan quotas & capabilities
+ */
+export const PLAN_QUOTAS = {
+  starter: {
+    name: "Starter Free",
+    monthlyPrice: 0,
+    maxTables: 10,
+    maxStaff: 2,
+    maxMenuItems: 30,
+    kdsEnabled: false,
+    customDomain: false,
+  },
+  pro: {
+    name: "Pro Resto",
+    monthlyPrice: 999,
+    maxTables: 50,
+    maxStaff: 10,
+    maxMenuItems: 200,
+    kdsEnabled: true,
+    customDomain: false,
+  },
+  enterprise: {
+    name: "Enterprise",
+    monthlyPrice: 2499,
+    maxTables: 200,
+    maxStaff: 50,
+    maxMenuItems: 1000,
+    kdsEnabled: true,
+    customDomain: true,
+  },
+} as const;
+
+export type PlanTier = keyof typeof PLAN_QUOTAS;
+
+/**
+ * Validates if an action is within subscription plan quota
+ */
+export function isWithinPlanQuota(
+  plan: PlanTier,
+  metric: "tables" | "staff" | "items",
+  currentCount: number
+): boolean {
+  const quota = PLAN_QUOTAS[plan];
+  if (!quota) return false;
+
+  if (metric === "tables") return currentCount < quota.maxTables;
+  if (metric === "staff") return currentCount < quota.maxStaff;
+  if (metric === "items") return currentCount < quota.maxMenuItems;
+  return true;
 }
 
 /**
@@ -92,4 +144,3 @@ export function isValidOrderStatusTransition(
 
   return allowedTransitions[c]?.includes(n) ?? false;
 }
-

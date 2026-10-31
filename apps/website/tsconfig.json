@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,19 +19,39 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@meraresto/types": ["../../packages/types/src/index.ts"],
-      "@meraresto/utils": ["../../packages/utils/src/index.ts"],
-      "@meraresto/database": ["../../packages/database/src/index.ts"],
-      "@meraresto/auth": ["../../packages/auth/src/index.ts"],
-      "@meraresto/ui": ["../../packages/ui/src/index.ts"]
-    }
+      "@/*": [
+        "./*"
+      ],
+      "@meraresto/types": [
+        "../../packages/types/src/index.ts"
+      ],
+      "@meraresto/utils": [
+        "../../packages/utils/src/index.ts"
+      ],
+      "@meraresto/database": [
+        "../../packages/database/src/index.ts"
+      ],
+      "@meraresto/auth": [
+        "../../packages/auth/src/index.ts"
+      ],
+      "@meraresto/ui": [
+        "../../packages/ui/src/index.ts"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
-
