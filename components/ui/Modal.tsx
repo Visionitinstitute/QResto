@@ -39,32 +39,32 @@ export const Modal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto flex items-start sm:items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity animate-fade-in"
+        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       {/* Modal Dialog */}
       <div
-        className={`relative w-full ${maxWidthStyles[maxWidth]} rounded-2xl bg-white p-6 shadow-2xl transition-all z-10 max-h-[90vh] overflow-y-auto`}
+        className={`relative w-full ${maxWidthStyles[maxWidth]} rounded-2xl bg-white p-4 sm:p-5 shadow-2xl transition-all z-10 max-h-[88vh] my-auto overflow-y-auto border border-zinc-200`}
       >
-        <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
+        <div className="flex items-center justify-between pb-2.5 border-b border-zinc-100">
           {title ? (
-            <h3 className="text-lg font-semibold text-zinc-900">{title}</h3>
+            <h3 className="text-base font-bold text-zinc-900">{title}</h3>
           ) : (
             <span />
           )}
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors"
+            className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors cursor-pointer"
             aria-label="Close modal"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
-        <div className="mt-4">{children}</div>
+        <div className="mt-3">{children}</div>
       </div>
     </div>
   );
