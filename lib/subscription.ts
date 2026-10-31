@@ -271,3 +271,4 @@ export function canAccessKDS(planId: SubscriptionPlanId = "starter"): boolean {
   const plan = SUBSCRIPTION_PLANS[planId];
   return !!plan?.kdsEnabled;
 }
+
